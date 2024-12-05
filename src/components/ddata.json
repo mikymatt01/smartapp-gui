@@ -1,0 +1,60 @@
+{
+    "labels": [
+        {
+            "id": 1,
+            "day": "Monday"
+        },
+        {
+            "id": 2,
+            "day": "Tuesday"
+        },
+        {
+            "id": 3,
+            "day": "Wednesday"
+        },
+        {
+            "id": 4,
+            "day": "Thursday"
+        },
+        {
+            "id": 5,
+            "day": "Friday"
+        },
+        {
+            "id": 6,
+            "day": "Saturday"
+        },
+        {
+            "id": 7,
+            "day": "Sunday"
+        }
+    ],
+    "datasets": [
+        {
+            "id": 1,
+            "label": "His Steps",
+            "data": [
+                3000,
+                5000,
+                4500,
+                6000,
+                8000,
+                7000,
+                9000
+            ]
+        },
+        {
+            "id": 2,
+            "label": "Her Steps",
+            "data": [
+                2000,
+                7000,
+                5000,
+                3000,
+                9000,
+                8000,
+                6000
+            ]
+        }
+    ]
+}

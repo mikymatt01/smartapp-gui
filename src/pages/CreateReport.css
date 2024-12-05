@@ -1,0 +1,33 @@
+.generate-report-button {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .generate-report-button:disabled {
+    background-color: #b0b0b0;
+    cursor: not-allowed;
+  }
+  
+  .download-icon {
+    margin-right: 10px; /* Adds space between the icon and text */
+    font-size: 20px; /* Icon size */
+  }
+  
+  .button-container {
+    margin-top: 20px;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  

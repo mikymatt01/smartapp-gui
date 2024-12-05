@@ -1,0 +1,14 @@
+.app {
+  display: flex;
+
+  .homeContainer {
+    background-color: rgb(255, 255, 255);
+    flex: 9;
+
+    .content {
+      display: flex;
+      font-family: 'Nunito Sans', sans-serif;
+    }
+  }
+
+}
