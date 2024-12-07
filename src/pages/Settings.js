@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Chatbot } from '../components/Chatbot'
 
 import "./Settings.css";
 
@@ -47,7 +46,6 @@ function Settings() {
           </div>
         )}
       </div>
-      <Chatbot />
     </div>
   );
 }
