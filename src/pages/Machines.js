@@ -7,18 +7,17 @@ const MachineDashboard = () => {
     const [expanded, setExpanded] = useState({}); // Tracks expanded state for each machine
 
     const machines = [
-        { id: 1, name: "Machine A", status: "Active", icon: <Settings />, subMachines: ["Sub A1", "Sub A2"] },
-        { id: 2, name: "Machine B", status: "Inactive", icon: <Memory />, subMachines: ["Sub B1", "Sub B2"] },
-        { id: 3, name: "Machine C", status: "Maintenance", icon: <Build />, subMachines: ["Sub C1", "Sub C2"] },
-        { id: 4, name: "Machine D", status: "Active", icon: <Settings />, subMachines: ["Sub D1", "Sub D2"] },
-        { id: 5, name: "Machine E", status: "Inactive", icon: <Memory />, subMachines: ["Sub E1", "Sub E2"] },
-        { id: 6, name: "Machine F", status: "Maintenance", icon: <Build />, subMachines: ["Sub F1", "Sub F2"] },
+        { id: 1, name: "Metal cutting machines", status: "Active", subMachines: ["Mach A1", "Mach A2"] },
+        { id: 2, name: "Laser welding machines", status: "Inactive", subMachines: ["Mach B1", "Mach B2"] },
+        { id: 3, name: "Assembly machines", status: "Active", subMachines: ["Mach C1", "Sub C2"] },
+        { id: 4, name: "Testing machines", status: "Active", subMachines: ["Mach D1", "Mach D2"] },
+        { id: 5, name: "Riveting Machine", status: "Inactive",  subMachines: ["Mach E1"] },
+        { id: 6, name: "Laser Cutter", status: "Active", subMachines: ["Mach F1"] },
     ];
 
     const statusColors = {
         Active: "success",
         Inactive: "error",
-        Maintenance: "warning",
     };
 
     const toggleExpand = (id) => {
@@ -28,9 +27,7 @@ const MachineDashboard = () => {
     return (
         <div>
             <Box sx={{ padding: 2, backgroundColor: "#f4f6f8", minHeight: "100vh" }}>
-                <Typography variant="h4" gutterBottom align="center">
-                    Machine Dashboard
-                </Typography>
+            <h1> Machine Dashboard </h1>
                 <Grid container spacing={2}>
                     {machines.map((machine) => (
                         <Grid item xs={12} sm={6} md={4} key={machine.id}>
@@ -62,7 +59,6 @@ const MachineDashboard = () => {
                                     </Box>
                                     <Collapse in={expanded[machine.id]} timeout="auto" unmountOnExit>
                                         <Box sx={{ mt: 2 }}>
-                                            <Typography variant="subtitle1">Sub-Machines:</Typography>
                                             <ul>
                                                 {machine.subMachines.map((subMachine, index) => (
                                                     <li key={index}>{subMachine}</li>
