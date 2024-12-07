@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Import styles for react-datepicker
+import { format } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css"; 
 import "./CreateReport.css";
 
 const CreateReport = () => {
@@ -23,8 +24,7 @@ const CreateReport = () => {
 
       try {
         const myHeaders = new Headers();
-        //After Bearer put user token
-        myHeaders.append("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImJkMGFlMTRkMjhkMTY1NzhiMzFjOGJlNmM4ZmRlZDM0ZDVlMWExYzEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiRkZNIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3NtYXJ0YXBwLTlmMjg3IiwiYXVkIjoic21hcnRhcHAtOWYyODciLCJhdXRoX3RpbWUiOjE3MzM1MDczNjgsInVzZXJfaWQiOiJ4TTJrZWE4YWthT0t2WXRhMjZOTUZCeThZbkozIiwic3ViIjoieE0ya2VhOGFrYU9Ldll0YTI2Tk1GQnk4WW5KMyIsImlhdCI6MTczMzUwNzM2OCwiZXhwIjoxNzMzNTEwOTY4LCJlbWFpbCI6ImZmbUBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJmZm1AZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.urqTWnDQsLCwcTBc2NhmVtEquZ0NouQ_h-bpZeL2ra002a4sgw1Jkw5HZW9YsnqhbmfRakq34oeXqsdQJqu-CCPH3buEA5t1qcxxWVAVamSo38Qs_H-r5sFc1HFsc6-Jizh_MwFIYSiaP0rOMRk9hxJB8py0uWxsxaIfHHo9VkgSMrG_FAyS4tMUXgGzWYzxamkW4GXUj7nos990Koxp6UwKzehDsdmNxt5KulX1XjYbyeBwF8sXSiveslBO0zFtYcfok90deaxMo1kjR5kxphCNZrlJ7I7uX97WgQiB0iDya88c121QOXewqnJujxewq1JQKYNdsoDl7gteoc8TTg");
+        myHeaders.append("Authorization", "Bearer  eyJhbGciOiJSUzI1NiIsImtpZCI6ImJkMGFlMTRkMjhkMTY1NzhiMzFjOGJlNmM4ZmRlZDM0ZDVlMWExYzEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiRkZNIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3NtYXJ0YXBwLTlmMjg3IiwiYXVkIjoic21hcnRhcHAtOWYyODciLCJhdXRoX3RpbWUiOjE3MzM1NjkzMDIsInVzZXJfaWQiOiJ4TTJrZWE4YWthT0t2WXRhMjZOTUZCeThZbkozIiwic3ViIjoieE0ya2VhOGFrYU9Ldll0YTI2Tk1GQnk4WW5KMyIsImlhdCI6MTczMzU2OTMwMiwiZXhwIjoxNzMzNTcyOTAyLCJlbWFpbCI6ImZmbUBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJmZm1AZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.CFwn3d177Ul0L6PVxc8Mx47LdEZhHeogcltNrqkpblx7dxvbuKcKT66UCB5LJilhxT6HSRjM8ZJZ-tQ8TDW28t92x1YdyhcjRdNJpXwKC3g0FdDFGhwLXaLc6pW5EoqJvnzgbId9hba1zPftK_jtqnHwE9GMoyISL5qHWzPLaEvsFlPPoAtUYtRPbk3YM7D6FcgOjDTq4QiOkaRPTyCkeE-f5BraAfwH5jafR4suKEq3ap06_OC_1tWPR8tAJBAEvqZbNM0SrugcY2dE8jmA4OVlSyqoUJDUQGkRnDfEFAfFjANbu63Plo3Ov2Dm4v9Zhv-jc57WP50qqhjpCQZG4A");
 
         const requestOptions = {
           method: "GET",
@@ -87,8 +87,7 @@ const CreateReport = () => {
 
     try {
       const myHeaders = new Headers();
-      //After Bearer put user token
-      myHeaders.append("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImJkMGFlMTRkMjhkMTY1NzhiMzFjOGJlNmM4ZmRlZDM0ZDVlMWExYzEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiRkZNIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3NtYXJ0YXBwLTlmMjg3IiwiYXVkIjoic21hcnRhcHAtOWYyODciLCJhdXRoX3RpbWUiOjE3MzM1MDczNjgsInVzZXJfaWQiOiJ4TTJrZWE4YWthT0t2WXRhMjZOTUZCeThZbkozIiwic3ViIjoieE0ya2VhOGFrYU9Ldll0YTI2Tk1GQnk4WW5KMyIsImlhdCI6MTczMzUwNzM2OCwiZXhwIjoxNzMzNTEwOTY4LCJlbWFpbCI6ImZmbUBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJmZm1AZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.urqTWnDQsLCwcTBc2NhmVtEquZ0NouQ_h-bpZeL2ra002a4sgw1Jkw5HZW9YsnqhbmfRakq34oeXqsdQJqu-CCPH3buEA5t1qcxxWVAVamSo38Qs_H-r5sFc1HFsc6-Jizh_MwFIYSiaP0rOMRk9hxJB8py0uWxsxaIfHHo9VkgSMrG_FAyS4tMUXgGzWYzxamkW4GXUj7nos990Koxp6UwKzehDsdmNxt5KulX1XjYbyeBwF8sXSiveslBO0zFtYcfok90deaxMo1kjR5kxphCNZrlJ7I7uX97WgQiB0iDya88c121QOXewqnJujxewq1JQKYNdsoDl7gteoc8TTg");
+      myHeaders.append("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImJkMGFlMTRkMjhkMTY1NzhiMzFjOGJlNmM4ZmRlZDM0ZDVlMWExYzEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiRkZNIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3NtYXJ0YXBwLTlmMjg3IiwiYXVkIjoic21hcnRhcHAtOWYyODciLCJhdXRoX3RpbWUiOjE3MzM1NjkzMDIsInVzZXJfaWQiOiJ4TTJrZWE4YWthT0t2WXRhMjZOTUZCeThZbkozIiwic3ViIjoieE0ya2VhOGFrYU9Ldll0YTI2Tk1GQnk4WW5KMyIsImlhdCI6MTczMzU2OTMwMiwiZXhwIjoxNzMzNTcyOTAyLCJlbWFpbCI6ImZmbUBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJmZm1AZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.CFwn3d177Ul0L6PVxc8Mx47LdEZhHeogcltNrqkpblx7dxvbuKcKT66UCB5LJilhxT6HSRjM8ZJZ-tQ8TDW28t92x1YdyhcjRdNJpXwKC3g0FdDFGhwLXaLc6pW5EoqJvnzgbId9hba1zPftK_jtqnHwE9GMoyISL5qHWzPLaEvsFlPPoAtUYtRPbk3YM7D6FcgOjDTq4QiOkaRPTyCkeE-f5BraAfwH5jafR4suKEq3ap06_OC_1tWPR8tAJBAEvqZbNM0SrugcY2dE8jmA4OVlSyqoUJDUQGkRnDfEFAfFjANbu63Plo3Ov2Dm4v9Zhv-jc57WP50qqhjpCQZG4A");
 
       const requestOptions = {
         method: "POST",
@@ -96,8 +95,11 @@ const CreateReport = () => {
         redirect: "follow",
       };
 
+      const formattedStartDate = startDate ? format(startDate, "yyyy-MM-dd") : null;
+      const formattedEndDate = endDate ? format(endDate, "yyyy-MM-dd") : null;
+
       const response = await fetch(
-        "https://api-656930476914.europe-west1.run.app/api/v1.0/report/?name=bla&site=1&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-14%2000%3A00%3A00&operation=avg",
+        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/?name=${name}&site=1&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&operation=${operation}`,
         requestOptions
       );
 

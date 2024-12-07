@@ -1,147 +1,125 @@
-
-/* Overall container for the create report page */
+/* General container styling */
 .create-report-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif;
+  max-width: 1000px; 
+  margin: 50px auto;
+  padding: 40px; 
+  background: #f9f9f9;
+  border-radius: 16px; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  font-family: "Roboto", sans-serif;
 }
 
-/* Form sections */
-.name-input-container,
-.dropdown-container {
-  margin-bottom: 20px;
+/* Grid layout for the form */
+.create-report-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 50px;
 }
 
-/* Label styles */
-.name-label,
-.dropdown-label {
-  font-size: 14px;
-  font-weight: 500;
+/* Full-width elements (like the button) */
+.button-container,
+.error-message {
+  grid-column: span 2; 
+  text-align: center;
+}
+
+/* General label styling */
+.create-report-container label {
+  font-weight: bold;
+  font-size: 16px; 
   color: #333;
   margin-bottom: 8px;
+  display: inline-block;
+}
+
+/* Input fields */
+.create-report-container input,
+.create-report-container select,
+.create-report-container .date-picker {
+  width: 100%;
+  padding: 14px; 
+  margin-top: 4px;
+  border: 1px solid #ddd;
+  border-radius: 8px; 
+  font-size: 16px; 
+  background: #fff;
+  color: #333;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.create-report-container input:focus,
+.create-report-container select:focus,
+.create-report-container .date-picker:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+/* Multi-select dropdown */
+.create-report-container select[multiple] {
+  height: 250px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Dropdown hint */
+.create-report-container small {
   display: block;
-}
-
-/* Input field for report name */
-.name-input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
   font-size: 14px;
-  color: #333;
-  background-color: #f9f9f9;
-  box-sizing: border-box; /* Ensure the padding is included in the width */
-  transition: border-color 0.3s ease;
+  color: #666;
+  margin-top: -8px;
+  margin-bottom: 12px;
 }
 
-/* Fix for the placeholder and text alignment */
-.name-input::placeholder {
-  color: #aaa;
-  font-style: italic;
-}
-
-.name-input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-/* Dropdown select styling */
-.dropdown-select {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  font-size: 14px;
-  color: #333;
-  transition: border-color 0.3s ease;
-}
-
-.dropdown-select:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-/* Multi-select dropdown for KPIs */
-#kpis {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  font-size: 14px;
-  color: #333;
-  height: 150px; /* Allow multiple selections */
-  transition: border-color 0.3s ease;
-}
-
-#kpis:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-/* Button container */
-.button-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-/* Generate Report Button */
+/* Button styling */
 .generate-report-button {
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
+  display: inline-block;
+  width: 100%;
+  padding: 14px;
+  font-size: 18px; 
   font-weight: bold;
-  padding: 12px 30px;
+  color: #fff;
+  background-color: #007bff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .generate-report-button:hover {
   background-color: #0056b3;
+  box-shadow: 0 6px 10px rgba(0, 123, 255, 0.3);
 }
 
 .generate-report-button:disabled {
-  background-color: #d6d6d6;
+  background-color: #ccc;
   cursor: not-allowed;
-}
-
-.generate-report-button:active {
-  background-color: #003366;
 }
 
 /* Error message */
 .error-message {
-  color: red;
-  font-size: 14px;
+  color: #d9534f;
+  font-size: 16px;
   margin-top: 10px;
+  text-align: center;
 }
 
-/* Loading option in the select dropdown */
-select option {
-  color: #007bff;
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .create-report-container {
+    grid-template-columns: 1fr; 
+    gap: 15px; 
+    padding: 20px;
+  }
+
+  .generate-report-button {
+    font-size: 16px;
+    padding: 12px;
+  }
 }
 
-/* Spacing between form elements */
-input,
-select {
-  margin-top: 8px;
-  margin-bottom: 12px;
+.create-report-container small {
+  margin-top: 8px; 
+  display: block; 
 }
-
-/* Loading state for KPIs dropdown */
-select option:disabled {
-  color: #888;
-}
-
-  
