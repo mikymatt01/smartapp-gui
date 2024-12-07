@@ -1,34 +1,57 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./SideBar.css";
+import "./Sidebar.css";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import BuildIcon from "@mui/icons-material/Build";
+import HistoryIcon from "@mui/icons-material/History";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-const SideBar = () => {
-    return (
-        <div className="sidebar">
-            <div className="sidebar-header">
-                <span className="logo">FFM</span>
-            </div>
-            <div className="sidebar-wrapper">
-                <ul className="sidebar-menu">
-                    <li className="menu-category">MAIN</li>
-                    <li><Link to="/dashboard">Dashboard</Link></li>
-                    <li><Link to="/machines">Machines</Link></li>
-                    <li className="menu-category">INVENTORY</li>
-                    <li><Link to="/production">Production</Link></li>
-                    <li><Link to="/kpi">KPI</Link></li>
-                    <li><Link to="/report">Report</Link></li>
-                    <li className="menu-category">UPDATES</li>
-                    <li><Link to="/notifications">Notifications</Link></li>
-                    <li><Link to="/status">Status</Link></li>
-                    <li><Link to="/alarms">Alarms</Link></li>
-                    <li className="menu-category">SERVICE</li>
-                    <li><Link to="/theme">Theme</Link></li>
-                    <li><Link to="/settings">Settings</Link></li>
-                    <li><Link to="/logout">Logout</Link></li>
-                </ul>
-            </div>
-        </div>
-    );
-};
+function Sidebar() {
+  return (
+    <div className="sidebar">
+      <h2 className="logo">SMO Dash</h2>
+      <ul className="sidebar-links">
+        <li>
+          <Link to="/">
+            <DashboardIcon className="sidebar-icon" />
+            Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link to="/sites">
+            <LocationOnIcon className="sidebar-icon" />
+            Sites
+          </Link>
+        </li>
+        <li>
+          <Link to="/machines">
+            <BuildIcon className="sidebar-icon" />
+            Machines
+          </Link>
+        </li>
+        <li>
+          <Link to="/report">
+            <HistoryIcon className="sidebar-icon" />
+            Report
+          </Link>
+        </li>
+        <li>
+          <Link to="/settings">
+            <SettingsIcon className="sidebar-icon" />
+            Settings
+          </Link>
+        </li>
+        <li>
+          <Link to="/logout">
+            <LogoutIcon className="sidebar-icon" />
+            Logout
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+}
 
-export default SideBar;
+export default Sidebar;

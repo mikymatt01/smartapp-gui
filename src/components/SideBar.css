@@ -1,54 +1,50 @@
 .sidebar {
-    /* position: fixed; */
-    /* display: flex; */
-    flex: 1;
-    width: 250px;
-    height: 250vh;
-    background-color: rgb(194, 237, 255);
-    /* Primary Color */
-    color: rgb(11, 64, 98);
-    /* Accent Color */
-    font-family: 'Nunito Sans', sans-serif;
-    padding: 10px;
-}
-
-.sidebar-header {
-    font-size: 1.5rem;
-    font-weight: bold;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px; /* Fixed width of the sidebar */
+  height: 100%;
+  background-color: #cde1f0; /* Blue color */
+  color: #fff;
+  padding: 5px 0; /* Vertical padding */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
 .logo {
-    align-items: center;
-    justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #084b66;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-
-.sidebar-menu {
-    list-style: none;
-    padding: 0;
+.sidebar-links {
+  list-style: none;
+  padding: 5px;
 }
 
-.sidebar-menu li {
-    padding: 10px 20px;
-    font-size: 1rem;
-
-    &:hover {
-        background-color: rgb(131, 200, 253);
-        border-radius: 7px;
-    }
+.sidebar-links li {
+  margin-bottom: 20px;
 }
 
-.sidebar-menu li a {
-    text-decoration: none;
-    color: rgb(11, 64, 98);
-    /* Accent Color */
+.sidebar-links li a {
+  text-decoration: none;
+  color: #084b66;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: background-color 0.2s;
 }
 
-.sidebar-menu li a:hover {
-    text-decoration: none;
+.sidebar-links li a:hover {
+  background-color: #a1d9f0;
+  color: #fff;
 }
 
-.menu-category {
-    font-weight: bold;
-    margin-top: 20px;
+.sidebar-icon {
+  margin-right: 10px;
+  font-size: 20px;
 }

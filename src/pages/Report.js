@@ -1,7 +1,6 @@
 import "./Report.css";
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Chatbot } from '../components/Chatbot'
 
 //import { useTable } from "react-table";
 
@@ -67,7 +66,6 @@ const Report = () => {
           <span>Create Report</span>
         </Link>
       </div>
-      <Chatbot />
       </div>)
 }
 

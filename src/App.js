@@ -8,6 +8,7 @@ import Machines from "./pages/Machines";
 import Report from "./pages/Report";
 import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
+import CreateReport from "./pages/CreateReport";
 
 import "./App.css";
 
@@ -25,6 +26,7 @@ function App() {
               <Route path="/sites" element={<Sites />} />
               <Route path="/machines" element={<Machines />} />
               <Route path="/report" element={<Report />} />
+              <Route path="/report/createreport" element={<CreateReport />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/logout" element={<Logout />} />
             </Routes>
