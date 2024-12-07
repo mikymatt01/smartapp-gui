@@ -1,6 +1,8 @@
 import "./Report.css";
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Chatbot } from '../components/Chatbot'
+
 //import { useTable } from "react-table";
 
 const Report = () => {
@@ -18,10 +20,10 @@ const Report = () => {
       ],
       []
     );
-  
+
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
       useTable({ columns, data });
-  
+
     return (
       <div className="Report">
         <div className="container">
@@ -65,8 +67,9 @@ const Report = () => {
           <span>Create Report</span>
         </Link>
       </div>
+      <Chatbot />
       </div>)
 }
-  
+
 
 export default Report
