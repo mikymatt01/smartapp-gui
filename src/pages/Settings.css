@@ -1,0 +1,61 @@
+/* General container styling */
+  
+  /* Settings Title */
+  .settings-container h1 {
+    font-size: 30px; /* Slightly smaller title */
+    font-weight: 600; /* Bold title */
+    text-align: center; /* Center the title */
+    color: #333; /* Dark grey text */
+    margin-bottom: 40px; /* Space between title and buttons */
+    font-family: "Roboto", sans-serif;
+  }
+  
+  /* Button container */
+  .button-container {
+    margin-left: 15px;
+    margin-bottom: 20px; /* Space between buttons */
+    text-align: center; /* Center buttons */
+    font-family: "Roboto", sans-serif;
+  }
+  
+  /* Individual button styling */
+  .settings-button {
+    background-color: #eaebec; /* Soft grey background */
+    color: #333; /* Dark text for readability */
+    font-size: 16px; /* Standard font size */
+    font-weight: normal; /* Lighter weight text */
+    padding: 12px 28px; /* More compact padding */
+    border: none;
+    border-radius: 8px; /* Subtle rounded corners */
+    cursor: pointer;
+    width: 100%; /* Full width button */
+    max-width: 350px; /* Limit button width */
+    margin: 0 auto; /* Center the buttons */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  }
+  
+  /* Hover effect for buttons */
+  .settings-button:hover {
+    background-color: #b2d2e4; /* Slightly darker grey on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for interaction */
+  }
+  
+  /* Disabled state for buttons */
+  .settings-button:disabled {
+    background-color: #ccc; /* Light grey background for disabled state */
+    color: #888; /* Lighter text for disabled state */
+    cursor: not-allowed; /* Show disabled cursor */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media screen and (max-width: 768px) {
+    .settings-container {
+      padding: 20px; /* Less padding on mobile */
+    }
+  
+    .settings-button {
+      padding: 10px 24px; /* Slightly smaller button size on mobile */
+      font-size: 14px; /* Smaller text for mobile */
+    }
+  }
+  
