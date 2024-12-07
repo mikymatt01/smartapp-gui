@@ -10,15 +10,10 @@ import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
 import CreateReport from "./pages/CreateReport";
 import Login from "./pages/Login"; // Assuming the Login component is under 'pages'
-
-import Axios from "axios";
 import "./App.css";
 
 function App() {
   const [token, setToken] = useState(null); // State to manage authentication token
-  const [kpiData, setKpiData] = useState(null); // State to store KPI data
-  const [error, setError] = useState(null); // State to store errors
-
 
   // Retrieve token from localStorage on component mount
   useEffect(() => {
@@ -27,6 +22,7 @@ function App() {
       setToken(storedToken);
     }
 
+    /*
     const getAPI = () => {
       if (!token) {
         setError("You must log in first to fetch KPIs.");
@@ -45,12 +41,8 @@ function App() {
         });
     };
 
-    getAPI();
+    getAPI();*/
   }, [token]);
-
-
-  // Function to fetch KPI data
-
 
   return (
     <Router>
@@ -71,15 +63,6 @@ function App() {
                   <Route path="/logout" element={<Logout setToken={setToken} />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
-                {/* <button onClick={getAPI}>Get API Data</button> */}
-                <div className="api-response">
-                  {error && <p style={{ color: "red" }}>{error}</p>}
-                  {kpiData && (
-                    <pre style={{ whiteSpace: "pre-wrap", textAlign: "left" }}>
-                      {JSON.stringify(kpiData, null, 2)}
-                    </pre>
-                  )}
-                </div>
               </div>
             </div>
           </>

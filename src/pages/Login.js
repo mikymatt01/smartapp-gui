@@ -17,7 +17,6 @@ function Login({ setToken }) {
       setToken(token);
       // token stored in local storage
       localStorage.setItem("token", token);
-      alert("Login successful!");
     } catch (err) {
       setError(err.message);
     }

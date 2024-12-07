@@ -6,8 +6,6 @@ import { Chatbot } from '../components/Chatbot'
 import { Chart, ArcElement } from 'chart.js'
 Chart.register(ArcElement);
 
-
-
 export const KPI = () => {
     const timeData = {
         labels: ["Working", "Idle", "Offline"],
