@@ -56,7 +56,7 @@ const Report = () => {
 
     return (
       <div>
-      <h1>Report Page</h1>
+      <h1>Report History</h1>
       <p>Welcome to the report page. Here you can manage your reports.</p>
 
       {/* button to create report */}
