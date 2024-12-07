@@ -1,0 +1,44 @@
+{
+  "labels": [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ],
+  "datasets": [
+    {
+      "label": "Machine 1",
+      "data": [2000, 1800, 1700, 2100, 1900, 2200, 2600, 2500, 3000, 3100, 3600, 4000],
+      "borderColor": "#3e95cd",
+      "fill": false
+    },
+    {
+      "label": "Machine 2",
+      "data": [500, 1300, 1600, 1400, 2100, 1800, 2500, 2300, 2700, 2900, 3200, 1700],
+      "borderColor": "#8e5ea2",
+      "fill": false
+    },
+    {
+      "label": "Machine 3",
+      "data": [900, 1000, 1100, 1600, 1700, 2400, 2200, 2900, 3000, 3300, 3700, 2900],
+      "borderColor": "#3cba9f",
+      "fill": false
+    },
+    {
+      "label": "Machine 4",
+      "data": [1500, 1200, 1300, 1800, 1900, 2000, 2300, 2400, 2800, 3000, 3100, 3500],
+      "borderColor": "#e8c3b9",
+      "fill": false
+    },
+    {
+      "label": "Machine 5",
+      "data": [800, 900, 1100, 1400, 1500, 1700, 2000, 2200, 2600, 2700, 3100, 2000],
+      "borderColor": "#c45850",
+      "fill": false
+    },
+    {
+      "label": "Machine 6",
+      "data": [600, 850, 900, 1000, 1200, 1500, 1800, 2000, 2400, 2600, 2900, 3200],
+      "borderColor": "#ffa500",
+      "fill": false
+    }
+  ]
+}
