@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import SendIcon from "@mui/icons-material/Send";
 import "./Chatbot.css";

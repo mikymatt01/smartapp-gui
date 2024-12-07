@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Box, Grid, Card, CardContent, Typography, Chip, IconButton, Collapse } from "@mui/material";
 import { ExpandMore, ExpandLess, Settings, Memory, Build, CheckCircle, Error, HourglassEmpty } from "@mui/icons-material";
-import { Chatbot } from '../components/Chatbot'
 
 
 const MachineDashboard = () => {

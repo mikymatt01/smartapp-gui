@@ -11,9 +11,11 @@ function Settings() {
         <h2>Settings</h2>
         <ul>
           <li onClick={() => setActiveTab("profile")}>Profile</li>
-          <li onClick={() => setActiveTab("account")}>Account</li>
-          <li onClick={() => setActiveTab("preferences")}>Preferences</li>
-          <li onClick={() => setActiveTab("privacy")}>Privacy</li>
+          <li onClick={() => setActiveTab("notifications")}>Notifications</li>
+          <li onClick={() => setActiveTab("devices")}>Connected Devices</li>
+          <li onClick={() => setActiveTab("language")}>Languge</li>
+          <li onClick={() => setActiveTab("accessibility")}>Accessibility</li>
+          <li onClick={() => setActiveTab("help")}>Help</li>
         </ul>
       </div>
       <div className="settings-content">
@@ -24,24 +26,38 @@ function Settings() {
             {/* Add form for profile updates */}
           </div>
         )}
-        {activeTab === "account" && (
+        {activeTab === "notifications" && (
           <div>
-            <h3>Account Settings</h3>
-            <p>Manage your account settings here.</p>
+            <h3>Notifications Settings</h3>
+            <p>Manage your notifications settings here.</p>
             {/* Add form for account settings */}
           </div>
         )}
-        {activeTab === "preferences" && (
+        {activeTab === "devices" && (
           <div>
-            <h3>Preferences</h3>
+            <h3>Connected Devices:</h3>
             <p>Customize your app experience here.</p>
             {/* Add options for preferences */}
           </div>
         )}
-        {activeTab === "privacy" && (
+        {activeTab === "language" && (
           <div>
-            <h3>Privacy Settings</h3>
-            <p>Manage your privacy settings here.</p>
+            <h3>Language</h3>
+            <p>Manage your language settings here.</p>
+            {/* Add privacy-related settings */}
+          </div>
+        )}
+        {activeTab === "accessibility" && (
+          <div>
+            <h3>Accessibility Settings</h3>
+            <p>Manage your accessibility settings here.</p>
+            {/* Add privacy-related settings */}
+          </div>
+        )}
+        {activeTab === "help" && (
+          <div>
+            <h3>Help</h3>
+            <p>Get contact info here.</p>
             {/* Add privacy-related settings */}
           </div>
         )}
