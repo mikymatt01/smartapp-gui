@@ -91,7 +91,7 @@ export const Chatbot = () => {
                                 className="chatbot-input"
                                 placeholder="Type your message..."
                             />
-                            <button onClick={handleSend} >
+                            <button onClick={handleSend} className= "chatbot-send-button">
                                 <SendIcon />
                             </button>
                         </div>

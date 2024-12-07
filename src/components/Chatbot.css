@@ -3,7 +3,7 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: rgb(194, 237, 255);
+    background-color: #4fa4ff;
     border: none;
     border-radius: 50%;
     width: 60px;
@@ -17,6 +17,7 @@
 
 .chat-icon:hover {
     background-color: rgb(174, 217, 245);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
 }
 
 /* Chatbot container */

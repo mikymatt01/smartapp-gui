@@ -113,7 +113,7 @@ const CreateReport = () => {
         const link = document.createElement("a");
         link.href = data.data;
         link.download = name || "report"; // If user doesn't provide a name, default to report
-        console.log(data.data);
+        console.log(data.data); // Wait on api to see if u need to put data.data.url
         link.click();
       } else {
         throw new Error(response.message);

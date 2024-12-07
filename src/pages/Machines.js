@@ -77,7 +77,6 @@ const MachineDashboard = () => {
                     ))}
                 </Grid>
             </Box>
-            <Chatbot />
         </div>
 
     );
