@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css"; 
 import "./css/CreateReport.css";
+import { AuthContext } from "../hooks/user";
 
 // This page is in common between SMO and FFM
 // Allows them to create a report choosing the time period
@@ -12,9 +13,11 @@ import "./css/CreateReport.css";
 // those too
 
 const CreateReport = () => {
+  const auth = useContext(AuthContext);
   const [language, setLanguage] = useState("language"); // State for language
   const [startDate, setStartDate] = useState(null); // Start Date state
   const [endDate, setEndDate] = useState(null); // End Date state
+  const [site, setSite] = useState(auth.site); // State for sites
   const [operation, setOperation] = useState("operation"); // State for frequency
   const [name, setName] = useState(""); // State for report name
   const [selectedKPIs, setSelectedKPIs] = useState([]); // State for selected KPIs
@@ -41,7 +44,7 @@ const CreateReport = () => {
         };
 
         const response = await fetch(
-          "https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/?site=1",
+          `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/?site=1`,
           requestOptions
         );
 
@@ -69,6 +72,10 @@ const CreateReport = () => {
   // Handle language change
   const handleLanguageChange = (newLanguage) => {
     setLanguage(newLanguage);
+  };
+
+  const handleSiteChange = (site) => {
+    setSite(site);
   };
 
   // Handle operation change
@@ -108,7 +115,7 @@ const CreateReport = () => {
       const formattedEndDate = endDate ? format(endDate, "yyyy-MM-dd") : null;
 
       const response = await fetch(
-        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/?name=${name}&site=1&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&operation=${operation}`,
+        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/?name=${name}&site=${site}&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&operation=${operation}`,
         requestOptions
       );
 
@@ -170,6 +177,30 @@ const CreateReport = () => {
           <option value="fr">French</option>
         </select>
       </div>
+
+      {
+        auth.site === null && (
+          <div className="dropdown-container">
+            <label htmlFor="site" className="dropdown-label">
+              Site
+            </label>
+            <select
+              id="site"
+              value={site}
+              onChange={(e) => handleSiteChange(e.target.value)}
+              className="dropdown-select"
+            >
+              <option value="" disabled>
+                Select Site
+              </option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        )
+      }
+      
 
       {/* Date Pickers */}
       <div className="date-picker-container">

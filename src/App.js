@@ -13,7 +13,7 @@ function App() {
   const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // IN contextValue the info of the user
+  // In contextValue the info of the user
   const contextValue = useMemo(() => currentUser, [currentUser]);
 
   // Retrieve token from localStorage on component mount
