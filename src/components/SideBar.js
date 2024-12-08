@@ -11,7 +11,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 function Sidebar() {
   return (
     <div className="sidebar">
-      <h2 className="logo">SMO Dash</h2>
+      <h2 className="logo">Dash</h2>
       <ul className="sidebar-links">
         <li>
           <Link to="/">

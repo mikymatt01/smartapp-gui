@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from "react";
 import { LineGraph } from '../components/LineGraph';
 import { KPI } from '../components/KPIs';
-import "./Dashboard.css";
+import "./css/Dashboard.css";
 
 function Dashboard() {
     const [error, setError] = useState(null); // State for error messages

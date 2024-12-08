@@ -22,26 +22,6 @@ function App() {
       setToken(storedToken);
     }
 
-    /*
-    const getAPI = () => {
-      if (!token) {
-        setError("You must log in first to fetch KPIs.");
-        return;
-      }
-
-      Axios.get("https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((response) => {
-          setKpiData(response.data);
-          setError(null);
-        })
-        .catch((error) => {
-          setError("Failed to fetch KPIs. Please try again later.");
-        });
-    };
-
-    getAPI();*/
   }, [token]);
 
   return (
