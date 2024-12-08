@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./css/Topbar.css";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import Avatar from "@mui/material/Avatar";
+import { AuthContext } from "../hooks/user"
+import UserThumbnail from "./UserThumbnail";
 
 function Topbar() {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -16,6 +17,8 @@ function Topbar() {
     setShowNotifications(!showNotifications);
   };
 
+  const auth = useContext(AuthContext)
+  if (!auth) return <></>
   return (
     <div className="topbar">
       <div className="search-container">
@@ -42,7 +45,11 @@ function Topbar() {
             </div>
           )}
         </div>
-        <Avatar alt="User Profile" src="/static/images/avatar/1.jpg" />
+          <UserThumbnail
+            email={auth.email}
+            name={auth.first_name}
+            surname={auth.last_name}
+          />
       </div>
     </div>
   );
