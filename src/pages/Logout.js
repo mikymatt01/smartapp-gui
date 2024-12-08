@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//import PageTitle from "./PageTitle";
+import PageTitle from "./PageTitle";
 
 const Logout = ({ setToken }) => {
     const navigate = useNavigate(); // Hook for navigation
@@ -16,10 +16,9 @@ const Logout = ({ setToken }) => {
         navigate("/"); // This will navigate to the login page ("/")
     }, [setToken, navigate]);
 
-    //<PageTitle title="Logout" />
-
     return (
         <div>
+            <PageTitle title="Logout" />
             <p>Logging you out...</p>
         </div>
     );

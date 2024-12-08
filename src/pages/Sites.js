@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Sites.css";
+import "./css/Sites.css";
 import { Chatbot } from '../components/Chatbot'
 
 
@@ -85,7 +85,7 @@ const SitesPage = () => {
           </ul>
         </div>
       )}
-<Chatbot />
+      <Chatbot />
     </div>
   );
 };
