@@ -57,8 +57,9 @@ function Dashboard() {
                 )}
             </div>
 
-
+            <div className= "linegraph-container"> 
             <LineGraph />
+            </div>
             <KPI />
         </div>
     );
