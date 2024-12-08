@@ -17,7 +17,6 @@ function Dashboard() {
         setDropdownVisible((prev) => !prev); // Toggle dropdown visibility
     };
 
-
     return (
         <div>
             <h2>Welcome to the Dashboard</h2>

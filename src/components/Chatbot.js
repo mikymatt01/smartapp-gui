@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import SendIcon from "@mui/icons-material/Send";
-import "./Chatbot.css";
+import "./css/Chatbot.css";
 
 export function Chatbot () {
     const [messages, setMessages] = useState([]);
@@ -16,8 +16,9 @@ export function Chatbot () {
 
         try {
             // Send the user's input to the backend API
+            const storedToken = localStorage.getItem("token");
             const myHeaders = new Headers();
-            myHeaders.append("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImJkMGFlMTRkMjhkMTY1NzhiMzFjOGJlNmM4ZmRlZDM0ZDVlMWExYzEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiRkZNIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3NtYXJ0YXBwLTlmMjg3IiwiYXVkIjoic21hcnRhcHAtOWYyODciLCJhdXRoX3RpbWUiOjE3MzM1NjkzMDIsInVzZXJfaWQiOiJ4TTJrZWE4YWthT0t2WXRhMjZOTUZCeThZbkozIiwic3ViIjoieE0ya2VhOGFrYU9Ldll0YTI2Tk1GQnk4WW5KMyIsImlhdCI6MTczMzU2OTMwMiwiZXhwIjoxNzMzNTcyOTAyLCJlbWFpbCI6ImZmbUBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJmZm1AZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.CFwn3d177Ul0L6PVxc8Mx47LdEZhHeogcltNrqkpblx7dxvbuKcKT66UCB5LJilhxT6HSRjM8ZJZ-tQ8TDW28t92x1YdyhcjRdNJpXwKC3g0FdDFGhwLXaLc6pW5EoqJvnzgbId9hba1zPftK_jtqnHwE9GMoyISL5qHWzPLaEvsFlPPoAtUYtRPbk3YM7D6FcgOjDTq4QiOkaRPTyCkeE-f5BraAfwH5jafR4suKEq3ap06_OC_1tWPR8tAJBAEvqZbNM0SrugcY2dE8jmA4OVlSyqoUJDUQGkRnDfEFAfFjANbu63Plo3Ov2Dm4v9Zhv-jc57WP50qqhjpCQZG4A");
+            myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
             const requestOptions = {
                 method: "POST",

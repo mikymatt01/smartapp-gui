@@ -10,7 +10,7 @@ import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
 import CreateReport from "./pages/CreateReport";
 import Login from "./pages/Login"; // Assuming the Login component is under 'pages'
-import "./App.css";
+import "./pages/css/App.css";
 
 function App() {
   const [token, setToken] = useState(null); // State to manage authentication token

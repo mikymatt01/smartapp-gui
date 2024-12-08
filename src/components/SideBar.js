@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Sidebar.css";
+import "./css/Sidebar.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import BuildIcon from "@mui/icons-material/Build";

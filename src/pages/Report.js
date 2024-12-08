@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTable } from "react-table"; // Import useTable from react-table
 import { Link } from "react-router-dom";
-import "./Report.css";
+import "./css/Report.css";
 
 const Report = () => {
   const [reports, setReports] = useState([]); // State to hold reports

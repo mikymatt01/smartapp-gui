@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseconfig";
-//import "./Login.css"; // Import the CSS file
+import "./css/Login.css"; // Import the CSS file
 
 function Login({ setToken }) {
   const [email, setEmail] = useState("");
@@ -15,8 +15,8 @@ function Login({ setToken }) {
       const userCreds = await signInWithEmailAndPassword(auth, email, password);
       const token = userCreds.user.accessToken;
       setToken(token);
-      // token stored in local storage
       localStorage.setItem("token", token);
+      // alert("Login successful!");
     } catch (err) {
       setError(err.message);
     }
