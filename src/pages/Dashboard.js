@@ -9,6 +9,7 @@ const sites = [
     1,
     2
 ];
+
 function Dashboard() {
     const auth = useContext(AuthContext)
     const [error, setError] = useState(null); // State for error messages
@@ -29,6 +30,7 @@ function Dashboard() {
         if(auth.site !== null) return <LineGraph site={auth.site} /> // ffm
         else return sites.map((site) => <LineGraph site={site} />) // smo
     }
+    
     return (
         <div>
             <h2>Welcome to the Dashboard</h2>

@@ -2,12 +2,12 @@ import React, { useState, useEffect, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./pages/css/App.css";
 import { AuthContext } from "./hooks/user"
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/SideBar";
 import Topbar from "./components/Topbar";
 import Login from "./pages/Login";
 import MyRoutes from "./components/Routes";
 
-const baseUrl = 'http://127.0.0.1:8000/api/v1.0'
+const baseUrl = 'https://api-656930476914.europe-west1.run.app/api/v1.0'
 
 function App() {
   const [token, setToken] = useState(null);
