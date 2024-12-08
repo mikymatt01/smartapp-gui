@@ -28,7 +28,7 @@ function Dashboard() {
     const renderGraph = () => {
         if(!auth) return <></>
         if(auth.site !== null) return <LineGraph site={auth.site} /> // ffm
-        else return sites.map((site) => <LineGraph site={site} />) // smo
+        else return sites.map((site) => <LineGraph key={`graph_${site}`} site={site} />) // smo
     }
     
     return (

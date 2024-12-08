@@ -18,7 +18,6 @@ function Topbar() {
   };
 
   const auth = useContext(AuthContext)
-  if (!auth) return <></>
   return (
     <div className="topbar">
       <div className="search-container">
@@ -45,11 +44,11 @@ function Topbar() {
             </div>
           )}
         </div>
-          <UserThumbnail
+          {auth ? (<UserThumbnail
             email={auth.email}
             name={auth.first_name}
             surname={auth.last_name}
-          />
+          />) : null}
       </div>
     </div>
   );

@@ -33,10 +33,13 @@ function App() {
       const requestOptions = {
         method: "GET",
         headers: myHeaders,
-        redirect: "follow",
       };
-      const response = await fetch(`${baseUrl}/user`, requestOptions)
-      setCurrentUser((await response.json()).data)
+      try {
+        const response = await fetch(`${baseUrl}/user/`, requestOptions)
+        setCurrentUser((await response.json()).data)
+      } catch (e) {
+        
+      } 
     }
     getUser()
   }, [token])
