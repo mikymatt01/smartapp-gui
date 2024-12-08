@@ -11,7 +11,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 function Sidebar() {
   return (
     <div className="sidebar">
-      <h2 className="logo">FFM Dash</h2>
+      <h2 className="logo">SMO Dash</h2>
       <ul className="sidebar-links">
         <li>
           <Link to="/">
@@ -32,9 +32,9 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link to="/report-history">
+          <Link to="/report">
             <HistoryIcon className="sidebar-icon" />
-            Report History
+            Report
           </Link>
         </li>
         <li>
