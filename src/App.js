@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./pages/css/App.css";
 import { AuthContext } from "./hooks/user"
 import Sidebar from "./components/Sidebar";

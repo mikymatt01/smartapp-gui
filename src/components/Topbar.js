@@ -18,6 +18,7 @@ function Topbar() {
   };
 
   const auth = useContext(AuthContext)
+  if (!auth) return <></>
   return (
     <div className="topbar">
       <div className="search-container">
