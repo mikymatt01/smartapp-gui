@@ -7,7 +7,7 @@ import Topbar from "./components/Topbar";
 import Login from "./pages/Login";
 import MyRoutes from "./components/Routes";
 
-const baseUrl = 'http://127.0.0.1:8000/api/v1.0'
+const baseUrl = 'https://api-656930476914.europe-west1.run.app/api/v1.0'
 
 function App() {
   const [token, setToken] = useState(null);
@@ -33,10 +33,13 @@ function App() {
       const requestOptions = {
         method: "GET",
         headers: myHeaders,
-        redirect: "follow",
       };
-      const response = await fetch(`${baseUrl}/user`, requestOptions)
-      setCurrentUser((await response.json()).data)
+      try {
+        const response = await fetch(`${baseUrl}/user/`, requestOptions)
+        setCurrentUser((await response.json()).data)
+      } catch (e) {
+        
+      } 
     }
     getUser()
   }, [token])
