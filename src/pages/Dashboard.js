@@ -1,9 +1,16 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState, useContext }  from "react";
 import { LineGraph } from '../components/LineGraph';
 import { KPI } from '../components/KPIs';
 import "./css/Dashboard.css";
+import { AuthContext } from '../hooks/user'
 
+const sites = [
+    0,
+    1,
+    2
+];
 function Dashboard() {
+    const auth = useContext(AuthContext)
     const [error, setError] = useState(null); // State for error messages
     const [dropdownVisible, setDropdownVisible] = useState(false); // State for dropdown visibility
     const [selection, setSelection] = useState(null); // State for the selected option
@@ -17,12 +24,19 @@ function Dashboard() {
         setDropdownVisible((prev) => !prev); // Toggle dropdown visibility
     };
 
+    const renderGraph = () => {
+        if(!auth) return <></>
+        return auth.site !== null ?
+            <LineGraph site={auth.site} /> :
+            sites.map((site) => <LineGraph site={site} />)
+    }
     return (
         <div>
             <h2>Welcome to the Dashboard</h2>
             <p>Here is your overview.</p>
 
             <div className="button-container">
+
                 <button
                     onClick={toggleDropdown} // Toggle the dropdown visibility
                     className="add-button"
@@ -57,8 +71,8 @@ function Dashboard() {
                 )}
             </div>
 
-            <div className= "linegraph-container"> 
-            <LineGraph />
+            <div className="linegraph-container"> 
+                {renderGraph()}
             </div>
             <KPI />
         </div>

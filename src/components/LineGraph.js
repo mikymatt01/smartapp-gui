@@ -14,7 +14,7 @@ import { Line } from "react-chartjs-2";
 // Register the components with Chart.js
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip, Legend);
 
-export const LineGraph = () => {
+export const LineGraph = ({ site }) => {
     const [error, setError] = useState(null); // State for error
     const [chartData, setChartData] = useState(null); // State for chart data
     // Color mapping for each machine category
@@ -45,7 +45,7 @@ export const LineGraph = () => {
                 };
 
                 const response = await fetch(
-                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=673a6ad2d9e0b151b88cbed0&start_date=2024-10-08%2000%3A00%3A00&end_date=2024-10-14%2000%3A00%3A00&granularity_op=avg&granularity_days=1&category=${category}`,
+                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/${site}/compute?kpi_id=673a6ad2d9e0b151b88cbed0&start_date=2024-10-08%2000%3A00%3A00&end_date=2024-10-14%2000%3A00%3A00&granularity_op=avg&granularity_days=1&category=${category}`,
                     requestOptions
                 );
 
