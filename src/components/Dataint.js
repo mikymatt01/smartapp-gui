@@ -6,8 +6,6 @@ export const LineChartData = () => {
     const [labels, setlables] = useState();
     const [datasets, setDataset] = useState();
 
-
-
     useEffect(() => {
         const fetchChartData = async () => {
             try {

@@ -1,5 +1,3 @@
-
-
 export const lineChartData = {
     labels: [
         "Monday",
