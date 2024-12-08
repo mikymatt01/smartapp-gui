@@ -8,6 +8,14 @@ import HistoryIcon from "@mui/icons-material/History";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 
+/*
+<li>
+          <Link to="/sites">
+            <LocationOnIcon className="sidebar-icon" />
+            Sites
+          </Link>
+        </li>
+*/
 function Sidebar() {
   return (
     <div className="sidebar">
@@ -17,12 +25,6 @@ function Sidebar() {
           <Link to="/">
             <DashboardIcon className="sidebar-icon" />
             Dashboard
-          </Link>
-        </li>
-        <li>
-          <Link to="/sites">
-            <LocationOnIcon className="sidebar-icon" />
-            Sites
           </Link>
         </li>
         <li>

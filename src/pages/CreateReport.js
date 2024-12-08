@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css"; 
 import "./css/CreateReport.css";
 
 const CreateReport = () => {
@@ -15,33 +15,28 @@ const CreateReport = () => {
   const [loading, setLoading] = useState(false); // State for loading status
   const [error, setError] = useState(null); // State for error messages
   const [kpis, setKpis] = useState([]); // State for KPIs options to show to user
-  const [token, setToken] = useState(null); // State to manage authentication token
-
 
   // Fetch KPIs data from API
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
-
     const fetchKPIs = async () => {
       setLoadingKPIs(true);
       setError(null);
+      const storedToken = localStorage.getItem("token");
 
       try {
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
         const requestOptions = {
           method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
+          headers: myHeaders,
           redirect: "follow",
         };
 
         const response = await fetch(
-          "https://api-656930476914.europe-west1.run.app/api/v1.0/site/1",
+          "https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/?site=1",
           requestOptions
         );
-        console.log(response)
 
         if (!response.ok) {
           throw new Error("Failed to fetch KPIs");
@@ -57,7 +52,7 @@ const CreateReport = () => {
     };
 
     fetchKPIs();
-  }, [token]);
+  }, []);
 
   // Handle name input change
   const handleNameChange = (newName) => {
@@ -92,10 +87,13 @@ const CreateReport = () => {
     setError(null);
 
     try {
+      const myHeaders = new Headers();
+      const storedToken = localStorage.getItem("token");
+      myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
       const requestOptions = {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: myHeaders,
         redirect: "follow",
       };
 
@@ -103,7 +101,7 @@ const CreateReport = () => {
       const formattedEndDate = endDate ? format(endDate, "yyyy-MM-dd") : null;
 
       const response = await fetch(
-        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/?name=${name}&site=1&start_date=${formattedStartDate}&end_date=${formattedEndDate}&operation=${operation}`,
+        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/?name=${name}&site=1&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&operation=${operation}`,
         requestOptions
       );
 
@@ -117,7 +115,7 @@ const CreateReport = () => {
         const link = document.createElement("a");
         link.href = data.data;
         link.download = name || "report"; // If user doesn't provide a name, default to report
-        console.log(data.data);
+        console.log(data.data); // Wait on api to see if u need to put data.data.url
         link.click();
       } else {
         throw new Error(response.message);
