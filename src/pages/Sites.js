@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./css/Sites.css";
 import { Chatbot } from '../components/Chatbot'
 
+// This is a page that only the SMO has access to.
+// The sites pages allow the user to see in details the different sites
 
 const SitesPage = () => {
   const [sites, setSites] = useState([]);

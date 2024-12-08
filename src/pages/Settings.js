@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./css/Settings.css";
 
+// Simple setting page
 function Settings() {
   const [activeTab, setActiveTab] = useState("profile");
 

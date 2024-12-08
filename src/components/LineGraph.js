@@ -14,6 +14,9 @@ import { Line } from "react-chartjs-2";
 // Register the components with Chart.js
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip, Legend);
 
+// This file allows to call the api to create a line graph based on a week data of all the machines
+// divided in categories, it's hard coded to show the ones we know from the site we have
+
 export const LineGraph = ({ site }) => {
     const [error, setError] = useState(null); // State for error
     const [chartData, setChartData] = useState(null); // State for chart data

@@ -4,6 +4,8 @@ import { KPI } from '../components/KPIs';
 import "./css/Dashboard.css";
 import { AuthContext } from '../hooks/user'
 
+
+// There are three sites for the SMO
 const sites = [
     0,
     1,
@@ -11,11 +13,13 @@ const sites = [
 ];
 
 function Dashboard() {
-    const auth = useContext(AuthContext)
+    const auth = useContext(AuthContext); // Gets the context of the user
     const [error, setError] = useState(null); // State for error messages
     const [dropdownVisible, setDropdownVisible] = useState(false); // State for dropdown visibility
     const [selection, setSelection] = useState(null); // State for the selected option
 
+    // Functions for the "add" button, this button needs to be able to add a new widget in the dashboard
+    // and to add a new allarm.
     const handleChoice = (choice) => {
         setSelection(choice);
         setError(null); // Reset error when a choice is made
@@ -25,12 +29,15 @@ function Dashboard() {
         setDropdownVisible((prev) => !prev); // Toggle dropdown visibility
     };
 
+    // Calls graph on the info of 1 site if FFM, all sites if SMO
+    // Since the SMO user has no site field in the object it's rappresented in we check
+    // if it's a SMO by checking the site field
     const renderGraph = () => {
         if(!auth) return <></>
-        if(auth.site !== null) return <LineGraph site={auth.site} /> // ffm
-        else return sites.map((site) => <LineGraph key={`graph_${site}`} site={site} />) // smo
+        if(auth.site !== null) return <LineGraph site={auth.site} /> // FFM
+        else return sites.map((site) => <LineGraph key={`graph_${site}`} site={site} />) // SMO
     }
-    
+
     return (
         <div>
             <h2>Welcome to the Dashboard</h2>
@@ -44,7 +51,6 @@ function Dashboard() {
                 >
                     Add New
                 </button>
-
                 {/* Dropdown menu */}
                 {dropdownVisible && (
                     <div className="dropdown-menu">

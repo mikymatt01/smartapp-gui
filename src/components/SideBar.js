@@ -5,6 +5,11 @@ import { smoRoutes, ffmRoutes } from '../consts'
 import { AuthContext } from "../hooks/user"
 import LogoutIcon from "@mui/icons-material/Logout";
 
+// This is the sidebar of the site
+// If it's a FFM there will be displayed: dashboard, machines, reports, settings, logout
+// If it's a SMO : dashboard sites, reports, settings, logout
+// The choice is again based on the fact if the field site is null 
+
 function Sidebar() {
   const auth = useContext(AuthContext)
   return (

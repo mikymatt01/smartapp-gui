@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Box, Grid, Card, CardContent, Typography, Chip, IconButton, Collapse } from "@mui/material";
 import { ExpandMore, ExpandLess, CheckCircle, Error, HourglassEmpty } from "@mui/icons-material";
 
+// This page is only for the FFM
+// The machines page shows machines grouped by category
 
 const MachineDashboard = () => {
     const [expanded, setExpanded] = useState({}); // Tracks expanded state for each machine

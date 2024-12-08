@@ -4,6 +4,13 @@ import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css"; 
 import "./css/CreateReport.css";
 
+// This page is in common between SMO and FFM
+// Allows them to create a report choosing the time period
+// The SMO has too choose on which site too (with a button only a SMO user can see)
+
+// The language and kpis choices are for future implementation where the user will be able to choose
+// those too
+
 const CreateReport = () => {
   const [language, setLanguage] = useState("language"); // State for language
   const [startDate, setStartDate] = useState(null); // Start Date state

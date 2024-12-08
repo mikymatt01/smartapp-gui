@@ -8,6 +8,8 @@ import Settings from "../pages/Settings";
 import Logout from "../pages/Logout";
 import CreateReport from "../pages/CreateReport";
 
+// Page to know where the user has to be routed to 
+
 function MyRoutes({ setToken }) {
     return (
        <Routes>

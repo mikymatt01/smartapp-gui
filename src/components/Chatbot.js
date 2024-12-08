@@ -3,6 +3,8 @@ import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import SendIcon from "@mui/icons-material/Send";
 import "./css/Chatbot.css";
 
+// This implements the chatbot
+
 export function Chatbot () {
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState("");

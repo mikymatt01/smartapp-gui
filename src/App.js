@@ -13,6 +13,7 @@ function App() {
   const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
+  // IN contextValue the info of the user
   const contextValue = useMemo(() => currentUser, [currentUser]);
 
   // Retrieve token from localStorage on component mount
@@ -25,6 +26,7 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
+      // Call to get the user from api using the token
       const storedToken = localStorage.getItem("token");
       if (!storedToken) return
       const myHeaders = new Headers();

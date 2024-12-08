@@ -3,6 +3,9 @@ import { useTable } from "react-table"; // Import useTable from react-table
 import { Link } from "react-router-dom";
 import "./css/Report.css";
 
+// The report page is the Report History page, allows the user to see all the history they created
+// there is also a button called create report that routes them to the create report page
+
 const Report = () => {
   const [reports, setReports] = useState([]); // State to hold reports
   const [loadingReports, setLoadingReports] = useState(false); // State for loading
