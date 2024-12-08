@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
-import "./CreateReport.css";
+import "./css/CreateReport.css";
 
 const CreateReport = () => {
   const [language, setLanguage] = useState("language"); // State for language

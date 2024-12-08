@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Chatbot } from '../components/Chatbot'
 
-import "./Settings.css";
+import "./css/Settings.css";
 
 function Settings() {
   const [activeTab, setActiveTab] = useState("profile");

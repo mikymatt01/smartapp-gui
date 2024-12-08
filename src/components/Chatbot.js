@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import SendIcon from "@mui/icons-material/Send";
-import "./Chatbot.css";
+import "./css/Chatbot.css";
 
-export function Chatbot () {
+export function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState("");
     const [isOpen, setIsOpen] = useState(false);
