@@ -5,16 +5,15 @@
 }
 
 .content {
-  margin-left: 250px; /* Pushes content after the sidebar */
   display: flex;
   flex-direction: column;
-  width: calc(100% - 250px); /* Takes up the remaining space */
+  width: 100%;
 }
 
 .home-container {
-  margin-top: 60px; /* Push content below the topbar */
-  padding: 20px;
+  display: flex;
   flex-grow: 1;
-  overflow-y: auto;
+  flex-shrink: 0;
+  overflow: hidden;
   background-color: #f4f4f4;
 }

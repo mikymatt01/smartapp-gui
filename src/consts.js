@@ -44,7 +44,7 @@ const ffmRoutes = [
     },
     {
         url: "/machines",
-        title: "machines",
+        title: "Machines",
         icon: <BuildIcon className="sidebar-icon" />
     },
     {

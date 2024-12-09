@@ -3,9 +3,9 @@
     "id": 1,
     "name": "Site 1",
     "location": "123 Industrial Zone, City",
-    "ffm": "John Doe",
-    "ffmContact": "john.doe@example.com",
-    "machines": 50,
+    "ffm": "Mario Rossi",
+    "ffmContact": "ffm@example.com",
+    "machines": 16,
     "alerts": 3,
     "lastMaintenance": "2024-12-01",
     "alertsDetails": [

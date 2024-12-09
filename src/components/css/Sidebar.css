@@ -1,8 +1,5 @@
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 250px; /* Fixed width of the sidebar */
+  width: 180px; /* Fixed width of the sidebar */
   height: 100%;
   background-color: #cde1f0; /* Blue color */
   color: #fff;
@@ -40,7 +37,7 @@
 }
 
 .sidebar-links li a:hover {
-  background-color: #a1d9f0;
+  background-color: #124457;
   color: #fff;
 }
 

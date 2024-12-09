@@ -17,7 +17,7 @@ ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, T
 // This file allows to call the api to create a line graph based on a week data of all the machines
 // divided in categories, it's hard coded to show the ones we know from the site we have
 
-export const LineGraph = ({ site }) => {
+export const LineGraph = ({ site, title }) => {
     const [error, setError] = useState(null); // State for error
     const [chartData, setChartData] = useState(null); // State for chart data
     // Color mapping for each machine category
@@ -108,8 +108,8 @@ export const LineGraph = ({ site }) => {
     }
 
     return (
-        <div className="line-graph" style={{ position: "relative", height: "40vh", width: "200vw" }}>
-            <h2> Avarage working time </h2>
+        <div className="line-graph" style={{ position: "relative", width: "100%" }}>
+            <h2>{title}</h2>
             <Line data={chartData} options={options} />
         </div>
     );

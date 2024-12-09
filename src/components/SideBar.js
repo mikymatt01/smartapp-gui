@@ -14,7 +14,7 @@ function Sidebar() {
   const auth = useContext(AuthContext)
   return (
     <div className="sidebar">
-      <h2 className="logo">Dash</h2>
+      <h2 className="d-flex fs-4 justify-content-start logo mx-3">Dash</h2>
       <ul className="sidebar-links">
         {
           auth ? (
@@ -27,7 +27,7 @@ function Sidebar() {
             </li>
           ))
           ) : (
-              <Link to={'/logout'}>
+              <Link to={'/logout'} className="mt-auto">
                 <LogoutIcon className="sidebar-icon" />
                 Logout
               </Link>

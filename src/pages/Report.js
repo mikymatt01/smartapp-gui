@@ -71,32 +71,29 @@ const Report = () => {
       {
         Header: "Delete",
         accessor: "_id",
-      }
+      },
     ],
     []
   );
 
   const data = React.useMemo(() => reports, [reports]);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data });
 
   return (
-    <div className="Report">
-      <div className="container">
+    <div className="Report d-flex flex-grow-1">
+      <div className="container d-flex flex-column pt-3 gap-3">
         <h1>Report History</h1>
-        <p>Welcome to the report page. Here you can manage your reports.</p>
+        <div className="d-flex align-items-center">
+          <p>Welcome to the report page. Here you can manage your reports.</p>
 
-        {/* Button to create a new report */}
-        <div className="button-container">
-          <Link to="/report/createreport" className="create-report-button">
-            <span>Create Report</span>
-          </Link>
+          {/* Button to create a new report */}
+          <div className=" ms-auto">
+            <Link to="/report/createreport" className="create-report-button">
+              <span>Create Report</span>
+            </Link>
+          </div>
         </div>
 
         {/* Show loading spinner or error */}
@@ -110,7 +107,9 @@ const Report = () => {
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                    <th {...column.getHeaderProps()}>
+                      {column.render("Header")}
+                    </th>
                   ))}
                 </tr>
               ))}

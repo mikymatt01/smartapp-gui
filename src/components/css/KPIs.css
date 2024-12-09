@@ -17,6 +17,20 @@
     margin-bottom: 20px;
 }
 
+.view-details-btn:disabled{
+    background-color: rgb(184, 184, 184) !important;
+    color: rgb(147, 147, 147) !important;
+}
+.view-details-btn:disabled:hover{
+    color: rgb(147, 147, 147) !important;
+}
+.kpi-tab:disabled{
+    background-color: rgb(184, 184, 184) !important;
+    color: rgb(147, 147, 147) !important;
+}
+.kpi-tab:disabled:hover{
+    color: rgb(147, 147, 147) !important;
+}
 .kpi-tab {
     background-color: #f0f0f0;
     border: none;

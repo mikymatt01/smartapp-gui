@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./css/Sites.css";
-import { Chatbot } from '../components/Chatbot'
+import { Chatbot } from "../components/Chatbot";
+import KPI from "../components/KPIs";
 
 // This is a page that only the SMO has access to.
 // The sites pages allow the user to see in details the different sites
@@ -22,7 +23,7 @@ const SitesPage = () => {
   };
 
   return (
-    <div className="sites-page">
+    <div className="sites-page d-flex flex-column overflow-scroll w-100 m-4">
       <h1 className="page-title">Manufacturing Sites</h1>
       <div className="sites-grid">
         {sites.map((site) => (
@@ -44,6 +45,7 @@ const SitesPage = () => {
             <button
               className="view-details-btn"
               onClick={() => selectSite(site)}
+              disabled={site.id != 1}
             >
               View Details
             </button>
@@ -56,38 +58,9 @@ const SitesPage = () => {
           <button className="close-btn" onClick={() => setSelectedSite(null)}>
             Close
           </button>
-          <h2>{selectedSite.name} - Details</h2>
-          <p>
-            <strong>Location:</strong> {selectedSite.location}
-          </p>
-          <p>
-            <strong>Factory Floor Manager:</strong> {selectedSite.ffm} (
-            <a href={`mailto:${selectedSite.ffmContact}`}>
-              {selectedSite.ffmContact}
-            </a>
-            )
-          </p>
-          <p>
-            <strong>Total Machines:</strong> {selectedSite.machines}
-          </p>
-          <p>
-            <strong>Machines Under Alert:</strong> {selectedSite.alerts}
-          </p>
-          <h3>Alerts Details:</h3>
-          <ul>
-            {selectedSite.alertsDetails.map((alert, index) => (
-              <li key={index}>
-                <strong>Machine {alert.machineId}:</strong> {alert.issue} (
-                <span className={`severity ${alert.severity.toLowerCase()}`}>
-                  {alert.severity}
-                </span>
-                )
-              </li>
-            ))}
-          </ul>
+          <KPI />
         </div>
       )}
-      <Chatbot />
     </div>
   );
 };
