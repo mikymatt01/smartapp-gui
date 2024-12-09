@@ -14,6 +14,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr; 
   gap: 50px;
+  overflow-y: scroll;
 }
 
 /* Full-width elements (like the button) */

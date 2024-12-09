@@ -17,7 +17,7 @@ const CreateReport = () => {
   const [language, setLanguage] = useState("language"); // State for language
   const [startDate, setStartDate] = useState(null); // Start Date state
   const [endDate, setEndDate] = useState(null); // End Date state
-  const [site, setSite] = useState(auth.site); // State for sites
+  const [site, setSite] = useState(auth?.site); // State for sites
   const [operation, setOperation] = useState("operation"); // State for frequency
   const [name, setName] = useState(""); // State for report name
   const [selectedKPIs, setSelectedKPIs] = useState([]); // State for selected KPIs
@@ -182,7 +182,7 @@ const CreateReport = () => {
       </div>
 
       {
-        auth.site === null && (
+        auth?.site === null && (
           <div className="dropdown-container">
             <label htmlFor="site" className="dropdown-label">
               Site
