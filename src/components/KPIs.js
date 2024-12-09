@@ -523,7 +523,6 @@ export const KPI = () => {
                     </>
                 )}
             </div>
-            <Chatbot />
         </div>
     );
 };

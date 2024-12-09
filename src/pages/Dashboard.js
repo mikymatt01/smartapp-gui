@@ -6,6 +6,7 @@ import "./css/Dashboard.css";
 import { AuthContext } from "../hooks/user";
 import DatePicker from "react-datepicker";
 import LineGraphFiltered from "../components/LineGraphFiltered";
+import Chatbot from "../components/Chatbot";
 
 // There are three sites for the SMO
 const sites = [0, 1, 2];
@@ -122,10 +123,8 @@ function Dashboard() {
   const handleNewWidget = async () => {
     setLoading(true);
     setErrorWidget(null);
-    console.log("Prova handle");
 
     try {
-      console.log("Prova try");
       const myHeaders = new Headers();
       const storedToken = localStorage.getItem("token");
       myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -141,11 +140,6 @@ function Dashboard() {
         : null;
       const formattedEndDate = endDate ? format(endDate, "yyyy-MM-dd") : null;
 
-      console.log("site", site);
-      console.log("startDate", formattedStartDate);
-      console.log("endDate", formattedEndDate);
-      console.log("Kpi", selectedKPI);
-      console.log("Operation", operation);
       if (site && selectedKPI) {
         const response = await fetch(
           `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/${site}/compute?kpi_id=${selectedKPI}&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&granularity_op=${operation}&granularity_days=${granularity}`,
@@ -154,17 +148,15 @@ function Dashboard() {
 
         console.log("Response", response);
 
-        /*         if (!response.ok) {
+       if (!response.ok) {
           throw new Error("Failed to create");
-        } */
+        } 
 
         const data = await response.json();
 
-        console.log("data", data.data);
         var dataParsed = data.data.map((e) => {
           return e.value;
         });
-        console.log("dataParsed", dataParsed);
 
         if (dataParsed) setDataSet(dataParsed);
         /*         setDataSet(
@@ -327,6 +319,7 @@ function Dashboard() {
       </div>
       {renderGraph()}
       {auth?.site && <KPI />}
+      <Chatbot />
     </div>
   );
 }
