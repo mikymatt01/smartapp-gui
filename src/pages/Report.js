@@ -68,6 +68,10 @@ const Report = () => {
           </a>
         ), // Custom cell rendering to create a clickable link
       },
+      {
+        Header: "Delete",
+        accessor: "_id",
+      }
     ],
     []
   );

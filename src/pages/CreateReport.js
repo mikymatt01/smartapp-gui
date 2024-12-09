@@ -115,7 +115,7 @@ const CreateReport = () => {
       const formattedEndDate = endDate ? format(endDate, "yyyy-MM-dd") : null;
 
       const response = await fetch(
-        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/?name=${name}&site=${site}&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&operation=${operation}`,
+        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/?name=${name}&site=${site}&kpi_names=${kpis}&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&operation=${operation}`,
         requestOptions
       );
 
@@ -125,12 +125,15 @@ const CreateReport = () => {
 
       const data = await response.json();
 
+      console.log(data.message);
       if (data?.data) {
         const link = document.createElement("a");
-        link.href = data.data;
+        link.href = data.data.url;
         link.download = name || "report"; // If user doesn't provide a name, default to report
-        console.log(data.data); // Wait on api to see if u need to put data.data.url
+        link.target = "_blank"; // Opens in a new tab
+        document.body.appendChild(link); // Append to DOM temporarily
         link.click();
+        document.body.removeChild(link); // Clean up
       } else {
         throw new Error(response.message);
       }
