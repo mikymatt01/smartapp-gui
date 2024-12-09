@@ -210,7 +210,7 @@ function Dashboard() {
             onClick={() => handleChoiceWidget("Add Widget")}
             className={`kpi-tab ${selection === "Add Widget" ? "active" : ""}`}
           >
-            Add Widget
+            Show New Graph
           </button>
         </div>
       </div>
@@ -268,7 +268,7 @@ function Dashboard() {
                 <option value="avg">Average</option>
                 <option value="min">Min</option>
                 <option value="max">Max</option>
-                <option value="sum">Summary</option>
+                <option value="sum">Sum</option>
               </select>
               <select
                 id="granularity"
@@ -279,7 +279,6 @@ function Dashboard() {
                 <option value="" disabled>
                   Select Granularity
                 </option>
-                <option value="">All</option>
                 <option value="1">1 day</option>
                 <option value="30">30 days</option>
                 <option value="7">7 days</option>

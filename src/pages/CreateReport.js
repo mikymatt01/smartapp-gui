@@ -249,7 +249,7 @@ const CreateReport = () => {
           <option value="avg">Average</option>
           <option value="min">Min</option>
           <option value="max">Max</option>
-          <option value="sum">Summary</option>
+          <option value="sum">Sum</option>
         </select>
       </div>
 
