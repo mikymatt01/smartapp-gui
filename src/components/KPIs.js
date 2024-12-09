@@ -7,42 +7,6 @@ import { Chart, ArcElement } from 'chart.js'
 Chart.register(ArcElement);
 
 export const KPI = () => {
-    const consumptionData1 = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May"],
-        datasets: [
-            {
-                label: "Consumption (kWh)",
-                data: [200, 220, 210, 230, 250],
-                borderColor: "#3f51b5",
-                backgroundColor: "rgba(63, 81, 181, 0.2)",
-                fill: true,
-            },
-        ],
-    };
-
-    const cycleData = {
-        labels: ["Good Cycles", "Bad Cycles"],
-        datasets: [
-            {
-                data: [1200, 300],
-                backgroundColor: ["#badb16", "#800505"],
-            },
-        ],
-    };
-
-    const additionalConsumptionData = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May"],
-        datasets: [
-            {
-                label: "Idle Consumption (kWh)",
-                data: [50, 60, 70, 65, 80],
-                borderColor: "#ff5722",
-                backgroundColor: "rgba(255, 87, 34, 0.2)",
-                fill: true,
-            },
-        ],
-    };
-
     const [tabValue, setTabValue] = React.useState(0);
     const [error, setError] = React.useState(null); // State for error
     const [energyAnomaliesData, setEnergyAnomaliesData] = React.useState(null);
@@ -54,13 +18,16 @@ export const KPI = () => {
     const [costData, setCostData] = React.useState(null);
     const [costIdleData, setCostIdleData] = React.useState(null);
     const [costWorkingData, setCostWorkingData] = React.useState(null);
+    const [cycleData, setCycleData] =React.useState(null);
+    const [cycleGoodData, setCycleGoodData] = React.useState(null);
+    const [cycleBadData, setCyclebadData] = React.useState(null);
 
     const machine_category = ["Metal cutter", "Laser Welder", "Assembler", "Tester", "Rivetter", "Laser Cutter"];
     const day_label = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
     const type_anom = ["energy", "downtime", "cycle_quality"];
     const backgroundColor = ["#8e5ea2", "#3e95cd", "#3cba9f", "#e8c3b9", "#c45850", "#ffcc00"];
     const storedToken = localStorage.getItem("token");
-    const kpi_id = ["673a6ad3d9e0b151b88cbed3","673a6ad4d9e0b151b88cbed6", "673a6ad4d9e0b151b88cbed5", "673a6ad5d9e0b151b88cbed9", "673a6ad5d9e0b151b88cbed8"]; //consumption, consumption idle, consumption working, const idle, const working
+    const kpi_id = ["673a6ad3d9e0b151b88cbed3","673a6ad4d9e0b151b88cbed6", "673a6ad4d9e0b151b88cbed5", "673a6ad5d9e0b151b88cbed9", "673a6ad5d9e0b151b88cbed8", "673a6ad7d9e0b151b88cbedb", "673a6ad8d9e0b151b88cbedc"]; //consumption, consumption idle, consumption working, const idle, const working, good cycles, bad cycles
 
     const handleTabChange = (value) => {
         setTabValue(value);
@@ -287,6 +254,109 @@ export const KPI = () => {
         fetchAllValues();
     };
 
+    const handleCycle = () => {
+        const fetchValues = async (kpi, bordercolor, backcolor) => {
+            setError(null); // Clear previous errors
+
+            try {
+                const myHeaders = new Headers();
+                myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+                const requestOptions = {
+                    method: "GET",
+                    headers: myHeaders,
+                    redirect: "follow",
+                };
+
+                const response = await fetch(
+                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=avg&granularity_days=1`,
+                    requestOptions
+                );
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+                
+                const data = await response.json();
+                const values = Array.isArray(data.data) ? data.data.map((item) => item.value) : [];
+                return {
+                    labels : day_label,
+                    datasets : [{
+                        label : "Site Avarage",
+                        data: values,
+                        borderColor: bordercolor,
+                        backgroundColor: backcolor,
+                        fill: true,
+                    }]
+                }
+            } catch (err) {
+                setError(err.message);
+            }
+        };
+
+        const fetchValuePie = async (kpi, kpi1) => {
+            try{
+                const myHeaders = new Headers();
+                myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+                const requestOptions = {
+                    method: "GET",
+                    headers: myHeaders,
+                    redirect: "follow",
+                };
+
+                const response = await fetch(
+                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
+                    requestOptions
+                );
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+
+                const response1 = await fetch(
+                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi1}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
+                    requestOptions
+                );
+
+                if (!response1.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+
+                const data = await response.json();
+                const data1 = await response1.json();
+                const values = Array.isArray(data.data) ? data.data.map((item) => item.value) : [];
+                const values1 = Array.isArray(data1.data) ? data1.data.map((item) => item.value) : [];
+                return {
+                    labels : ["Working" , "Idle"],
+                    datasets : [{
+                        data: [values[0], values1[0]],
+                        backgroundColor: [ "#badb16", "#ff5722"],
+                    }]
+                }
+            } catch (err){
+                console.log(err);
+            }
+        }
+
+        const fetchAllValues = async () => {
+            try {
+                const data = await fetchValuePie(kpi_id[5], kpi_id[6]);
+                setCycleData(data);
+
+                const datawork = await fetchValues(kpi_id[5],"#ff5722", "rgba(76, 175, 80, 0.2)");
+                setCycleGoodData(datawork);
+
+                const dataidle = await fetchValues(kpi_id[6],"#2196f3",  "rgba(33, 150, 243, 0.2)");
+                setCyclebadData(dataidle);
+            } catch (err) {
+                setError("An error occurred while fetching values.");
+            }
+        };
+        
+        fetchAllValues();
+    };
+
     return (
         <div className="kpi-container">
 
@@ -323,7 +393,11 @@ export const KPI = () => {
                 </button>
                 <button
                     className={`kpi-tab ${tabValue === 3 ? "active" : ""}`}
-                    onClick={() => handleTabChange(3)}
+                    onClick={() => {
+                        handleTabChange(3);
+                        handleCycle();
+                    }
+                    }
                 >
                     Cycles
                 </button>
@@ -424,17 +498,27 @@ export const KPI = () => {
                     <>
                         <div className="kpi-card">
                             <h3>Cycle Distribution</h3>
-                            <div style={{ position: 'relative', height: '22vh', width: '120vw' }}>
+                            {cycleData ? (
                                 <Pie data={cycleData} />
-                            </div>
+                                    ): (
+                                    <p>Loading ... </p>
+                                )}
                         </div>
                         <div className="kpi-card">
                             <h3>Good Cycles Trend</h3>
-                            <Line data={consumptionData1} />
+                            {cycleGoodData ? (
+                                <Line data={cycleGoodData} />
+                                    ): (
+                                    <p>Loading ... </p>
+                                )}
                         </div>
                         <div className="kpi-card">
                             <h3>Bad Cycles Trend</h3>
-                            <Line data={additionalConsumptionData} />
+                            {cycleBadData ? (
+                                <Line data={cycleBadData} />
+                                    ): (
+                                    <p>Loading ... </p>
+                                )}
                         </div>
                     </>
                 )}
