@@ -9,12 +9,13 @@ const MachineDashboard = () => {
     const [expanded, setExpanded] = useState({}); // Tracks expanded state for each machine
 
     const machines = [
-        { id: 1, name: "Metal cutting machines", status: "Active", subMachines: ["Mach A1", "Mach A2"] },
-        { id: 2, name: "Laser welding machines", status: "Inactive", subMachines: ["Mach B1", "Mach B2"] },
-        { id: 3, name: "Assembly machines", status: "Active", subMachines: ["Mach C1", "Sub C2"] },
-        { id: 4, name: "Testing machines", status: "Active", subMachines: ["Mach D1", "Mach D2"] },
-        { id: 5, name: "Riveting Machine", status: "Inactive",  subMachines: ["Mach E1"] },
-        { id: 6, name: "Laser Cutter", status: "Active", subMachines: ["Mach F1"] },
+        { id: 1, name: "Metal cutting machines", status: "Active", subMachines: ['Large Capacity Cutting Machine 1', 'Large Capacity CuttingMachine 2', 'Medium Capacity Cutting Machine 1', 'Medium Capacity Cutting Machine 2',
+'Medium Capacity Cutting Machine 3', 'Low Capacity Cutting Machine 1'] },
+        { id: 2, name: "Laser welding machines", status: "Inactive", subMachines: ['Laser Welding Machine 1', 'Laser Welding Machine 2'] },
+        { id: 3, name: "Assembly machines", status: "Active", subMachines: ['Assembly Machine 1', 'Assembly Machine 2', 'Assembly Machine 3'] },
+        { id: 4, name: "Testing machines", status: "Active", subMachines: ['Testing Machine 1','Testing Machine 2', 'Testing Machine 3'] },
+        { id: 5, name: "Riveting Machine", status: "Inactive",  subMachines: ["Rivelting Machine"] },
+        { id: 6, name: "Laser Cutter", status: "Active", subMachines: ["Laser Cutter"] },
     ];
 
     const statusColors = {

@@ -15,7 +15,8 @@ const sites = [
 function Dashboard() {
     const auth = useContext(AuthContext); // Gets the context of the user
     const [error, setError] = useState(null); // State for error messages
-    const [dropdownVisible, setDropdownVisible] = useState(false); // State for dropdown visibility
+    const [dropdownVisible1, setDropdownVisible1] = useState(false); // State for dropdown visibility
+    const [dropdownVisible2, setDropdownVisible2] = useState(false);
     const [selection, setSelection] = useState(null); // State for the selected option
 
     // Functions for the "add" button, this button needs to be able to add a new widget in the dashboard
@@ -25,9 +26,19 @@ function Dashboard() {
         setError(null); // Reset error when a choice is made
     };
 
-    const toggleDropdown = () => {
-        setDropdownVisible((prev) => !prev); // Toggle dropdown visibility
+    const handleChoiceWidget = (choice) => {
+        toggleDropdown2();
+        setSelection(choice);
+        setError(null); // Reset error when a choice is made
     };
+
+    const toggleDropdown1 = () => {
+        setDropdownVisible1((prev) => !prev); // Toggle dropdown visibility
+    };
+
+    const toggleDropdown2 =() =>{
+        setDropdownVisible2((prev) => !prev);
+    }
 
     // Calls graph on the info of 1 site if FFM, all sites if SMO
     // Since the SMO user has no site field in the object it's rappresented in we check
@@ -46,22 +57,26 @@ function Dashboard() {
             <div className="button-container">
 
                 <button
-                    onClick={toggleDropdown} // Toggle the dropdown visibility
+                    onClick={toggleDropdown1} // Toggle the dropdown visibility
                     className="add-button"
                 >
                     Add New
                 </button>
                 {/* Dropdown menu */}
-                {dropdownVisible && (
+                {dropdownVisible1 && (
                     <div className="dropdown-menu">
-                        <button onClick={() => handleChoice('Add Widget')}>Add Widget</button>
+                        <button onClick={() => handleChoiceWidget('Add Widget')}>Add Widget</button>
                         <button onClick={() => handleChoice('Add Alarm')}>Add Alarm</button>
 
                          {/* Show additional options based on the selection */}
-                         {selection === 'Add Widget' && (
+                         {selection === 'Add Widget' && dropdownVisible2 && (
                             <div className="widget-options">
-                                <button onClick={() => console.log('Add KPI')}>Select KPI</button>
-                                <button onClick={() => console.log('Add Graph')}>Add Graph</button>
+                                <button onClick={() => console.log('Select KPI')}>Select KPI</button>
+                                <button onClick={() => console.log('Start Date')}>Start date</button>
+                                <button onClick={() => console.log('End Date')}>End Date</button>
+                                <button onClick={() => console.log('Select Operation')}>Select Operation</button>
+                                <button onClick={() => console.log('Select Granularity')}>Select Granularity</button>
+                                {auth.site == null && (<button onClick={() => console.log('Select Site')}>Select Site</button>)}
                                 {/* Add more widget types as needed */}
                             </div>
                         )}
