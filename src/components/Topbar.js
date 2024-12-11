@@ -1,10 +1,8 @@
 import React, { useState, useContext, useRef } from "react";
 import "./css/Topbar.css";
-import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { AuthContext } from "../hooks/user";
 import UserThumbnail from "./UserThumbnail";
-import { Popover } from "react-bootstrap";
 
 function Topbar() {
   const [showNotifications, setShowNotifications] = useState(false);

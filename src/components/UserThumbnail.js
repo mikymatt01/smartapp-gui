@@ -1,6 +1,8 @@
 import React from 'react';
 import './css/UserThumbnail.css';
 
+// Component for the user on the top bar 
+
 const UserThumbnail = ({ image, email, name, surname }) => {
   return (
     <div className="user-thumbnail">

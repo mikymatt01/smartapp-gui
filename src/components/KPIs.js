@@ -2,7 +2,6 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import { Pie } from "react-chartjs-2";
 import "./css/KPIs.css";
-import { Chatbot } from '../components/Chatbot'
 import { Chart, ArcElement } from 'chart.js'
 Chart.register(ArcElement);
 

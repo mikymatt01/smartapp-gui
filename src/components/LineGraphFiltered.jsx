@@ -22,6 +22,8 @@ ChartJS.register(
   Legend
 );
 
+// Component used to render a graph based on user input
+
 export default function LineGraphFiltered({ chartData, startDate, endDate }) {
   const [data, setData] = useState(null);
 
@@ -44,7 +46,7 @@ export default function LineGraphFiltered({ chartData, startDate, endDate }) {
         setData(newData);
       }
     }
-  }, [chartData]);
+  }, [startDate, endDate, chartData]);
 
   return (
     <div
@@ -57,20 +59,21 @@ export default function LineGraphFiltered({ chartData, startDate, endDate }) {
   );
 }
 
+// Function to get an array of dates to use as labels for the x-axis
 function generateDateRange(startDate, endDate) {
   const dateList = [];
   const currentDate = new Date(startDate);
   const finalDate = new Date(endDate);
 
-  // Verifica validità delle date
+  // Verifies the dates
   if (isNaN(currentDate.getTime()) || isNaN(finalDate.getTime())) {
     throw new Error("Le date fornite non sono valide.");
   }
 
-  // Genera la lista di date
+  // Generates the list of dates
   while (currentDate <= finalDate) {
-    dateList.push(currentDate.toISOString().split("T")[0]); // Formato YYYY-MM-DD
-    currentDate.setDate(currentDate.getDate() + 1); // Incremento di un giorno
+    dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
+    currentDate.setDate(currentDate.getDate() + 1); // One day increment
   }
 
   return dateList;

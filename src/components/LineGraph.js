@@ -111,6 +111,7 @@ export const LineGraph = ({ site, title }) => {
         <div className="line-graph" style={{ position: "relative", width: "100%" }}>
             <h2>{title}</h2>
             <Line data={chartData} options={options} />
+            {error && <p className="error-message">{error}</p>}
         </div>
     );
 };

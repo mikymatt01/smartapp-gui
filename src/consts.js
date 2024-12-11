@@ -5,6 +5,9 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
+
+// This file allows to have 2 different sidebars based on which user is logged in: the ffm or the smo
+
 const smoRoutes = [
     {
         url: "/",
@@ -13,7 +16,7 @@ const smoRoutes = [
     },
     {
         url: "/sites",
-        title: "sites",
+        title: "Sites",
         icon: <LocationOnIcon className="sidebar-icon" />
 
     },

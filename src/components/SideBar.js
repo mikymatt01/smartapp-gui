@@ -8,7 +8,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 // This is the sidebar of the site
 // If it's a FFM there will be displayed: dashboard, machines, reports, settings, logout
 // If it's a SMO : dashboard sites, reports, settings, logout
-// The choice is again based on the fact if the field site is null 
+// The choice is based on if the field .site is null in the context
 
 function Sidebar() {
   const auth = useContext(AuthContext)

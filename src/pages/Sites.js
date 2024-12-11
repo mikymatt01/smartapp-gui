@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./css/Sites.css";
-import { Chatbot } from "../components/Chatbot";
 import KPI from "../components/KPIs";
 
 // This is a page that only the SMO has access to.

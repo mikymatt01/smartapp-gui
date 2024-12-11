@@ -14,23 +14,22 @@ const sites = [0, 1, 2];
 function Dashboard() {
   const auth = useContext(AuthContext); // Gets the context of the user
   const [error, setError] = useState(null); // State for error messages
-  const [errorWidget, setErrorWidget] = useState(null); // State for error messages
-  const [dropdownVisible1, setDropdownVisible1] = useState(false); // State for dropdown visibility
-  const [dropdownVisible2, setDropdownVisible2] = useState(false);
+  const [errorWidget, setErrorWidget] = useState(null); // State for error messages for newwidget
+  const [dropdownVisible2, setDropdownVisible2] = useState(false); // State for newwidget dropdown
   const [granularity, setGranularity] = useState(""); // State for report name
-  const [operation, setOperation] = useState(""); // State for opration
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [selection, setSelection] = useState(null); // State for the selected option
+  const [operation, setOperation] = useState(""); // State for opration of aggregation for newwidget
+  const [startDate, setStartDate] = useState(null); // State for end date for newwidget
+  const [endDate, setEndDate] = useState(null); // State for start date for newwidget
+  const [selection, setSelection] = useState(null); // State for the selected option of button (alarm or new graph)
   const [site, setSite] = useState(auth?.site); // State for sites
-  const [selectedKPI, setSelectedKPI] = useState(null); // State for selected KPIs
-  const [loadingKPIs, setLoadingKPIs] = useState(false); // State for loading status KPIS
-  const [kpis, setKpis] = useState([]); // State for KPIs options to show to user
-  const [loading, setLoading] = useState(false); // State for loading status
-  const [category, setCategory] = useState(null);
-  const [dataSet, setDataSet] = useState([]);
+  const [selectedKPI, setSelectedKPI] = useState(null); // State for selected KPI for newwidget
+  const [loadingKPIs, setLoadingKPIs] = useState(false); // State for loading status KPIS for newwidget
+  const [kpis, setKpis] = useState([]); // State for KPIs options to show to user for newwidget
+  const [loading, setLoading] = useState(false); // State for loading status for newwidget
+  const [category, setCategory] = useState(null); // State to choose either to load by category or by site
+  const [dataSet, setDataSet] = useState([]); // State for the data to be passed to the LineGraphFiltered component
 
-  // Fetch KPIs data from API
+  // Fetch KPIs data from API based on site
   useEffect(() => {
     const fetchKPIs = async () => {
       setLoadingKPIs(true);
@@ -57,7 +56,7 @@ function Dashboard() {
           }
 
           const data = await response.json();
-          setKpis(data.data); // the .data is an array of objec
+          setKpis(data.data); // the .data is an array of object
         }
       } catch (err) {
         setError(err.message);
@@ -77,13 +76,7 @@ function Dashboard() {
     }
   }, [auth]);
 
-  // Functions for the "add" button, this button needs to be able to add a new widget in the dashboard
-  // and to add a new allarm.
-  const handleChoice = (choice) => {
-    setSelection(choice);
-    setError(null); // Reset error when a choice is made
-  };
-
+  // Handle granularity of days change
   const handleGranularityChange = (newName) => {
     setGranularity(newName);
   };
@@ -92,10 +85,6 @@ function Dashboard() {
     toggleDropdown2();
     setSelection(choice);
     setError(null); // Reset error when a choice is made
-  };
-
-  const toggleDropdown1 = () => {
-    setDropdownVisible1((prev) => !prev); // Toggle dropdown visibility
   };
 
   const toggleDropdown2 = () => {
@@ -107,15 +96,12 @@ function Dashboard() {
     setOperation(newOperation);
   };
 
+  // Handle site change
   const handleSiteChange = (site) => {
     setSite(site);
   };
 
-  const handleKPIChange = (event) => {
-    const options = event;
-    console.log("KPI option: ", options);
-  };
-
+  // Handle granularity of machines change
   const handleGradMachines = (event) => {
     setCategory(event);
   };
@@ -135,6 +121,7 @@ function Dashboard() {
         redirect: "follow",
       };
 
+      // Date formatted for the API
       const formattedStartDate = startDate
         ? format(startDate, "yyyy-MM-dd")
         : null;
@@ -146,11 +133,9 @@ function Dashboard() {
           requestOptions
         );
 
-        console.log("Response", response);
-
-       if (!response.ok) {
+        if (!response.ok) {
           throw new Error("Failed to create");
-        } 
+        }
 
         const data = await response.json();
 
@@ -159,9 +144,6 @@ function Dashboard() {
         });
 
         if (dataParsed) setDataSet(dataParsed);
-        /*         setDataSet(
-          Array.isArray(data.data) ? data.data.map((item) => {return item.value}) : []
-        ); */
       }
     } catch (err) {
       setErrorWidget(err.message);
@@ -174,12 +156,18 @@ function Dashboard() {
   // if it's a SMO by checking the site field
   const renderGraph = () => {
     if (!auth) return <></>;
-    if (auth?.site !== null) return <LineGraph site={auth?.site} title={`Average working time`}/>; // FFM
+    if (auth?.site !== null)
+      return <LineGraph site={auth?.site} title={`Average working time`} />;
+    // FFM
     else
       return (
         <div className="d-flex flex-column gap-3 pb-3 flex-shrink-0">
           {sites.map((site) => (
-            <LineGraph key={`graph_${site}`} site={site} title={`Average working time of site ${site + 1}`}/>
+            <LineGraph
+              key={`graph_${site}`}
+              site={site}
+              title={`Average working time of site ${site + 1}`}
+            />
           ))}
         </div>
       );
@@ -284,8 +272,8 @@ function Dashboard() {
                 <option value="" disabled>
                   Select Granularity Machines
                 </option>
-                <option value="">By category</option>
                 <option value="1">By site</option>
+                <option value="2">By category</option>
               </select>
               {auth?.site == null && (
                 <select
@@ -302,7 +290,10 @@ function Dashboard() {
                   <option value="2">3</option>
                 </select>
               )}
-              <button onClick={handleNewWidget}>Create new section</button>
+              <button onClick={handleNewWidget} className="kpi-tab">
+                {loading ? "Generating..." : "Create new graph"}
+              </button>
+              {errorWidget && <p className="error-message">{errorWidget}</p>}
               {/* Add more widget types as needed */}
             </div>
           )}

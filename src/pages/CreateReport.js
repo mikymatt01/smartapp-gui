@@ -9,8 +9,7 @@ import { AuthContext } from "../hooks/user";
 // Allows them to create a report choosing the time period
 // The SMO has too choose on which site too (with a button only a SMO user can see)
 
-// The language and kpis choices are for future implementation where the user will be able to choose
-// those too
+// The language choice is for future implementation 
 
 const CreateReport = () => {
   const auth = useContext(AuthContext);
