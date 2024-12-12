@@ -25,7 +25,7 @@ function Dashboard() {
   const [loadingKPIs, setLoadingKPIs] = useState(false); // State for loading status KPIS for newwidget
   const [kpis, setKpis] = useState([]); // State for KPIs options to show to user for newwidget
   const [loading, setLoading] = useState(false); // State for loading status for newwidget
-  const [category, setCategory] = useState(null); // State to choose either to load by category or by site
+  const [category, setCategory] = useState(true); // State to choose either to load by category or by site
   const [dataSet, setDataSet] = useState([]); // State for the data to be passed to the LineGraphFiltered component
 
   // Fetch KPIs data from API based on site
@@ -179,7 +179,7 @@ function Dashboard() {
         <div className="d-flex gap-2 flex-1 align-items-center justify-content-end ms-auto">
           <button
             onClick={() => handleChoiceWidget()}
-            className={`kpi-tab ${3}`}
+            className={`kpi-tab`}
             disabled
           >
             Add Alarm
@@ -255,7 +255,7 @@ function Dashboard() {
                 className="dropdown-select"
               >
                 <option value="" disabled>
-                  Select Granularity
+                  Select Granularity Days
                 </option>
                 <option value="1">1 day</option>
                 <option value="30">30 days</option>
@@ -270,8 +270,8 @@ function Dashboard() {
                 <option value="" disabled>
                   Select Granularity Machines
                 </option>
-                <option value="1">By site</option>
-                <option value="2">By category</option>
+                <option value="true">By site</option>
+                <option value="false">By category</option>
               </select>
               {auth?.site == null && (
                 <select
@@ -289,7 +289,7 @@ function Dashboard() {
                 </select>
               )}
               <button onClick={handleNewWidget} className="kpi-tab">
-                {loading ? "Generating..." : "Create new graph"}
+                {loading ? "Creating..." : "Create new graph"}
               </button>
               {errorWidget && <p className="error-message">{errorWidget}</p>}
               {/* Add more widget types as needed */}

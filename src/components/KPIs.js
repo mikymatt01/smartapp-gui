@@ -356,6 +356,13 @@ export const KPI = () => {
         fetchAllValues();
     };
 
+
+    React.useEffect(() => {
+        handleAnomalies(); // Chiamare la funzione al montaggio
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div className="kpi-container">
             {/* Tab Buttons */}

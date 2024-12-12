@@ -41,12 +41,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 5px;
+    padding-left: 10px;
     background: #9dd5eb;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     font-size: 18px;
     font-weight: bold;
     color: #fff;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Close button */
@@ -55,7 +57,7 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: #fff;
+    color: #fff ;
     transition: color 0.3s ease;
 }
 
