@@ -358,7 +358,6 @@ export const KPI = () => {
 
     return (
         <div className="kpi-container">
-
             {/* Tab Buttons */}
             <div className="kpi-tabs">
                 <button
@@ -521,6 +520,7 @@ export const KPI = () => {
                         </div>
                     </>
                 )}
+                {error && <p className="error-message">{error}</p>}
             </div>
         </div>
     );

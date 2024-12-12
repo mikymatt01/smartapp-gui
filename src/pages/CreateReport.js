@@ -43,7 +43,7 @@ const CreateReport = () => {
         };
 
         const response = await fetch(
-          `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/?site=1`,
+          `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/?site=${site}`,
           requestOptions
         );
 
@@ -61,7 +61,7 @@ const CreateReport = () => {
     };
 
     fetchKPIs();
-  }, []);
+  }, [site]);
 
   // Handle name input change
   const handleNameChange = (newName) => {
@@ -144,7 +144,7 @@ const CreateReport = () => {
   };
 
   return (
-    <div className="create-report-container">
+    <div className="create-report-container align-items-center">
       {/* Name Input */}
       <div className="name-input-container">
         <label htmlFor="report-name" className="name-label">

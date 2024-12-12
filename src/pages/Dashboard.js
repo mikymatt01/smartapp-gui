@@ -20,7 +20,6 @@ function Dashboard() {
   const [operation, setOperation] = useState(""); // State for opration of aggregation for newwidget
   const [startDate, setStartDate] = useState(null); // State for end date for newwidget
   const [endDate, setEndDate] = useState(null); // State for start date for newwidget
-  const [selection, setSelection] = useState(null); // State for the selected option of button (alarm or new graph)
   const [site, setSite] = useState(auth?.site); // State for sites
   const [selectedKPI, setSelectedKPI] = useState(null); // State for selected KPI for newwidget
   const [loadingKPIs, setLoadingKPIs] = useState(false); // State for loading status KPIS for newwidget
@@ -83,7 +82,6 @@ function Dashboard() {
 
   const handleChoiceWidget = (choice) => {
     toggleDropdown2();
-    setSelection(choice);
     setError(null); // Reset error when a choice is made
   };
 
@@ -180,15 +178,15 @@ function Dashboard() {
         <p className="m-0">Here is your overview.</p>
         <div className="d-flex gap-2 flex-1 align-items-center justify-content-end ms-auto">
           <button
-            onClick={() => handleChoiceWidget("Add Alarm")}
-            className={`kpi-tab ${selection === "Add Alarm" ? "active" : ""}`}
+            onClick={() => handleChoiceWidget()}
+            className={`kpi-tab ${3}`}
             disabled
           >
             Add Alarm
           </button>
           <button
-            onClick={() => handleChoiceWidget("Add Widget")}
-            className={`kpi-tab ${selection === "Add Widget" ? "active" : ""}`}
+            onClick={() => handleChoiceWidget()}
+            className={`kpi-tab ${dropdownVisible2 ? "active" : ""}`}
           >
             Show New Graph
           </button>
@@ -199,7 +197,7 @@ function Dashboard() {
         {/* Dropdown menu */}
         <div className="d-flex flex-column gap-3">
           {/* Show additional options based on the selection */}
-          {selection === "Add Widget" && dropdownVisible2 && (
+          {dropdownVisible2 && (
             <div className="d-flex gap-3 flex-wrap kpi-card p-3">
               <select
                 id="kpis"
