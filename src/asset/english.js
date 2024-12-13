@@ -14,7 +14,6 @@ const translation = {
         select_site : "Select Site",
         create_button : "Create new graph",
         create_button_loading : "Creating",
-
     },
 
     CreateReport : {
