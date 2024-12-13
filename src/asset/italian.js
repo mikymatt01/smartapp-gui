@@ -1,21 +1,30 @@
-const translation = {
+export const translation = {
+    labels: {
+        avg: "Media",
+        min: "Min",
+        max: "Max",
+        sum: "Somma",
+    },
     Dashboard: {
-        title: "Benvenuto nel Dashboard",
-        subtitle: "Ecco la tua panoramica:",
+        title: "Benvenuto nella Dashboard",
+        subtitle: "Ecco la tua panoramica",
         graph_title_ffm: "Tempo medio di lavoro",
         graph_title_smo: "Tempo medio di lavoro del sito",
         create_alarm: "Aggiungi Allarme",
-        create_graph: "Mostra Nuovo Grafico",
+        show_graph: "Mostra Nuovo Grafico",
         loading_kpis: "Caricamento KPIs ...",
         error_kpis: "Errore nel caricamento dei KPIs",
         select_operation: "Seleziona Operazione",
         select_days: "Seleziona Granularità Giorni",
+        day: "giorno",
+        days: "giorni",
         select_machines: "Seleziona Granularità Macchine",
+        by_site: "Per sito",
+        by_category: "Per categoria",
         select_site: "Seleziona Sito",
-        create_button: "Crea nuovo grafico",
+        create_graph: "Crea nuovo grafico",
         create_button_loading: "Creazione in corso",
     },
-
     CreateReport: {
         name: "Nome",
         language: "Lingua",

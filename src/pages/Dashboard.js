@@ -7,12 +7,14 @@ import { AuthContext } from "../hooks/user";
 import DatePicker from "react-datepicker";
 import LineGraphFiltered from "../components/LineGraphFiltered";
 import Chatbot from "../components/Chatbot";
+import { TranslationContext } from "../hooks/translation";
 
 // There are three sites for the SMO
 const sites = [0, 1, 2];
 
 function Dashboard() {
   const auth = useContext(AuthContext); // Gets the context of the user
+  const { translate } = useContext(TranslationContext); // Gets the context of the translation
   const [error, setError] = useState(null); // State for error messages
   const [errorWidget, setErrorWidget] = useState(null); // State for error messages for newwidget
   const [dropdownVisible2, setDropdownVisible2] = useState(false); // State for newwidget dropdown
@@ -27,7 +29,7 @@ function Dashboard() {
   const [loading, setLoading] = useState(false); // State for loading status for newwidget
   const [category, setCategory] = useState(true); // State to choose either to load by category or by site
   const [dataSet, setDataSet] = useState([]); // State for the data to be passed to the LineGraphFiltered component
-
+  
   // Fetch KPIs data from API based on site
   useEffect(() => {
     const fetchKPIs = async () => {
@@ -175,22 +177,22 @@ function Dashboard() {
 
   return (
     <div className="d-flex flex-column w-100 h-100 overflow-scroll p-3">
-      <h2>Welcome to the Dashboard</h2>
+      <h2>{translate.Dashboard.title}</h2>
       <div className="d-flex align-items-center">
-        <p className="m-0">Here is your overview.</p>
+        <p className="m-0">{translate.Dashboard.subtitle}</p>
         <div className="d-flex gap-2 flex-1 align-items-center justify-content-end ms-auto">
           <button
             onClick={() => handleChoiceWidget()}
             className={`kpi-tab`}
             disabled
           >
-            Add Alarm
+            {translate.Dashboard.create_alarm}
           </button>
           <button
             onClick={() => handleChoiceWidget()}
             className={`kpi-tab ${dropdownVisible2 ? "active" : ""}`}
           >
-            Show New Graph
+            {translate.Dashboard.show_graph}
           </button>
         </div>
       </div>
@@ -209,9 +211,9 @@ function Dashboard() {
                 }}
                 className="dropdown-select"
               >
-                {loadingKPIs && <option>Loading KPIs...</option>}{" "}
+                {loadingKPIs && <option>{translate.Dashboard.loading_kpis}</option>}{" "}
                 {/* Loading state */}
-                {error && <option>Error loading KPIs</option>}{" "}
+                {error && <option>{translate.Dashboard.error_kpis}</option>}{" "}
                 {/* Error state */}
                 {!loadingKPIs &&
                   !error &&
@@ -242,12 +244,12 @@ function Dashboard() {
                 className="dropdown-select"
               >
                 <option value="" disabled>
-                  Select Operation
+                  {translate.Dashboard.select_operation}
                 </option>
-                <option value="avg">Average</option>
-                <option value="min">Min</option>
-                <option value="max">Max</option>
-                <option value="sum">Sum</option>
+                <option value="avg">{translate.labels.avg}</option>
+                <option value="min">{translate.labels.min}</option>
+                <option value="max">{translate.labels.max}</option>
+                <option value="sum">{translate.labels.sum}</option>
               </select>
               <select
                 id="granularity"
@@ -256,11 +258,11 @@ function Dashboard() {
                 className="dropdown-select"
               >
                 <option value="" disabled>
-                  Select Granularity Days
+                  {translate.Dashboard.select_days}
                 </option>
-                <option value="1">1 day</option>
-                <option value="30">30 days</option>
-                <option value="7">7 days</option>
+                <option value="1">1 {translate.Dashboard.day}</option>
+                <option value="7">7 {translate.Dashboard.days}</option>
+                <option value="30">30 {translate.Dashboard.days}</option>
               </select>
               <select
                 id="category"
@@ -269,10 +271,10 @@ function Dashboard() {
                 className="dropdown-select"
               >
                 <option value="" disabled>
-                  Select Granularity Machines
+                  {translate.Dashboard.select_machines}
                 </option>
-                <option value="true">By site</option>
-                <option value="false">By category</option>
+                <option value="true">{translate.Dashboard.by_site}</option>
+                <option value="false">{translate.Dashboard.by_category}</option>
               </select>
               {auth?.site == null && (
                 <select
@@ -282,7 +284,7 @@ function Dashboard() {
                   className="dropdown-select"
                 >
                   <option value="" disabled>
-                    Select Site
+                    {translate.Dashboard.select_site}
                   </option>
                   <option value="1">1</option>
                   <option value="0">2</option>
@@ -290,7 +292,7 @@ function Dashboard() {
                 </select>
               )}
               <button onClick={handleNewWidget} className="kpi-tab">
-                {loading ? "Creating..." : "Create new graph"}
+                {loading ? translate.Dashboard.create_button_loading : translate.Dashboard.create_graph}
               </button>
               {errorWidget && <p className="error-message">{errorWidget}</p>}
               {/* Add more widget types as needed */}
