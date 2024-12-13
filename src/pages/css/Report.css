@@ -46,3 +46,11 @@ table th {
   color: white;
   font-weight: bold;
 }
+.delete-button {
+ font-size: 22px;
+ color: black;
+}
+
+.delete-button:hover {
+  color:red;
+}
