@@ -104,7 +104,7 @@ const Report = () => {
         ), // Custom cell rendering to create a clickable link
       },
       {
-        Header: "Actions",
+        Header: "Delete",
         Cell: ({ row }) => (
           <button
             className="delete-button"

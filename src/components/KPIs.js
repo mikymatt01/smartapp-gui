@@ -20,10 +20,11 @@ export const KPI = () => {
     const [cycleData, setCycleData] =React.useState(null);
     const [cycleGoodData, setCycleGoodData] = React.useState(null);
     const [cycleBadData, setCyclebadData] = React.useState(null);
+    const [cycleTimeAnomaliesData, setcTimeAnomaliesData] = React.useState(null);
 
     const machine_category = ["Metal cutter", "Laser Welder", "Assembler", "Tester", "Rivetter", "Laser Cutter"];
     const day_label = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    const type_anom = ["energy", "downtime", "cycle_quality"];
+    const type_anom = ["energy", "downtime", "cycle_quality", "cycle_time"];
     const backgroundColor = ["#8e5ea2", "#3e95cd", "#3cba9f", "#e8c3b9", "#c45850", "#ffcc00"];
     const storedToken = localStorage.getItem("token");
     const kpi_id = ["673a6ad3d9e0b151b88cbed3","673a6ad4d9e0b151b88cbed6", "673a6ad4d9e0b151b88cbed5", "673a6ad5d9e0b151b88cbed9", "673a6ad5d9e0b151b88cbed8", "673a6ad7d9e0b151b88cbedb", "673a6ad8d9e0b151b88cbedc"]; //consumption, consumption idle, consumption working, const idle, const working, good cycles, bad cycles
@@ -84,6 +85,9 @@ export const KPI = () => {
 
                 const datacycle = await fetchValues(type_anom[2]);
                 setCycleAnomaliesData(datacycle);
+
+                const datacycleTime = await fetchValues(type_anom[3]);
+                setcTimeAnomaliesData(datacycleTime);
             } catch (err) {
                 setError("An error occurred while fetching values.");
             }
@@ -413,7 +417,7 @@ export const KPI = () => {
                 {tabValue === 0 && (
                     <>
                         <div className="kpi-card">
-                            <h3>Energy Anomalies </h3>
+                            <h3>Energy Anomalies</h3>
                             {energyAnomaliesData ? (
                                 <Pie data={energyAnomaliesData} />
                                     ): (
@@ -429,13 +433,22 @@ export const KPI = () => {
                                 )}
                         </div>
                         <div className="kpi-card">
-                            <h3>Cycle quality anomalies</h3>
+                            <h3>Cycle Quality Anomalies</h3>
                                 {cycleAnomaliesData ? (
                                     <Pie data = {cycleAnomaliesData} />
                                 ) : (
                                     <p>Loading ... </p>
                                 )
 
+                                }
+                        </div>
+                        <div className="kpi-card">
+                            <h3>Cycle Time Anomalies</h3>
+                                {cycleTimeAnomaliesData ? (
+                                    <Pie data = {cycleAnomaliesData} />
+                                ) : (
+                                    <p>Loading ... </p>
+                                )
                                 }
                         </div>
                     </>

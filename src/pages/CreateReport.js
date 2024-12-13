@@ -13,7 +13,7 @@ import { AuthContext } from "../hooks/user";
 
 const CreateReport = () => {
   const auth = useContext(AuthContext);
-  const [language, setLanguage] = useState("language"); // State for language
+  const [language, setLanguage] = useState(null); // State for language
   const [startDate, setStartDate] = useState(null); // Start Date state
   const [endDate, setEndDate] = useState(null); // End Date state
   const [site, setSite] = useState(auth?.site); // State for sites
@@ -103,18 +103,27 @@ const CreateReport = () => {
       const myHeaders = new Headers();
       const storedToken = localStorage.getItem("token");
       myHeaders.append("Authorization", `Bearer ${storedToken}`);
+      myHeaders.append("Content-Type", "application/json");
+
+      const formattedStartDate = startDate ? format(startDate, "yyyy-MM-dd") + " 00:00:00"  : null;
+      const formattedEndDate = endDate ? format(endDate, "yyyy-MM-dd") + " 00:00:00"  : null;
 
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
-        redirect: "follow",
+        body: JSON.stringify({
+          name: name,
+          site: site,
+          kpi_names: selectedKPIs,
+          language: language,
+          start_date: formattedStartDate,
+          end_date: formattedEndDate,
+          operation: operation,
+        }),
       };
 
-      const formattedStartDate = startDate ? format(startDate, "yyyy-MM-dd") : null;
-      const formattedEndDate = endDate ? format(endDate, "yyyy-MM-dd") : null;
-
       const response = await fetch(
-        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/?name=${name}&site=${site}&kpi_names=${kpis}&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&operation=${operation}`,
+        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/`,
         requestOptions
       );
 
@@ -174,9 +183,9 @@ const CreateReport = () => {
           <option value="" disabled>
             Select Language
           </option>
-          <option value="ita">Italian</option>
-          <option value="eng">English</option>
-          <option value="fr">French</option>
+          <option value="italian">Italian</option>
+          <option value="english">English</option>
+          <option value="french">French</option>
         </select>
       </div>
 

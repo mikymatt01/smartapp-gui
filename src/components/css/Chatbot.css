@@ -67,12 +67,12 @@ button.close-button {
 }
 
 .close-button svg {
-    fill: #fff; 
-  }
+    fill: #fff;
+}
   
-  .close-button:hover svg {
+.close-button:hover svg {
     fill: #ff7373; 
-  }
+}
 
 /* Chatbot box */
 .chatbot-box {

@@ -79,7 +79,7 @@ export const LineGraph = ({ site, title }) => {
                 
                 // Format the data for the chart
                 const data = {
-                    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], // x-axis labels
+                    labels: ["24-10-08", "24-10-09", "24-10-10", "24-10-11", "24-10-12", "24-10-13", "24-10-14"], // x-axis labels
                     datasets: allValues // Set the fetched data as datasets
                 };
 
