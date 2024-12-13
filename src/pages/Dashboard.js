@@ -145,7 +145,7 @@ function Dashboard() {
       }
     } catch (err) {
       if(err){
-        setErrorWidget("Can't create with this input, please try again");
+        setErrorWidget(err.message);
       }
     } finally {
       setLoading(false);

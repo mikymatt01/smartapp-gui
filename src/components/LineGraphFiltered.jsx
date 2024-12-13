@@ -79,12 +79,12 @@ function generateDateRange(startDate, endDate, increment) {
   } else if(increment == 7){
     while (currentDate <= finalDate) {
       dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
-      currentDate.setDate(currentDate.getDate() + 7); // One day increment
+      currentDate.setDate(currentDate.getDate() + 7); // Seven days increment
     }
   } else if(increment == 30){
     while (currentDate <= finalDate) {
       dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
-      currentDate.setDate(currentDate.getDate() + 30); // One day increment
+      currentDate.setDate(currentDate.getDate() + 30); // 30 days increment
     }
   }
 

@@ -1,114 +1,122 @@
 import React, { useState } from "react";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import SendIcon from "@mui/icons-material/Send";
+import { IoMdClose } from "react-icons/io";
 import "./css/Chatbot.css";
 
 // This implements the chatbot
 
-export function Chatbot () {
-    const [messages, setMessages] = useState([]);
-    const [userInput, setUserInput] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
+export function Chatbot() {
+  const [messages, setMessages] = useState([]);
+  const [userInput, setUserInput] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
-    const handleSend = async () => {
-        if (!userInput.trim()) return;
+  const handleSend = async () => {
+    if (!userInput.trim()) return;
 
-        const newMessages = [...messages, { sender: "user", text: userInput }];
-        setMessages(newMessages);
+    const newMessages = [...messages, { sender: "user", text: userInput }];
+    setMessages(newMessages);
 
-        try {
-            // Send the user's input to the backend API
-            const storedToken = localStorage.getItem("token");
-            const myHeaders = new Headers();
-            myHeaders.append("Authorization", `Bearer ${storedToken}`);
+    try {
+      // Send the user's input to the backend API
+      const storedToken = localStorage.getItem("token");
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${storedToken}`);
 
-            const requestOptions = {
-                method: "POST",
-                headers: myHeaders,
-                redirect: "follow",
-            };
-            
-            //Add site from user
-            const response = await fetch(`https://api-656930476914.europe-west1.run.app/api/v1.0/chat/?site_id=1&query=${userInput}`,
-                requestOptions
-            );
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        redirect: "follow",
+      };
 
-            const botMessage = (await response.text()).replaceAll('"',"");
+      //Add site from user
+      const response = await fetch(
+        `https://api-656930476914.europe-west1.run.app/api/v1.0/chat/?site_id=1&query=${userInput}`,
+        requestOptions
+      );
 
-            setMessages([...newMessages, { sender: "bot", text: botMessage }]);
-        } catch (error) {
-            console.error("Error fetching response:", error);
-            setMessages([
-                ...newMessages,
-                { sender: "bot", text: "Sorry, something went wrong. Please try again later!" },
-            ]);
-        }
+      const botMessage = (await response.text())
+        .replaceAll('"', "")
+        .replaceAll("[", "")
+        .replaceAll("]", "")
+        .replaceAll("\\n", "\n");
 
-        setUserInput("");
-    };
+      setMessages([...newMessages, { sender: "bot", text: botMessage }]);
+    } catch (error) {
+      console.error("Error fetching response:", error);
+      setMessages([
+        ...newMessages,
+        {
+          sender: "bot",
+          text: "Sorry, something went wrong. Please try again later!",
+        },
+      ]);
+    }
 
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") {
-            handleSend();
-        }
-    };
+    setUserInput("");
+  };
 
-    const toggleChatbot = () => {
-        setIsOpen(!isOpen);
-    };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
+  };
 
-    return (
-        <div>
-            {/* Chat icon */}
-            <button className="chat-icon" onClick={toggleChatbot}>
-                <QuestionAnswerIcon />
+  const toggleChatbot = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div>
+      {/* Chat icon */}
+      <button className="chat-icon" onClick={toggleChatbot}>
+        <QuestionAnswerIcon />
+      </button>
+
+      {/* Chatbot */}
+      {isOpen && (
+        <div className="chatbot-container">
+          {/* Top bar */}
+          <div className="chatbot-header">
+            <span>Chat</span>
+            <button className="close-button" onClick={toggleChatbot}>
+            <IoMdClose size={28} />
             </button>
+          </div>
 
-            {/* Chatbot */}
-            {isOpen && (
-                <div className="chatbot-container">
-                    {/* Top bar */}
-                    <div className="chatbot-header">
-                        <span>Chat</span>
-                        <button className="close-button" onClick={toggleChatbot}>
-                            ✖
-                        </button>
-                    </div>
-
-                    <div className="chatbot-box">
-                        <div className="chatbot-messages">
-                            {messages.map((msg, idx) => (
-                                <div
-                                    key={idx}
-                                    className={
-                                        msg.sender === "user"
-                                            ? "chat-message user-message"
-                                            : "chat-message bot-message"
-                                    }
-                                >
-                                    <p>{msg.text}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="chatbot-input-container">
-                            <input
-                                type="text"
-                                value={userInput}
-                                onChange={(e) => setUserInput(e.target.value)}
-                                onKeyPress={handleKeyPress}
-                                className="chatbot-input"
-                                placeholder="Write a message..."
-                            />
-                            <button onClick={handleSend} className= "chatbot-send-button">
-                                <SendIcon />
-                            </button>
-                        </div>
-                    </div>
+          <div className="chatbot-box">
+            <div className="chatbot-messages">
+              {messages.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={
+                    msg.sender === "user"
+                      ? "chat-message user-message"
+                      : "chat-message bot-message"
+                  }
+                >
+                  <p>{msg.text}</p>
                 </div>
-            )}
+              ))}
+            </div>
+            <div className="chatbot-input-container">
+              <input
+                type="text"
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                className="chatbot-input"
+                placeholder="Write a message..."
+              />
+              <button onClick={handleSend} className="chatbot-send-button">
+                <SendIcon />
+              </button>
+            </div>
+          </div>
         </div>
-    );
-};
+      )}
+    </div>
+  );
+}
 
 export default Chatbot;
-

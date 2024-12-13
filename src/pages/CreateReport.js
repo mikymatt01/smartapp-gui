@@ -17,7 +17,7 @@ const CreateReport = () => {
   const [startDate, setStartDate] = useState(null); // Start Date state
   const [endDate, setEndDate] = useState(null); // End Date state
   const [site, setSite] = useState(auth?.site); // State for sites
-  const [operation, setOperation] = useState("operation"); // State for frequency
+  const [operation, setOperation] = useState("avg"); // State for frequency
   const [name, setName] = useState(""); // State for report name
   const [selectedKPIs, setSelectedKPIs] = useState([]); // State for selected KPIs
   const [loadingKPIs, setLoadingKPIs] = useState(false); // State for loading status KPIS
