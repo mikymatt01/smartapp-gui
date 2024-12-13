@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useTable } from "react-table"; // Import useTable from react-table
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useTable } from "react-table"; 
 import { Link } from "react-router-dom";
 import "./css/Report.css";
+
 
 // The report page is the Report History page, allows the user to see all the history they created
 // there is also a button called create report that routes them to the create report page
@@ -11,6 +13,7 @@ const Report = () => {
   const [loadingReports, setLoadingReports] = useState(false); // State for loading
   const [error, setError] = useState(null); // State for error
 
+  // Fetch reports on page load
   useEffect(() => {
     const fetchReports = async () => {
       setLoadingReports(true);
@@ -37,6 +40,7 @@ const Report = () => {
         }
 
         const result = await response.json(); // Parse the JSON response
+        console.log(result);
         if (result.success) {
           setReports(result.data); // Store the data in the state
         } else {
@@ -51,6 +55,37 @@ const Report = () => {
 
     fetchReports();
   }, []);
+
+  // Handle deleting the report from the API and UI
+  const handleDelete = async (reportId) => {
+    const storedToken = localStorage.getItem("token");
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    try {
+      console.log(`Sending DELETE request for report ID: ${reportId}`);
+      // Make the API DELETE request to delete the report
+      const response = await fetch(
+        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/${reportId}`,
+        requestOptions
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete report");
+      }
+
+      // If the deletion is successful, update the UI by filtering out the deleted report
+      setReports(prevReports => prevReports.filter(report => report._id !== reportId));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   // Define columns for react-table
   const columns = React.useMemo(
@@ -68,8 +103,19 @@ const Report = () => {
           </a>
         ), // Custom cell rendering to create a clickable link
       },
+      {
+        Header: "Actions",
+        Cell: ({ row }) => (
+          <button
+            className="delete-button"
+            onClick={() => handleDelete(row.original._id)} // Pass the report id to the delete handler
+          >
+          <RiDeleteBin6Line />
+          </button>
+        ),
+      },
     ],
-    []
+    [] // Re-render on data change
   );
 
   const data = React.useMemo(() => reports, [reports]);
