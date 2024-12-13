@@ -144,7 +144,9 @@ function Dashboard() {
         if (dataParsed) setDataSet(dataParsed);
       }
     } catch (err) {
-      setErrorWidget(err.message);
+      if(err){
+        setErrorWidget("Can't create with this input, please try again");
+      }
     } finally {
       setLoading(false);
     }
@@ -203,7 +205,6 @@ function Dashboard() {
                 id="kpis"
                 value={selectedKPI}
                 onChange={(e) => {
-                  console.log("Event", e.target.value);
                   setSelectedKPI(e.target.value);
                 }}
                 className="dropdown-select"
@@ -298,10 +299,11 @@ function Dashboard() {
         </div>
       </div>
       <div className="p-3 mb-4">
-        {startDate && endDate && dataSet?.length > 0 && (
+        {startDate && endDate && granularity && dataSet?.length > 0 && (
           <LineGraphFiltered
             startDate={startDate}
             endDate={endDate}
+            increment = {granularity}
             chartData={dataSet}
           />
         )}

@@ -24,12 +24,12 @@ ChartJS.register(
 
 // Component used to render a graph based on user input
 
-export default function LineGraphFiltered({ chartData, startDate, endDate }) {
+export default function LineGraphFiltered({ chartData, startDate, endDate, increment }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     if (chartData && startDate && endDate) {
-      var labels = generateDateRange(startDate, endDate);
+      var labels = generateDateRange(startDate, endDate, increment);
       var label = "value";
       if (labels) {
         var newData = {
@@ -46,7 +46,7 @@ export default function LineGraphFiltered({ chartData, startDate, endDate }) {
         setData(newData);
       }
     }
-  }, [startDate, endDate, chartData]);
+  }, [startDate, endDate, chartData, increment]);
 
   return (
     <div
@@ -60,7 +60,7 @@ export default function LineGraphFiltered({ chartData, startDate, endDate }) {
 }
 
 // Function to get an array of dates to use as labels for the x-axis
-function generateDateRange(startDate, endDate) {
+function generateDateRange(startDate, endDate, increment) {
   const dateList = [];
   const currentDate = new Date(startDate);
   const finalDate = new Date(endDate);
@@ -70,10 +70,22 @@ function generateDateRange(startDate, endDate) {
     throw new Error("Le date fornite non sono valide.");
   }
 
-  // Generates the list of dates
-  while (currentDate <= finalDate) {
-    dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
-    currentDate.setDate(currentDate.getDate() + 1); // One day increment
+  // Generates the list of dates based on granularity
+  if(increment == 1){
+    while (currentDate <= finalDate) {
+      dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
+      currentDate.setDate(currentDate.getDate() + 1); // One day increment
+    }
+  } else if(increment == 7){
+    while (currentDate <= finalDate) {
+      dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
+      currentDate.setDate(currentDate.getDate() + 7); // One day increment
+    }
+  } else if(increment == 30){
+    while (currentDate <= finalDate) {
+      dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
+      currentDate.setDate(currentDate.getDate() + 30); // One day increment
+    }
   }
 
   return dateList;
