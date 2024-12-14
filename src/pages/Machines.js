@@ -1,15 +1,22 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { Box, Grid, Card, CardContent, Typography, Chip, IconButton, Collapse, Button } from "@mui/material";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  IconButton,
+  Collapse,
+  Button,
+} from "@mui/material";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
-import { TranslationContext } from '../hooks/translation'
 
 const MachineDashboard = () => {
-  const { translate } = useContext(TranslationContext)
   const [machines, setMachines] = useState({});
   const [expanded, setExpanded] = useState({});
-  const [selectedKpis, setSelectedKpis] = useState({}); // Stores KPIs per machine
-  const [visibleKpis, setVisibleKpis] = useState({}); // Track visibility of KPIs for each machine
-  const machineRefs = useRef({}); // Stores refs for each machine box
+  const [selectedKpis, setSelectedKpis] = useState({});
+  const [visibleKpis, setVisibleKpis] = useState({});
+  const machineRefs = useRef({});
   const baseUrl = "https://api-656930476914.europe-west1.run.app/api/v1.0";
 
   useEffect(() => {
@@ -57,22 +64,58 @@ const MachineDashboard = () => {
       const responseData = await response.json();
       console.log("KPIs Response:", responseData);
 
-      // Update KPIs for the specific machine
+      const kpiDetails = responseData.data.kpis || [];
+      const computedKpis = [];
+
+      for (const kpi of kpiDetails) {
+        const kpiValue = await computeKpi(machineId, kpi._id);
+        computedKpis.push({
+          name: kpi.name,
+          value: kpiValue
+        });
+      }
+
       setSelectedKpis((prev) => ({
         ...prev,
-        [machineId]: responseData.data.kpis || [],
+        [machineId]: computedKpis,
       }));
-
-      // Toggle visibility of the KPIs for the selected machine
-      setVisibleKpis((prev) => ({
-        ...prev,
-        [machineId]: !prev[machineId], // Toggle the visibility
-      }));
-
-      // Scroll to the machine's box
-      machineRefs.current[machineId]?.scrollIntoView({ behavior: "smooth", block: "start" });
+      toggleKpisVisibility(machineId);
     } catch (error) {
       console.error("Error fetching KPIs:", error);
+    }
+  };
+
+  const computeKpi = async (machineId, kpiId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const startDate = "2024-10-01 00:00:00";
+      const endDate = "2024-10-30 23:59:59";
+      const granularityOp = "avg";
+
+      const response = await fetch(
+        `${baseUrl}/kpi/machine/${machineId}/compute?kpi_id=${kpiId}&start_date=${encodeURIComponent(
+          startDate
+        )}&end_date=${encodeURIComponent(endDate)}&granularity_op=${granularityOp}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const responseData = await response.json();
+      console.log("KPI Computation Response:", responseData);
+
+      if (response.ok && responseData.data) {
+        return responseData.data[0]?.value;
+      } else {
+        throw new Error(responseData.message);
+      }
+    } catch (error) {
+      console.error("Error computing KPI:", error);
+      return null;
     }
   };
 
@@ -80,16 +123,29 @@ const MachineDashboard = () => {
     setExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
   };
 
+  const toggleKpisVisibility = (machineId) => {
+    setVisibleKpis((prev) => ({
+      ...prev,
+      [machineId]: !prev[machineId],
+    }));
+  };
+
   return (
     <div>
       <Box sx={{ padding: 2, backgroundColor: "#f4f6f8", minHeight: "100vh" }}>
-        <h1> {translate.Machines.title} </h1>
+        <h1>Machine Dashboard</h1>
         <Grid container spacing={2}>
           {Object.entries(machines).map(([category, categoryMachines]) => (
             <Grid item xs={12} key={category}>
               <Card>
                 <CardContent>
-                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <Typography variant="h6">{category}</Typography>
                     <IconButton onClick={() => toggleExpand(category)}>
                       {expanded[category] ? <ExpandLess /> : <ExpandMore />}
@@ -101,37 +157,45 @@ const MachineDashboard = () => {
                         {categoryMachines.map((machine) => (
                           <li
                             key={machine._id}
-                            ref={(el) => (machineRefs.current[machine._id] = el)} // Assign ref to machine box
+                            ref={(el) => (machineRefs.current[machine._id] = el)}
+                            style={{ marginBottom: "1rem" }}
                           >
-                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                              <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                                {machine.name}
-                              </Typography>
+                            <Typography variant="body1">
+                              {machine.name}
                               <Button
                                 variant="contained"
                                 size="small"
-                                sx={{ ml: 2, my: 0.2 }}
+                                sx={{ ml: 2 }}
                                 onClick={() => fetchKpis(machine._id)}
                               >
                                 {visibleKpis[machine._id] ? "Hide KPIs" : "Select"}
                               </Button>
-                            </Box>
-                            {visibleKpis[machine._id] && selectedKpis[machine._id] && (
-                              <Box sx={{ maxHeight: 200, overflowY: "auto", mt: 2, pl: 4 }}>
-                                <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-                                  KPIs:
-                                </Typography>
-                                <ul>
-                                  {selectedKpis[machine._id].map((kpi) => (
-                                    <li key={kpi._id}>
-                                      <Typography variant="body2">
-                                        {kpi.name} - {kpi.description} ({kpi.unite_of_measure})
-                                      </Typography>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </Box>
-                            )}
+                            </Typography>
+                            {visibleKpis[machine._id] &&
+                              selectedKpis[machine._id] &&
+                              selectedKpis[machine._id].length > 0 && (
+                                <Box
+                                  sx={{
+                                    maxHeight: 200,
+                                    overflowY: "auto",
+                                    mt: 2,
+                                    pl: 4,
+                                  }}
+                                >
+                                  <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                                    KPIs:
+                                  </Typography>
+                                  <ul>
+                                    {selectedKpis[machine._id].map((kpi, index) => (
+                                      <li key={index}>
+                                        <Typography variant="body2">
+                                          {kpi.name}: {kpi.value} {kpi.unit}
+                                        </Typography>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </Box>
+                              )}
                           </li>
                         ))}
                       </ul>
