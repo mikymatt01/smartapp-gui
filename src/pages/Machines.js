@@ -1,83 +1,148 @@
-import React, { useState } from "react";
-import { Box, Grid, Card, CardContent, Typography, Chip, IconButton, Collapse } from "@mui/material";
-import { ExpandMore, ExpandLess, CheckCircle, Error, HourglassEmpty } from "@mui/icons-material";
-
-// This page is only for the FFM
-// The machines page shows machines grouped by category
+import React, { useState, useEffect, useRef } from "react";
+import { Box, Grid, Card, CardContent, Typography, Chip, IconButton, Collapse, Button } from "@mui/material";
+import { ExpandMore, ExpandLess } from "@mui/icons-material";
 
 const MachineDashboard = () => {
-    const [expanded, setExpanded] = useState({}); // Tracks expanded state for each machine
+  const [machines, setMachines] = useState({});
+  const [expanded, setExpanded] = useState({});
+  const [selectedKpis, setSelectedKpis] = useState({}); // Stores KPIs per machine
+  const [visibleKpis, setVisibleKpis] = useState({}); // Track visibility of KPIs for each machine
+  const machineRefs = useRef({}); // Stores refs for each machine box
+  const baseUrl = "https://api-656930476914.europe-west1.run.app/api/v1.0";
 
-    const machines = [
-        { id: 1, name: "Metal cutting machines", status: "Active", subMachines: ['Large Capacity Cutting Machine 1', 'Large Capacity CuttingMachine 2', 'Medium Capacity Cutting Machine 1', 'Medium Capacity Cutting Machine 2',
-'Medium Capacity Cutting Machine 3', 'Low Capacity Cutting Machine 1'] },
-        { id: 2, name: "Laser welding machines", status: "Inactive", subMachines: ['Laser Welding Machine 1', 'Laser Welding Machine 2'] },
-        { id: 3, name: "Assembly machines", status: "Active", subMachines: ['Assembly Machine 1', 'Assembly Machine 2', 'Assembly Machine 3'] },
-        { id: 4, name: "Testing machines", status: "Active", subMachines: ['Testing Machine 1','Testing Machine 2', 'Testing Machine 3'] },
-        { id: 5, name: "Riveting Machine", status: "Inactive",  subMachines: ["Rivelting Machine"] },
-        { id: 6, name: "Laser Cutter", status: "Active", subMachines: ["Laser Cutter"] },
-    ];
+  useEffect(() => {
+    const fetchMachines = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${baseUrl}/machine/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
 
-    const statusColors = {
-        Active: "success",
-        Inactive: "error",
+        const responseData = await response.json();
+        console.log("API Response:", responseData);
+
+        const machinesArray = Array.isArray(responseData.data) ? responseData.data : [responseData.data];
+
+        const groupedMachines = machinesArray.reduce((acc, machine) => {
+          const category = machine.category || "Uncategorized";
+          if (!acc[category]) acc[category] = [];
+          acc[category].push(machine);
+          return acc;
+        }, {});
+
+        setMachines(groupedMachines);
+      } catch (error) {
+        console.error("Error fetching machines:", error);
+      }
     };
 
-    const toggleExpand = (id) => {
-        setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
-    };
+    fetchMachines();
+  }, []);
 
-    return (
-        <div>
-            <Box sx={{ padding: 2, backgroundColor: "#f4f6f8", minHeight: "100vh" }}>
-            <h1> Machine Dashboard </h1>
-                <Grid container spacing={2}>
-                    {machines.map((machine) => (
-                        <Grid item xs={12} sm={6} md={4} key={machine.id}>
-                            <Card>
-                                <CardContent>
-                                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                                            {machine.icon}
-                                            <Typography variant="h6" sx={{ ml: 1 }}>
-                                                {machine.name}
-                                            </Typography>
-                                        </Box>
-                                        <Chip
-                                            label={machine.status}
-                                            color={statusColors[machine.status] || "default"}
-                                            icon={
-                                                machine.status === "Active" ? (
-                                                    <CheckCircle />
-                                                ) : machine.status === "Inactive" ? (
-                                                    <Error />
-                                                ) : (
-                                                    <HourglassEmpty />
-                                                )
-                                            }
-                                        />
-                                        <IconButton onClick={() => toggleExpand(machine.id)}>
-                                            {expanded[machine.id] ? <ExpandLess /> : <ExpandMore />}
-                                        </IconButton>
-                                    </Box>
-                                    <Collapse in={expanded[machine.id]} timeout="auto" unmountOnExit>
-                                        <Box sx={{ mt: 2 }}>
-                                            <ul>
-                                                {machine.subMachines.map((subMachine, index) => (
-                                                    <li key={index}>{subMachine}</li>
-                                                ))}
-                                            </ul>
-                                        </Box>
-                                    </Collapse>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
-        </div>
+  const fetchKpis = async (machineId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${baseUrl}/machine/${machineId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-    );
+      const responseData = await response.json();
+      console.log("KPIs Response:", responseData);
+
+      // Update KPIs for the specific machine
+      setSelectedKpis((prev) => ({
+        ...prev,
+        [machineId]: responseData.data.kpis || [],
+      }));
+
+      // Toggle visibility of the KPIs for the selected machine
+      setVisibleKpis((prev) => ({
+        ...prev,
+        [machineId]: !prev[machineId], // Toggle the visibility
+      }));
+
+      // Scroll to the machine's box
+      machineRefs.current[machineId]?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (error) {
+      console.error("Error fetching KPIs:", error);
+    }
+  };
+
+  const toggleExpand = (category) => {
+    setExpanded((prev) => ({ ...prev, [category]: !prev[category] }));
+  };
+
+  return (
+    <div>
+      <Box sx={{ padding: 2, backgroundColor: "#f4f6f8", minHeight: "100vh" }}>
+        <h1> Machine Dashboard </h1>
+        <Grid container spacing={2}>
+          {Object.entries(machines).map(([category, categoryMachines]) => (
+            <Grid item xs={12} key={category}>
+              <Card>
+                <CardContent>
+                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <Typography variant="h6">{category}</Typography>
+                    <IconButton onClick={() => toggleExpand(category)}>
+                      {expanded[category] ? <ExpandLess /> : <ExpandMore />}
+                    </IconButton>
+                  </Box>
+                  <Collapse in={expanded[category]} timeout="auto" unmountOnExit>
+                    <Box sx={{ mt: 2 }}>
+                      <ul>
+                        {categoryMachines.map((machine) => (
+                          <li
+                            key={machine._id}
+                            ref={(el) => (machineRefs.current[machine._id] = el)} // Assign ref to machine box
+                          >
+                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                              <Typography variant="body1" sx={{ flexGrow: 1 }}>
+                                {machine.name}
+                              </Typography>
+                              <Button
+                                variant="contained"
+                                size="small"
+                                sx={{ ml: 2, my: 0.2 }}
+                                onClick={() => fetchKpis(machine._id)}
+                              >
+                                {visibleKpis[machine._id] ? "Hide KPIs" : "Select"}
+                              </Button>
+                            </Box>
+                            {visibleKpis[machine._id] && selectedKpis[machine._id] && (
+                              <Box sx={{ maxHeight: 200, overflowY: "auto", mt: 2, pl: 4 }}>
+                                <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                                  KPIs:
+                                </Typography>
+                                <ul>
+                                  {selectedKpis[machine._id].map((kpi) => (
+                                    <li key={kpi._id}>
+                                      <Typography variant="body2">
+                                        {kpi.name} - {kpi.description} ({kpi.unite_of_measure})
+                                      </Typography>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </Box>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </Box>
+                  </Collapse>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </div>
+  );
 };
 
 export default MachineDashboard;
