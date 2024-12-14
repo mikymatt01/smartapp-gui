@@ -2,11 +2,13 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import { Pie } from "react-chartjs-2";
 import "./css/KPIs.css";
-import { Chart, ArcElement } from 'chart.js'
+import { Chart, ArcElement } from 'chart.js';
+import { TranslationContext } from "../hooks/translation";
 Chart.register(ArcElement);
 
 export const KPI = () => {
     const [tabValue, setTabValue] = React.useState(0);
+    const { translate } = React.useContext(TranslationContext); // Gets the context of the translation
     const [error, setError] = React.useState(null); // State for error
     const [energyAnomaliesData, setEnergyAnomaliesData] = React.useState(null);
     const [timeAnomaliesData, setTimeAnomaliesData] = React.useState(null);
@@ -124,7 +126,7 @@ export const KPI = () => {
                 return {
                     labels : day_label,
                     datasets : [{
-                        label : "Site Avarage",
+                        label : `${translate.KPIs.trend}`,
                         data: values,
                         borderColor: bordercolor,
                         backgroundColor: backcolor,
@@ -182,7 +184,7 @@ export const KPI = () => {
                 return {
                     labels : day_label,
                     datasets : [{
-                        label : "Site Avarage",
+                        label : `${translate.KPIs.trend}`,
                         data: values,
                         borderColor: bordercolor,
                         backgroundColor: backcolor,
@@ -228,7 +230,7 @@ export const KPI = () => {
                 const values = Array.isArray(data.data) ? data.data.map((item) => item.value) : [];
                 const values1 = Array.isArray(data1.data) ? data1.data.map((item) => item.value) : [];
                 return {
-                    labels : ["Working" , "Idle"],
+                    labels : [`${translate.KPIs.pie_cost_1}` , `${translate.KPIs.pie_cost_2}`],
                     datasets : [{
                         data: [values[0], values1[0]],
                         backgroundColor: [ "#badb16", "#ff5722"],
@@ -285,7 +287,7 @@ export const KPI = () => {
                 return {
                     labels : day_label,
                     datasets : [{
-                        label : "Site Avarage",
+                        label : `${translate.KPIs.trend}`,
                         data: values,
                         borderColor: bordercolor,
                         backgroundColor: backcolor,
@@ -331,7 +333,7 @@ export const KPI = () => {
                 const values = Array.isArray(data.data) ? data.data.map((item) => item.value) : [];
                 const values1 = Array.isArray(data1.data) ? data1.data.map((item) => item.value) : [];
                 return {
-                    labels : ["Working" , "Idle"],
+                    labels : [`${translate.KPIs.pie_cycle_1}` , `${translate.KPIs.pie_cycle_2}`],
                     datasets : [{
                         data: [values[0], values1[0]],
                         backgroundColor: [ "#badb16", "#ff5722"],
@@ -378,7 +380,7 @@ export const KPI = () => {
                         handleTabChange(0);
                     }}
                 >
-                    Anomalies
+                    {translate.KPIs.tab_anom}
                 </button>
                 <button
                     className={`kpi-tab ${tabValue === 1 ? "active" : ""}`}
@@ -388,7 +390,7 @@ export const KPI = () => {
                         }
                     }
                 >
-                    Energy Consumption
+                    {translate.KPIs.tab_energy}
                 </button>
                 <button
                     className={`kpi-tab ${tabValue === 2 ? "active" : ""}`}
@@ -398,7 +400,7 @@ export const KPI = () => {
                         }
                     }
                 >
-                    Costs
+                    {translate.KPIs.tab_cost}
                 </button>
                 <button
                     className={`kpi-tab ${tabValue === 3 ? "active" : ""}`}
@@ -408,7 +410,7 @@ export const KPI = () => {
                     }
                     }
                 >
-                    Cycles
+                    {translate.KPIs.tab_cycle}
                 </button>
             </div>
 
@@ -417,37 +419,37 @@ export const KPI = () => {
                 {tabValue === 0 && (
                     <>
                         <div className="kpi-card">
-                            <h3>Energy Anomalies</h3>
+                            <h3>{translate.KPIs.anom_1}</h3>
                             {energyAnomaliesData ? (
                                 <Pie data={energyAnomaliesData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading}</p>
                                 )}
                         </div>
                         <div className="kpi-card">
-                            <h3>Time Anomalies</h3>
+                            <h3>{translate.KPIs.anom_2}</h3>
                             {timeAnomaliesData ? (
                                 <Pie data={timeAnomaliesData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading} </p>
                                 )}
                         </div>
                         <div className="kpi-card">
-                            <h3>Cycle Quality Anomalies</h3>
+                            <h3>{translate.KPIs.anom_3}</h3>
                                 {cycleAnomaliesData ? (
                                     <Pie data = {cycleAnomaliesData} />
                                 ) : (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading} </p>
                                 )
 
                                 }
                         </div>
                         <div className="kpi-card">
-                            <h3>Cycle Time Anomalies</h3>
+                            <h3>{translate.KPIs.anom_4}</h3>
                                 {cycleTimeAnomaliesData ? (
                                     <Pie data = {cycleAnomaliesData} />
                                 ) : (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading} </p>
                                 )
                                 }
                         </div>
@@ -457,27 +459,27 @@ export const KPI = () => {
                 {tabValue === 1 && (
                     <>
                         <div className="kpi-card">
-                            <h3>Consumption Trends</h3>
+                            <h3>{translate.KPIs.energy_1}</h3>
                             {consumptionData ? (
                                 <Line data={consumptionData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading} </p>
                                 )}
                         </div>
                         <div className="kpi-card">
-                            <h3>Idle Consumption</h3>
+                            <h3>{translate.KPIs.energy_2}</h3>
                             {consumptionIdleData ? (
                                 <Line data={consumptionIdleData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading} </p>
                                 )}
                         </div>
                         <div className="kpi-card">
-                            <h3>Working consumption</h3>
+                            <h3>{translate.KPIs.energy_3}</h3>
                             {consumptionWorkingData ? (
                                 <Line data={consumptionWorkingData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading}</p>
                                 )}
                         </div>
                     </>
@@ -486,27 +488,27 @@ export const KPI = () => {
                 {tabValue === 2 && (
                     <>
                         <div className="kpi-card">
-                            <h3>Cost Breakdown</h3>
+                            <h3>{translate.KPIs.cost_1}</h3>
                             {costData ? (
                                 <Pie data={costData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading}</p>
                                 )}
                         </div>
                         <div className="kpi-card">
-                            <h3>Idle Costs</h3>
+                            <h3>{translate.KPIs.cost_2}</h3>
                             {costIdleData ? (
                                 <Line data={costIdleData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading}</p>
                                 )}
                         </div>
                         <div className="kpi-card">
-                            <h3>Working Cost</h3>
+                            <h3>{translate.KPIs.cost_3}</h3>
                             {costWorkingData ? (
                                 <Line data={costWorkingData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading}</p>
                                 )}
                         </div>
                     </>
@@ -515,27 +517,27 @@ export const KPI = () => {
                 {tabValue === 3 && (
                     <>
                         <div className="kpi-card">
-                            <h3>Cycle Distribution</h3>
+                            <h3>{translate.KPIs.cycle_1}</h3>
                             {cycleData ? (
                                 <Pie data={cycleData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading}</p>
                                 )}
                         </div>
                         <div className="kpi-card">
-                            <h3>Good Cycles Trend</h3>
+                            <h3>{translate.KPIs.cycle_2}</h3>
                             {cycleGoodData ? (
                                 <Line data={cycleGoodData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading}</p>
                                 )}
                         </div>
                         <div className="kpi-card">
-                            <h3>Bad Cycles Trend</h3>
+                            <h3>{translate.KPIs.cycle_3}</h3>
                             {cycleBadData ? (
                                 <Line data={cycleBadData} />
                                     ): (
-                                    <p>Loading ... </p>
+                                    <p>{translate.KPIs.loading}</p>
                                 )}
                         </div>
                     </>

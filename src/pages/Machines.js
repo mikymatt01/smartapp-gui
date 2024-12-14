@@ -7,7 +7,6 @@ import {
   Typography,
   IconButton,
   Collapse,
-  Button,
 } from "@mui/material";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
 
@@ -132,11 +131,11 @@ const MachineDashboard = () => {
 
   return (
     <div>
-      <Box sx={{ padding: 2, backgroundColor: "#f4f6f8", minHeight: "100vh" }}>
+      <div className="d-flex flex-column w-100 h-100 p-3">
         <h1>Machine Dashboard</h1>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} >
           {Object.entries(machines).map(([category, categoryMachines]) => (
-            <Grid item xs={12} key={category}>
+            <Grid item xs={12} sm={6} key={category}>
               <Card>
                 <CardContent>
                   <Box
@@ -146,50 +145,58 @@ const MachineDashboard = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Typography variant="h6">{category}</Typography>
+                    <Typography variant="h5" sx={{fontWeight: "bold"}}>
+                      {category}
+                    </Typography>
                     <IconButton onClick={() => toggleExpand(category)}>
                       {expanded[category] ? <ExpandLess /> : <ExpandMore />}
                     </IconButton>
                   </Box>
                   <Collapse in={expanded[category]} timeout="auto" unmountOnExit>
                     <Box sx={{ mt: 2 }}>
-                      <ul>
+                      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                         {categoryMachines.map((machine) => (
                           <li
                             key={machine._id}
                             ref={(el) => (machineRefs.current[machine._id] = el)}
                             style={{ marginBottom: "1rem" }}
                           >
-                            <Typography variant="body1">
+                            <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography variant="body1" sx={{ fontSize: "18px"}}>
                               {machine.name}
-                              <Button
-                                variant="contained"
-                                size="small"
-                                sx={{ ml: 2 }}
-                                onClick={() => fetchKpis(machine._id)}
-                              >
-                                {visibleKpis[machine._id] ? "Hide KPIs" : "Select"}
-                              </Button>
-                            </Typography>
+                            </Typography >
+                    <IconButton onClick={() => fetchKpis(machine._id)}>
+                      {visibleKpis[machine._id] ? <ExpandLess /> : <ExpandMore />}
+                    </IconButton>
+                  </Box>
+              
                             {visibleKpis[machine._id] &&
                               selectedKpis[machine._id] &&
                               selectedKpis[machine._id].length > 0 && (
                                 <Box
+                                  className= "d-flex gap-3 flex-wrap kpi-card p-3"
                                   sx={{
-                                    maxHeight: 200,
+                                    maxHeight: 300,
                                     overflowY: "auto",
                                     mt: 2,
                                     pl: 4,
                                   }}
                                 >
-                                  <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                                  <Typography variant="body2" sx={{ fontWeight: "bold" , fontSize: "20px"}}>
                                     KPIs:
                                   </Typography>
                                   <ul>
                                     {selectedKpis[machine._id].map((kpi, index) => (
                                       <li key={index}>
-                                        <Typography variant="body2">
-                                          {kpi.name}: {kpi.value} {kpi.unit}
+                                        <Typography variant="body2" sx={{ fontSize: "18px",  textAlign: "left"}}>
+                                        <span style={{ fontWeight: "bold" }}>{kpi.name}</span>
+                                        : {kpi.value} {kpi.unit}
                                         </Typography>
                                       </li>
                                     ))}
@@ -206,7 +213,7 @@ const MachineDashboard = () => {
             </Grid>
           ))}
         </Grid>
-      </Box>
+      </div>
     </div>
   );
 };

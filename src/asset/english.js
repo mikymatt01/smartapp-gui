@@ -43,6 +43,9 @@ export const translation = {
         op_max: "Max",
         op_sum: "Sum",
         kpis : "Select KPIs",
+        select_edate: "Select End Date",
+        select_sdate: "Select Start Date",
+        insert : "Enter report name",
         generate_button : "Generate Report",
         generate_loading : "Generating ...",
         press_ctrl: "Press ctrl to select multiple"
@@ -69,11 +72,14 @@ export const translation = {
         pie_cost_1 : "Working",
         pie_cost_2 : "Idle",
         pie_cycle_1 : "Good",
-        pie_cycle_2 : "Bad"
+        pie_cycle_2 : "Bad",
+        trend : "Site Avarage",
+        loading: "Loading ..."
     },
 
     Chatbot : {
-        message: "Write a message..."
+        message: "Write a message...",
+        sorry: "Sorry, something went wrong. Please try again later!"
     },
 
     Report : {

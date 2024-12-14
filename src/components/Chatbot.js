@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import SendIcon from "@mui/icons-material/Send";
 import { IoMdClose } from "react-icons/io";
-import "./css/Chatbot.css";
+import './css/Chatbot.css';
 
 // This implements the chatbot
 

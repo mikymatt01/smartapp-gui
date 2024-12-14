@@ -228,14 +228,14 @@ function Dashboard() {
                 onChange={(date) => setStartDate(date)}
                 dateFormat="yyyy/MM/dd"
                 className="date-picker"
-                placeholderText="Select Start Date"
+                placeholderText={translate.CreateReport.select_sdate}
               />
               <DatePicker
                 selected={endDate}
                 onChange={(date) => setEndDate(date)}
                 dateFormat="yyyy/MM/dd"
                 className="date-picker"
-                placeholderText="Select End Date"
+                placeholderText={translate.CreateReport.select_edate}
               />
               <select
                 id="operation"

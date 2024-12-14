@@ -18,18 +18,12 @@ function Topbar() {
   const auth = useContext(AuthContext);
   return (
     <div className="topbar w-100  px-3">
-      <div className="ms-auto d-flex align-items-center gap-2">
+      <div className="ms-auto d-flex align-items-center gap-2 ">
         <ChangeTranslation
+          className="notification-icon"
           show={showTranslation}
           setShow={setShowTranslation}
         />
-        {auth ? (
-          <UserThumbnail
-            email={auth.email}
-            name={auth.first_name}
-            surname={auth.last_name}
-          />
-        ) : null}
         <div className="notification-wrapper">
           <NotificationsIcon
             className="notification-icon"
@@ -48,6 +42,13 @@ function Topbar() {
             )}
           </div>
         </div>
+        {auth ? (
+          <UserThumbnail
+            email={auth.email}
+            name={auth.first_name}
+            surname={auth.last_name}
+          />
+        ) : null}
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import {
     Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { TranslationContext } from "../hooks/translation";
 
 // Register the components with Chart.js
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip, Legend);
@@ -20,6 +21,7 @@ ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, T
 export const LineGraph = ({ site, title }) => {
     const [error, setError] = useState(null); // State for error
     const [chartData, setChartData] = useState(null); // State for chart data
+    const { translate } = React.useContext(TranslationContext); // Gets the context of the translation
     // Color mapping for each machine category
     const colorMapping = {
         "Metal cutter": "#8e5ea2",  // Purple
@@ -104,7 +106,7 @@ export const LineGraph = ({ site, title }) => {
     };
 
     if (!chartData) {
-        return <p>Loading...</p>; // Show a loading message while data is being fetched
+        return <p>{translate.KPIs.loading}</p>; // Show a loading message while data is being fetched
     }
 
     return (

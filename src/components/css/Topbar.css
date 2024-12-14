@@ -9,37 +9,16 @@
   flex-grow: 1;
 }
 
-.search-container {
-  padding-left: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.search-container input {
-  width: 100%;
-  padding: 8px 10px 8px 35px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  outline: none;
-  font-size: 14px;
-}
-
-.search-container .search-icon {
-  position: absolute;
-  left: 10px;
-  color: #aaa;
-}
-
 .topbar-right {
   padding-right: 30px;
   display: flex;
   align-items: center;
-  gap: 15px; /* Consistent spacing between notification and avatar */
+  gap: 20px; /* Consistent spacing between notification and avatar */
   flex-shrink: 0; /* Prevent elements from shrinking */
 }
 
 .notification-icon {
-  font-size: 20px;
+  font-size: 25px;
   color: #066c94;
   cursor: pointer;
   transition: color 0.2s;

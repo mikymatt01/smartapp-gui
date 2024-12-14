@@ -21,7 +21,7 @@ function ChangeTranslation({ show, setShow }) {
         setShow((oldShow) => !oldShow);
     };
     return (
-        <div className="notification-wrapper">
+        <div className="notification-wrapper" style={{ cursor: "pointer" }} >
             <img src={language.icon} width={40} height={20} alt='Spain flag' onClick={toggleLanguages} />
             <div className="translation-dropdown" hidden={!show}>
                 {languagesSupported.map((ls, index) => (

@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css"; 
 import "./css/CreateReport.css";
 import { AuthContext } from "../hooks/user";
+import { TranslationContext } from "../hooks/translation";
 
 // This page is in common between SMO and FFM
 // Allows them to create a report choosing the time period
@@ -13,6 +14,7 @@ import { AuthContext } from "../hooks/user";
 
 const CreateReport = () => {
   const auth = useContext(AuthContext);
+  const { translate } = React.useContext(TranslationContext); // Gets the context of the translation
   const [language, setLanguage] = useState(null); // State for language
   const [startDate, setStartDate] = useState(null); // Start Date state
   const [endDate, setEndDate] = useState(null); // End Date state
@@ -157,14 +159,14 @@ const CreateReport = () => {
       {/* Name Input */}
       <div className="name-input-container">
         <label htmlFor="report-name" className="name-label">
-          Name
+          {translate.CreateReport.name}
         </label>
         <input
           id="report-name"
           type="text"
           value={name}
           onChange={(e) => handleNameChange(e.target.value)}
-          placeholder="Enter report name"
+          placeholder={translate.CreateReport.insert}
           className="name-input"
         />
       </div>
@@ -172,7 +174,7 @@ const CreateReport = () => {
       {/* Language Dropdown */}
       <div className="dropdown-container">
         <label htmlFor="language" className="dropdown-label">
-          Language
+          {translate.CreateReport.language}
         </label>
         <select
           id="language"
@@ -181,11 +183,11 @@ const CreateReport = () => {
           className="dropdown-select"
         >
           <option value="" disabled>
-            Select Language
+            {translate.CreateReport.select_language}
           </option>
-          <option value="italian">Italian</option>
-          <option value="english">English</option>
-          <option value="french">French</option>
+          <option value="italian">{translate.CreateReport.it}</option>
+          <option value="english">{translate.CreateReport.eng}</option>
+          <option value="french">{translate.CreateReport.fr}</option>
         </select>
       </div>
 
@@ -193,7 +195,7 @@ const CreateReport = () => {
         auth?.site === null && (
           <div className="dropdown-container">
             <label htmlFor="site" className="dropdown-label">
-              Site
+              {translate.CreateReport.site}
             </label>
             <select
               id="site"
@@ -202,7 +204,7 @@ const CreateReport = () => {
               className="dropdown-select"
             >
               <option value="" disabled>
-                Select Site
+              {translate.CreateReport.select_site}
               </option>
               <option value="1">1</option>
               <option value="0">2</option>
@@ -216,34 +218,34 @@ const CreateReport = () => {
       {/* Date Pickers */}
       <div className="date-picker-container">
         <label htmlFor="start-date" className="date-label">
-          Start Date
+        {translate.CreateReport.start_date}
         </label>
         <DatePicker
           selected={startDate}
           onChange={(date) => setStartDate(date)}
           dateFormat="yyyy/MM/dd"
           className="date-picker"
-          placeholderText="Select Start Date"
+          placeholderText={translate.CreateReport.select_sdate}
         />
       </div>
 
       <div className="date-picker-container">
         <label htmlFor="end-date" className="date-label">
-          End Date
+        {translate.CreateReport.end_date}
         </label>
         <DatePicker
           selected={endDate}
           onChange={(date) => setEndDate(date)}
           dateFormat="yyyy/MM/dd"
           className="date-picker"
-          placeholderText="Select End Date"
+          placeholderText={translate.CreateReport.select_edate}
         />
       </div>
 
       {/* Operation Dropdown */}
       <div className="dropdown-container">
         <label htmlFor="operation" className="dropdown-label">
-          Aggregation Operation
+          {translate.CreateReport.op}
         </label>
         <select
           id="operation"
@@ -252,19 +254,19 @@ const CreateReport = () => {
           className="dropdown-select"
         >
           <option value="" disabled>
-            Select Operation
+            {translate.CreateReport.select_op}
           </option>
-          <option value="avg">Average</option>
-          <option value="min">Min</option>
-          <option value="max">Max</option>
-          <option value="sum">Sum</option>
+          <option value="avg">{translate.CreateReport.op_avg}</option>
+          <option value="min">{translate.CreateReport.op_min}</option>
+          <option value="max">{translate.CreateReport.op_max}</option>
+          <option value="sum">{translate.CreateReport.op_sum}</option>
         </select>
       </div>
 
       {/* Select KPIs Dropdown (Multi-choice) */}
       <div className="dropdown-container">
         <label htmlFor="kpis" className="dropdown-label">
-          Select KPIs
+          {translate.CreateReport.kpis}
         </label>
         <select
           id="kpis"
@@ -283,7 +285,7 @@ const CreateReport = () => {
               </option>
             ))}
         </select>
-        <small>Press ctrl to select multiple</small>
+        <small>{translate.CreateReport.press_ctrl}</small>
       </div>
 
       {/* Download Button */}
@@ -293,7 +295,7 @@ const CreateReport = () => {
           disabled={loading}
           className="generate-report-button"
         >
-          {loading ? "Generating..." : "Generate Report"}
+          {loading ? `${translate.CreateReport.generate_loading}` : `${translate.CreateReport.generate_button}`}
         </button>
         {error && <p className="error-message">{error}</p>}
       </div>
