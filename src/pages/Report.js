@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useTable } from "react-table"; 
 import { Link } from "react-router-dom";
 import "./css/Report.css";
-
+import { TranslationContext } from '../hooks/translation'
 
 // The report page is the Report History page, allows the user to see all the history they created
 // there is also a button called create report that routes them to the create report page
@@ -12,7 +12,7 @@ const Report = () => {
   const [reports, setReports] = useState([]); // State to hold reports
   const [loadingReports, setLoadingReports] = useState(false); // State for loading
   const [error, setError] = useState(null); // State for error
-
+  const { translate } = useContext(TranslationContext)
   // Fetch reports on page load
   useEffect(() => {
     const fetchReports = async () => {
@@ -91,20 +91,20 @@ const Report = () => {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Name",
+        Header: translate.Report.header_1,
         accessor: "name", // Corresponds to the "name" field in the API response
       },
       {
-        Header: "Download",
+        Header: translate.Report.header_2,
         accessor: "url", // Corresponds to the "url" field in the API response
         Cell: ({ value }) => (
           <a href={value} target="_blank" rel="noopener noreferrer">
-            Download
+            {translate.Report.header_2}
           </a>
         ), // Custom cell rendering to create a clickable link
       },
       {
-        Header: "Delete",
+        Header: translate.Report.header_3,
         Cell: ({ row }) => (
           <button
             className="delete-button"
@@ -115,7 +115,7 @@ const Report = () => {
         ),
       },
     ],
-    [] // Re-render on data change
+    [translate.Report.header_1, translate.Report.header_2, translate.Report.header_3] // Re-render on data change
   );
 
   const data = React.useMemo(() => reports, [reports]);
@@ -126,20 +126,20 @@ const Report = () => {
   return (
     <div className="Report d-flex flex-grow-1">
       <div className="container d-flex flex-column pt-3 gap-3">
-        <h1>Report History</h1>
+        <h1>{translate.Report.title}</h1>
         <div className="d-flex align-items-center">
-          <p>Welcome to the report page. Here you can manage your reports.</p>
+          <p>{translate.Report.subtitle}</p>
 
           {/* Button to create a new report */}
           <div className=" ms-auto">
             <Link to="/report/createreport" className="create-report-button">
-              <span>Create Report</span>
+              <span>{translate.Report.create_report}</span>
             </Link>
           </div>
         </div>
 
         {/* Show loading spinner or error */}
-        {loadingReports && <p>Loading reports...</p>}
+        {loadingReports && <p>{translate.Report.loading}</p>}
         {error && <p className="error">{error}</p>}
 
         {/* Table for displaying reports */}
@@ -173,7 +173,7 @@ const Report = () => {
 
         {/* No reports available */}
         {!loadingReports && reports.length === 0 && !error && (
-          <p>No reports available</p>
+          <p>{translate.Report.no_reports}</p>
         )}
       </div>
     </div>

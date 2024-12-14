@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./css/Sidebar.css";
 import { smoRoutes, ffmRoutes } from '../consts'
 import { AuthContext } from "../hooks/user"
+import { TranslationContext } from "../hooks/translation"
 import LogoutIcon from "@mui/icons-material/Logout";
 
 // This is the sidebar of the site
@@ -12,6 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 function Sidebar() {
   const auth = useContext(AuthContext)
+  const { translate } = useContext(TranslationContext)
   return (
     <div className="sidebar">
       <h2 className="d-flex fs-4 justify-content-start logo mx-3">Dash</h2>
@@ -22,7 +24,7 @@ function Sidebar() {
             <li key={route.title}>
               <Link key={route.title} to={route.url}>
                 {route.icon}
-                {route.title}
+                {translate.SideBar[route.title]}
               </Link>
             </li>
           ))

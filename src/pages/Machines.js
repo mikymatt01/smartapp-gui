@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Box, Grid, Card, CardContent, Typography, Chip, IconButton, Collapse, Button } from "@mui/material";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
+import { TranslationContext } from '../hooks/translation'
 
 const MachineDashboard = () => {
+  const { translate } = useContext(TranslationContext)
   const [machines, setMachines] = useState({});
   const [expanded, setExpanded] = useState({});
   const [selectedKpis, setSelectedKpis] = useState({}); // Stores KPIs per machine
@@ -81,7 +83,7 @@ const MachineDashboard = () => {
   return (
     <div>
       <Box sx={{ padding: 2, backgroundColor: "#f4f6f8", minHeight: "100vh" }}>
-        <h1> Machine Dashboard </h1>
+        <h1> {translate.Machines.title} </h1>
         <Grid container spacing={2}>
           {Object.entries(machines).map(([category, categoryMachines]) => (
             <Grid item xs={12} key={category}>

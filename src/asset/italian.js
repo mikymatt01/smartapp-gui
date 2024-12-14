@@ -79,9 +79,12 @@ export const translation = {
     Report: {
         title: "Cronologia dei Report",
         subtitle: "Benvenuto nella pagina dei report. Qui puoi gestire i tuoi report.",
-        create_button: "Crea Report",
+        loading: "Caricamento report...",
+        no_reports: "Nessun report disponibile",
+        create_report: "Crea Report",
         header_1: "Nome",
-        header_2: "Elimina",
+        header_2: "Scarica",
+        header_3: "Elimina",
     },
 
     Settings: {
@@ -97,6 +100,7 @@ export const translation = {
         accessibility_header: "Impostazioni di Accessibilità",
         accessibility_text: "Gestisci le impostazioni di accessibilità qui.",
         language_header: "Impostazioni della Lingua",
+        language_text : "Gestisci le impostazioni sulla lingua qui.",
         devices_header: "Dispositivi Collegati",
         devices_text: "Gestisci i dispositivi collegati qui.",
         notifications_header: "Impostazioni delle Notifiche",
@@ -107,6 +111,8 @@ export const translation = {
 
     Machines: {
         title: "Dashboard Macchine",
+        active: 'Attivo',
+        inactive: 'Inattivo',
     },
 
     Sites: {
@@ -117,4 +123,13 @@ export const translation = {
         details: "Visualizza Dettagli",
         close_button: "Chiudi",
     },
+
+    SideBar: {
+        Dashboard: "Schermata iniziale",
+        Sites: "Siti",
+        Machines: "Macchine",
+        Report: "Report",
+        Settings: "Impostazioni",
+        Logout: "Disconnettersi",
+    }
 };

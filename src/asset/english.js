@@ -79,9 +79,12 @@ export const translation = {
     Report : {
         title: "Report History",
         subtitle: "Welcome to the report page. Here you can manage your reports.",
-        create_button: "Create Report",
+        create_report: "Create Report",
+        loading: "Loading reports...",
+        no_reports: "No reports available",
         header_1 : "Name",
-        header_2 : "Delete"
+        header_2 : "Download",
+        header_3 : "Delete"
     },
 
     Settings : {
@@ -97,6 +100,7 @@ export const translation = {
         accessibility_header : "Accessibility Settings",
         accessibility_text : "Manage your accessibility settings here.",
         language_header : "Language Settings",
+        language_text : "Manage your language settings here.",
         devices_header : "Connected Devices",
         devices_text: "Manage your connected devices here.",
         notifications_header : "Notifications Settings",
@@ -106,7 +110,9 @@ export const translation = {
     },
 
     Machines : {
-        title: "Machine Dashboard"
+        title: "Machine Dashboard",
+        active: 'Active',
+        inactive: 'Inactive',
     },
 
     Sites :{
@@ -116,5 +122,13 @@ export const translation = {
         last_maint: "Last Maintenance:",
         details: "View Details",
         close_button: "Close",
+    },
+    SideBar: {
+        Dashboard: "Dashboard",
+        Sites: "Sites",
+        Machines: "Machines",
+        Report: "Report",
+        Settings: "Settings",
+        Logout: "Logout",
     }
 }
