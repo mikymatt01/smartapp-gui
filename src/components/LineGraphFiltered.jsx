@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import { TranslationContext } from "../hooks/translation";
 import {
   Chart as ChartJS,
   LineElement,
@@ -26,11 +27,12 @@ ChartJS.register(
 
 export default function LineGraphFiltered({ chartData, startDate, endDate, increment }) {
   const [data, setData] = useState(null);
+  const { translate } = React.useContext(TranslationContext); // Gets the context of the translation
 
   useEffect(() => {
     if (chartData && startDate && endDate) {
       var labels = generateDateRange(startDate, endDate, increment);
-      var label = "value";
+      var label = `${translate.Graph.label}`;
       if (labels) {
         var newData = {
           labels: labels, // x-axis labels
@@ -53,7 +55,7 @@ export default function LineGraphFiltered({ chartData, startDate, endDate, incre
       className="line-graph mb-3 pb-4"
       style={{ position: "relative", height: "40vh", width: "100%" }}
     >
-      <h2> Generated graph </h2>
+      <h2>{translate.Graph.header}</h2>
       {data && <Line data={data} />}
     </div>
   );

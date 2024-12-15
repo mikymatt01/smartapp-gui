@@ -4,6 +4,7 @@ export const translation = {
         min: "Min",
         max: "Max",
         sum: "Somma",
+        std: 'Deviazione Standard'
     },
     Dashboard: {
         title: "Benvenuto nella Dashboard",
@@ -46,6 +47,7 @@ export const translation = {
         op_min: "Min",
         op_max: "Max",
         op_sum: "Somma",
+        op_std: "Deviazione Standard",
         kpis: "Seleziona KPIs",
         generate_button: "Genera Report",
         generate_loading: "Generazione in corso ...",
@@ -59,8 +61,8 @@ export const translation = {
         tab_cycle: "Cicli",
         anom_1: "Anomalie sull'Energia",
         anom_2: "Anomalie sul Tempo",
-        anom_3: "Anomalie sulla Qualità Ciclo",
-        anom_4: "Anomalie sulla Tempo Ciclo",
+        anom_3: "Anomalie sulla Qualità dei Cicli",
+        anom_4: "Anomalie sul Tempo dei Cicli",
         energy_1: "Trend del Consumo",
         energy_2: "Consumo a Riposo",
         energy_3: "Consumo durante il Lavoro",
@@ -80,6 +82,7 @@ export const translation = {
 
     Chatbot: {
         message: "Scrivi un messaggio...",
+        sorry: "Scusa, qualcosa è andato storto. Per favore, prova di nuovo più tardi!"
     },
 
     Report: {
@@ -116,7 +119,7 @@ export const translation = {
     },
 
     Machines: {
-        title: "Dashboard Macchine",
+        title: "Pagina delle Macchine",
         active: 'Attivo',
         inactive: 'Inattivo',
     },
@@ -137,5 +140,10 @@ export const translation = {
         Report: "Report",
         Settings: "Impostazioni",
         Logout: "Disconnettersi",
+    },
+
+    Graph:{
+        header: "Grafo Generato",
+        label: "Valore"
     }
 };

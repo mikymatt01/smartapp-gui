@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import SendIcon from "@mui/icons-material/Send";
 import { IoMdClose } from "react-icons/io";
+import { TranslationContext } from "../hooks/translation";
 import './css/Chatbot.css';
 
 // This implements the chatbot
@@ -9,6 +10,7 @@ import './css/Chatbot.css';
 export function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
+  const { translate } = React.useContext(TranslationContext); // Gets the context of the translation
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSend = async () => {
@@ -48,7 +50,7 @@ export function Chatbot() {
         ...newMessages,
         {
           sender: "bot",
-          text: "Sorry, something went wrong. Please try again later!",
+          text: `${translate.Chatbot.sorry}`,
         },
       ]);
     }
@@ -106,7 +108,7 @@ export function Chatbot() {
                 onChange={(e) => setUserInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 className="chatbot-input"
-                placeholder="Write a message..."
+                placeholder={translate.Chatbot.message}
               />
               <button onClick={handleSend} className="chatbot-send-button">
                 <SendIcon />

@@ -260,6 +260,7 @@ const CreateReport = () => {
           <option value="min">{translate.CreateReport.op_min}</option>
           <option value="max">{translate.CreateReport.op_max}</option>
           <option value="sum">{translate.CreateReport.op_sum}</option>
+          <option value="std">{translate.CreateReport.op_std}</option>
         </select>
       </div>
 

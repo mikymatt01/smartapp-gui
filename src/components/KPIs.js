@@ -25,7 +25,7 @@ export const KPI = () => {
     const [cycleTimeAnomaliesData, setcTimeAnomaliesData] = React.useState(null);
 
     const machine_category = ["Metal cutter", "Laser Welder", "Assembler", "Tester", "Rivetter", "Laser Cutter"];
-    const day_label = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    const day_label =  ["24-10-30", "24-10-01", "24-10-02", "24-10-03", "24-10-04"];
     const type_anom = ["energy", "downtime", "cycle_quality", "cycle_time"];
     const backgroundColor = ["#8e5ea2", "#3e95cd", "#3cba9f", "#e8c3b9", "#c45850", "#ffcc00"];
     const storedToken = localStorage.getItem("token");

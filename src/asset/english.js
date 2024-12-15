@@ -1,9 +1,10 @@
 export const translation = {
     labels: {
-        avg: 'Avg',
+        avg: 'Avarage',
         min: 'Min',
         max: 'Max',
-        sum: 'sum',
+        sum: 'Sum',
+        std: 'Standard Deviation'
     },
     Dashboard : {
         title : "Welcome to the Dashboard",
@@ -42,6 +43,7 @@ export const translation = {
         op_min : "Min",
         op_max: "Max",
         op_sum: "Sum",
+        op_std: "Standard Deviation",
         kpis : "Select KPIs",
         select_edate: "Select End Date",
         select_sdate: "Select Start Date",
@@ -136,5 +138,10 @@ export const translation = {
         Report: "Report",
         Settings: "Settings",
         Logout: "Logout",
+    },
+
+    Graph:{
+        header: "Generated Graph",
+        label: "Value"
     }
 }

@@ -9,9 +9,11 @@ import {
   Collapse,
 } from "@mui/material";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
+import { TranslationContext } from "../hooks/translation";
 
 const MachineDashboard = () => {
   const [machines, setMachines] = useState({});
+  const { translate } = React.useContext(TranslationContext); // Gets the context of the translation
   const [expanded, setExpanded] = useState({});
   const [selectedKpis, setSelectedKpis] = useState({});
   const [visibleKpis, setVisibleKpis] = useState({});
@@ -32,7 +34,9 @@ const MachineDashboard = () => {
         const responseData = await response.json();
         console.log("API Response:", responseData);
 
-        const machinesArray = Array.isArray(responseData.data) ? responseData.data : [responseData.data];
+        const machinesArray = Array.isArray(responseData.data)
+          ? responseData.data
+          : [responseData.data];
 
         const groupedMachines = machinesArray.reduce((acc, machine) => {
           const category = machine.category || "Uncategorized";
@@ -70,7 +74,7 @@ const MachineDashboard = () => {
         const kpiValue = await computeKpi(machineId, kpi._id);
         computedKpis.push({
           name: kpi.name,
-          value: kpiValue
+          value: kpiValue,
         });
       }
 
@@ -94,7 +98,9 @@ const MachineDashboard = () => {
       const response = await fetch(
         `${baseUrl}/kpi/machine/${machineId}/compute?kpi_id=${kpiId}&start_date=${encodeURIComponent(
           startDate
-        )}&end_date=${encodeURIComponent(endDate)}&granularity_op=${granularityOp}`,
+        )}&end_date=${encodeURIComponent(
+          endDate
+        )}&granularity_op=${granularityOp}`,
         {
           method: "GET",
           headers: {
@@ -132,8 +138,8 @@ const MachineDashboard = () => {
   return (
     <div>
       <div className="d-flex flex-column w-100 h-100 p-3">
-        <h1>Machine Dashboard</h1>
-        <Grid container spacing={2} >
+        <h1>{translate.Machines.title}</h1>
+        <Grid container spacing={2}>
           {Object.entries(machines).map(([category, categoryMachines]) => (
             <Grid item xs={12} sm={6} key={category}>
               <Card>
@@ -145,42 +151,54 @@ const MachineDashboard = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Typography variant="h5" sx={{fontWeight: "bold"}}>
-                      {category}
-                    </Typography>
+                    <Typography variant="h5">{category}</Typography>
                     <IconButton onClick={() => toggleExpand(category)}>
                       {expanded[category] ? <ExpandLess /> : <ExpandMore />}
                     </IconButton>
                   </Box>
-                  <Collapse in={expanded[category]} timeout="auto" unmountOnExit>
+                  <Collapse
+                    in={expanded[category]}
+                    timeout="auto"
+                    unmountOnExit
+                  >
                     <Box sx={{ mt: 2 }}>
                       <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                         {categoryMachines.map((machine) => (
                           <li
                             key={machine._id}
-                            ref={(el) => (machineRefs.current[machine._id] = el)}
+                            ref={(el) =>
+                              (machineRefs.current[machine._id] = el)
+                            }
                             style={{ marginBottom: "1rem" }}
                           >
                             <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography variant="body1" sx={{ fontSize: "18px"}}>
-                              {machine.name}
-                            </Typography >
-                    <IconButton onClick={() => fetchKpis(machine._id)}>
-                      {visibleKpis[machine._id] ? <ExpandLess /> : <ExpandMore />}
-                    </IconButton>
-                  </Box>
-              
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <Typography
+                                variant="body1"
+                                sx={{ fontSize: "18px" }}
+                              >
+                                {machine.name}
+                              </Typography>
+                              <IconButton
+                                onClick={() => fetchKpis(machine._id)}
+                              >
+                                {visibleKpis[machine._id] ? (
+                                  <ExpandLess />
+                                ) : (
+                                  <ExpandMore />
+                                )}
+                              </IconButton>
+                            </Box>
                             {visibleKpis[machine._id] &&
                               selectedKpis[machine._id] &&
                               selectedKpis[machine._id].length > 0 && (
                                 <Box
-                                  className= "d-flex gap-3 flex-wrap kpi-card p-3"
+                                  className="d-flex gap-3 flex-wrap kpi-card p-3"
                                   sx={{
                                     maxHeight: 300,
                                     overflowY: "auto",
@@ -188,18 +206,36 @@ const MachineDashboard = () => {
                                     pl: 4,
                                   }}
                                 >
-                                  <Typography variant="body2" sx={{ fontWeight: "bold" , fontSize: "20px"}}>
+                                  <Typography
+                                    variant="body2"
+                                    sx={{
+                                      fontWeight: "bold",
+                                      fontSize: "20px",
+                                    }}
+                                  >
                                     KPIs:
                                   </Typography>
                                   <ul>
-                                    {selectedKpis[machine._id].map((kpi, index) => (
-                                      <li key={index}>
-                                        <Typography variant="body2" sx={{ fontSize: "18px",  textAlign: "left"}}>
-                                        <span style={{ fontWeight: "bold" }}>{kpi.name}</span>
-                                        : {kpi.value} {kpi.unit}
-                                        </Typography>
-                                      </li>
-                                    ))}
+                                    {selectedKpis[machine._id].map(
+                                      (kpi, index) => (
+                                        <li key={index}>
+                                          <Typography
+                                            variant="body2"
+                                            sx={{
+                                              fontSize: "18px",
+                                              textAlign: "left",
+                                            }}
+                                          >
+                                            <span
+                                              style={{ fontWeight: "bold" }}
+                                            >
+                                              {kpi.name}
+                                            </span>
+                                            : {kpi.value} {kpi.unit}
+                                          </Typography>
+                                        </li>
+                                      )
+                                    )}
                                   </ul>
                                 </Box>
                               )}

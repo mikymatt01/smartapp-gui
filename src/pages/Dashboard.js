@@ -159,7 +159,7 @@ function Dashboard() {
   const renderGraph = () => {
     if (!auth) return <></>;
     if (auth?.site !== null)
-      return <LineGraph site={auth?.site} title={`Average working time`} />;
+      return <LineGraph site={auth?.site} title={translate.Dashboard.graph_title_ffm} />;
     // FFM
     else
       return (
@@ -168,7 +168,7 @@ function Dashboard() {
             <LineGraph
               key={`graph_${site}`}
               site={site}
-              title={`Average working time of site ${site + 1}`}
+              title={`${translate.Dashboard.graph_title_smo} ${site + 1}`}
             />
           ))}
         </div>
@@ -249,7 +249,7 @@ function Dashboard() {
                 <option value="avg">{translate.labels.avg}</option>
                 <option value="min">{translate.labels.min}</option>
                 <option value="max">{translate.labels.max}</option>
-                <option value="sum">{translate.labels.sum}</option>
+                <option value="std">{translate.labels.std}</option>
               </select>
               <select
                 id="granularity"
@@ -291,7 +291,7 @@ function Dashboard() {
                   <option value="2">3</option>
                 </select>
               )}
-              <button onClick={handleNewWidget} className="kpi-tab">
+              <button onClick={handleNewWidget} disabled={loading} className="kpi-tab">
                 {loading ? translate.Dashboard.create_button_loading : translate.Dashboard.create_graph}
               </button>
               {errorWidget && <p className="error-message">{errorWidget}</p>}
