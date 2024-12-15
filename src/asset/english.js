@@ -61,7 +61,7 @@ export const translation = {
         anom_1 : "Energy Anomalies",
         anom_2 : "Time Anomalies",
         anom_3 : "Cycle Quality Anomalies",
-        // anom_3 : "Cycle Time Anomalies",
+        anom_4: "Cycle Time Anomalies",
         energy_1 : "Consumption Trend",
         energy_2 : "Idle Consumption",
         energy_3 : "Working Consumption",

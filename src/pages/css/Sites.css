@@ -54,6 +54,7 @@
 
 .view-details-btn:hover {
   background-color: #072e46;
+  color: rgb(127, 127, 127);
 }
 
 .site-detail {
@@ -91,5 +92,6 @@
 }
 
 .close-btn:hover {
-  background: #072e46;
+  background: #b92b2b;
+  color: white;
 }

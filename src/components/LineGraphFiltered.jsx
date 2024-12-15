@@ -53,7 +53,7 @@ export default function LineGraphFiltered({ chartData, startDate, endDate, incre
   return (
     <div
       className="line-graph mb-3 pb-4"
-      style={{ position: "relative", height: "40vh", width: "100%" }}
+      style={{ position: "relative", height: "60vh", width: "100%" }}
     >
       <h2>{translate.Graph.header}</h2>
       {data && <Line data={data} />}

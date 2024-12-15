@@ -18,7 +18,7 @@ const CreateReport = () => {
   const [language, setLanguage] = useState(null); // State for language
   const [startDate, setStartDate] = useState(null); // Start Date state
   const [endDate, setEndDate] = useState(null); // End Date state
-  const [site, setSite] = useState(auth?.site); // State for sites
+  const [site, setSite] = useState(auth?.site); // State for site, default to the one in the context
   const [operation, setOperation] = useState("avg"); // State for frequency
   const [name, setName] = useState(""); // State for report name
   const [selectedKPIs, setSelectedKPIs] = useState([]); // State for selected KPIs
@@ -75,6 +75,7 @@ const CreateReport = () => {
     setLanguage(newLanguage);
   };
 
+  // Handle site change
   const handleSiteChange = (site) => {
     setSite(site);
   };
