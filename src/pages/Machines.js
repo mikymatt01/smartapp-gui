@@ -32,7 +32,6 @@ const MachineDashboard = () => {
         });
 
         const responseData = await response.json();
-        console.log("API Response:", responseData);
 
         const machinesArray = Array.isArray(responseData.data)
           ? responseData.data

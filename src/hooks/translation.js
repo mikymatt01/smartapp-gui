@@ -7,7 +7,6 @@ export const TranslationProvider = ({ children }) => {
 
   const setTranslation = (language) => {
     setCurrentTranslation(language);
-    console.log(`Language updated to: ${language}`);
   };
 
   return (
