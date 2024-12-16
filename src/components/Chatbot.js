@@ -45,7 +45,6 @@ export function Chatbot() {
 
       setMessages([...newMessages, { sender: "bot", text: botMessage }]);
     } catch (error) {
-      console.error("Error fetching response:", error);
       setMessages([
         ...newMessages,
         {
