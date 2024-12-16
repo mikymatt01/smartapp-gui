@@ -64,7 +64,6 @@ const MachineDashboard = () => {
       });
 
       const responseData = await response.json();
-      console.log("KPIs Response:", responseData);
 
       const kpiDetails = responseData.data.kpis || [];
       const computedKpis = [];
@@ -110,7 +109,6 @@ const MachineDashboard = () => {
       );
 
       const responseData = await response.json();
-      console.log("KPI Computation Response:", responseData);
 
       if (response.ok && responseData.data) {
         return responseData.data[0]?.value;

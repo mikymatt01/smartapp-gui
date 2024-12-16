@@ -136,7 +136,6 @@ const CreateReport = () => {
 
       const data = await response.json();
 
-      console.log(data.message);
       if (data?.data) {
         const link = document.createElement("a");
         link.href = data.data.url;

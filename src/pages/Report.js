@@ -40,7 +40,6 @@ const Report = () => {
         }
 
         const result = await response.json(); // Parse the JSON response
-        console.log(result);
         if (result.success) {
           setReports(result.data); // Store the data in the state
         } else {
@@ -69,7 +68,6 @@ const Report = () => {
     };
 
     try {
-      console.log(`Sending DELETE request for report ID: ${reportId}`);
       // Make the API DELETE request to delete the report
       const response = await fetch(
         `https://api-656930476914.europe-west1.run.app/api/v1.0/report/${reportId}`,
