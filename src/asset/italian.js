@@ -9,8 +9,9 @@ export const translation = {
     Dashboard: {
         title: "Benvenuto nella Dashboard",
         subtitle: "Ecco la tua panoramica",
-        graph_title_ffm: "Tempo medio di lavoro",
-        graph_title_smo: "Tempo medio di lavoro del sito",
+        graph_title_ffm: "Media del sito per la KPI:",
+        graph_title_smo: "Media del sito: ",
+        graph_title_smo1: "per la KPI: ",
         create_alarm: "Aggiungi Allarme",
         show_graph: "Mostra Nuovo Grafico",
         loading_kpis: "Caricamento KPIs ...",
@@ -82,7 +83,8 @@ export const translation = {
 
     Chatbot: {
         message: "Scrivi un messaggio...",
-        sorry: "Scusa, qualcosa è andato storto. Per favore, prova di nuovo più tardi!"
+        sorry: "Scusa, qualcosa è andato storto. Per favore, prova di nuovo più tardi!",
+        subtitle: "Questo è un chatbot alimentato da IA, potrebbe commettere errori. Considera di controllare le informazioni importanti."
     },
 
     Report: {

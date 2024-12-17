@@ -9,8 +9,9 @@ export const translation = {
     Dashboard : {
         title : "Welcome to the Dashboard",
         subtitle : "Here is your overview",
-        graph_title_ffm : "Average working time",
-        graph_title_smo : "Average working time of site",
+        graph_title_ffm : "Average of the site",
+        graph_title_smo : "Average of site: ",
+        graph_title_smo1: "for KPI: ",
         create_alarm : "Add Alarm",
         show_graph : "Show New Graph",
         loading_kpis : "Loading KPIs ...",
@@ -81,7 +82,8 @@ export const translation = {
 
     Chatbot : {
         message: "Write a message...",
-        sorry: "Sorry, something went wrong. Please try again later!"
+        sorry: "Sorry, something went wrong. Please try again later!",
+        subtitle: "This is AI-powered chatbot, it can make mistakes. Consider checking important information."
     },
 
     Report : {

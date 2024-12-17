@@ -168,7 +168,7 @@ function Dashboard() {
             <LineGraph
               key={`graph_${site}`}
               site={site}
-              title={`${translate.Dashboard.graph_title_smo} ${site + 1}`}
+              title={`${translate.Dashboard.graph_title_smo} ${site + 1}, ${translate.Dashboard.graph_title_smo1}`}
             />
           ))}
         </div>

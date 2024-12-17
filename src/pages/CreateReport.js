@@ -15,10 +15,10 @@ import { TranslationContext } from "../hooks/translation";
 const CreateReport = () => {
   const auth = useContext(AuthContext);
   const { translate } = React.useContext(TranslationContext); // Gets the context of the translation
-  const [language, setLanguage] = useState(null); // State for language
+  const [language, setLanguage] = useState("italian"); // State for language
   const [startDate, setStartDate] = useState(null); // Start Date state
   const [endDate, setEndDate] = useState(null); // End Date state
-  const [site, setSite] = useState(auth?.site); // State for site, default to the one in the context
+  const [site, setSite] = useState(auth?.site ?? 1); // State for site, default to the one in the context or 1
   const [operation, setOperation] = useState("avg"); // State for frequency
   const [name, setName] = useState(""); // State for report name
   const [selectedKPIs, setSelectedKPIs] = useState([]); // State for selected KPIs

@@ -3,7 +3,7 @@ import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import SendIcon from "@mui/icons-material/Send";
 import { IoMdClose } from "react-icons/io";
 import { TranslationContext } from "../hooks/translation";
-import './css/Chatbot.css';
+import "./css/Chatbot.css";
 
 // This implements the chatbot
 
@@ -80,9 +80,22 @@ export function Chatbot() {
           {/* Top bar */}
           <div className="chatbot-header">
             <span>Chat</span>
+            {/* Aggiunta frase con stile inline */}
             <button className="close-button" onClick={toggleChatbot}>
-            <IoMdClose size={28} />
+              <IoMdClose size={28} />
             </button>
+          </div>
+          <div className="chatbot-allert">
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#777",
+                marginLeft: "5px",
+                display: "block",
+              }}
+            >
+              {translate.Chatbot.subtitle}
+            </p>
           </div>
 
           <div className="chatbot-box">
