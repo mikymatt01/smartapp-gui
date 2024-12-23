@@ -6,27 +6,22 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Switch,
+  FormLabel
 } from '@mui/material';
 import { TranslationContext } from "../hooks/translation";
-import { AuthContext } from "../hooks/user";
 import { DataContext } from "../hooks/data";
 
-const CreateAlarmModal = ({
+const UpdateAlarmModal = ({
+    data,
     isOpen,
     setIsOpen,
-    onCreateAlarm
+    onUpdateAlarm,
 }) => {
-    const user = useContext(AuthContext); // Gets the context of the translation
-    const { KPIs } = useContext(DataContext); // Gets the context of the translation
+    const { KPIs } = useContext(DataContext)
     const [loadingAlarm, setLoadingAlarm] = useState(false)
-    const [inputValue, setInputValue] = useState({
-        kpi_id: "",
-        site_id: user.site,
-        machine_id: null,
-        threshold: 0,
-        threshold_type: "UPPER_BOUND"
-    });
-    const { translate } = useContext(TranslationContext); // Gets the context of the translation
+    const [inputValue, setInputValue] = useState(data);
+    const { translate } = useContext(TranslationContext)
     const handleThresholdChange = (e) => {
         setInputValue((obj) => ({ ...obj, threshold: e.target.value }));
     };
@@ -39,23 +34,24 @@ const CreateAlarmModal = ({
     const handleKPIChange = (e) => {
         setInputValue((obj) => ({ ...obj, kpi_id: e.target.value }));
     };
+    const handleActiveChange = (e) => {
+        setInputValue((obj) => ({ ...obj, enabled: !obj.enabled }));
+    };
     
     const handleSubmit = async () => {
         setLoadingAlarm(true);
         try {
-            await onCreateAlarm({ ...inputValue, threshold: parseFloat(inputValue.threshold) })
+            await onUpdateAlarm({...inputValue, threshold: parseFloat(inputValue.threshold)})
         } catch (err) {
         } finally {
             setLoadingAlarm(false);
         }
-        closeModal(); // Close the modal after submission
+        closeModal()
     };
 
-    const handleOpen = () => setIsOpen(true);
     const handleClose = () => setIsOpen(false);
     const closeModal = () => setIsOpen(false);
-    console.log(inputValue)
-    return (
+    return inputValue ? (
         <Modal
             open={isOpen}
             onClose={handleClose}
@@ -99,14 +95,16 @@ const CreateAlarmModal = ({
                         ))}
                         </Select>
                     </FormControl>
+                    <FormLabel component="legend">Enabled</FormLabel>
+                    <Switch checked={inputValue.enabled} onChange={handleActiveChange} /> 
                     <div style={styles.buttonContainer}>
-                        <button onClick={handleSubmit} style={styles.button}>{loadingAlarm ? 'loading' :translate.labels.add}</button>
+                        <button onClick={handleSubmit} style={styles.button}>{loadingAlarm ? 'loading' :translate.labels.update}</button>
                         <button onClick={closeModal} style={styles.button}>{translate.labels.cancel}</button>
                     </div>
                 </div>
             </div>
         </Modal>
-    )
+    ) : (<div></div>)
 }
 
 const styles = {
@@ -149,4 +147,4 @@ const styles = {
   },
 };
 
-export default CreateAlarmModal
+export default UpdateAlarmModal

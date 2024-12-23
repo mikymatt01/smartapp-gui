@@ -100,6 +100,20 @@ export const translation = {
         header_3 : "Delete"
     },
 
+    Alarm: {
+        title: "Alarms",
+        subtitle: "Welcome to the alarm page. Here you can manage your alarms.",
+        create_alarm: "Create alarm",
+        no_alarms: "No alarm available",
+        threshold: "Threshold",
+        threshold_type: "Type",
+        kpi: 'KPI',
+        active: "Active",
+        delete: "Delete",
+        UPPER_BOUND: "Upper bound",
+        LOWER_BOUND: "Lower bound"
+    },
+
     Settings : {
         settings: "Settings",
         account: "Account",

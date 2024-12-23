@@ -10,14 +10,14 @@ import Chatbot from "../components/Chatbot";
 import CreateAlarmModal from "../components/CreateAlarmModal";
 import { TranslationContext } from "../hooks/translation";
 import { DataContext } from "../hooks/data";
-
+import { fetchKPIsSDK } from '../sdk'
 // There are three sites for the SMO
 const sites = [0, 1, 2];
 
 function Dashboard() {
   const auth = useContext(AuthContext); // Gets the context of the user
   const { translate } = useContext(TranslationContext); // Gets the context of the translation
-    const { setCachedKPIs, setCachedMachines } = useContext(DataContext)
+  const { setCachedKPIs, setCachedMachines } = useContext(DataContext)
 
   const [error, setError] = useState(null); // State for error messages
   const [errorWidget, setErrorWidget] = useState(null); // State for error messages for newwidget
@@ -40,31 +40,11 @@ function Dashboard() {
     const fetchKPIs = async () => {
       setLoadingKPIs(true);
       setError(null);
-      const storedToken = localStorage.getItem("token");
       try {
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-        const requestOptions = {
-          method: "GET",
-          headers: myHeaders,
-          redirect: "follow",
-        };
-        if (site) {
-          const response = await fetch(
-            `http://127.0.0.1:8000/api/v1.0/kpi/?site=${site}`,
-            requestOptions
-          );
-
-          if (!response.ok) {
-            throw new Error("Failed to fetch KPIs");
-          }
-
-          const data = await response.json();
+          const data = await fetchKPIsSDK(site)
           setKpis(data.data); // the .data is an array of object
           console.log("KPI: ", data.data)
           setCachedKPIs(data.data)
-        }
       } catch (err) {
         setError(err.message);
       } finally {

@@ -6,7 +6,8 @@ export const translation = {
         sum: "Somma",
         std: 'Deviazione Standard',
         cancel: 'Annulla',
-        add: 'Aggiungi'
+        add: 'Aggiungi',
+        update: 'Modifica'
     },
     Dashboard: {
         alarm_title: "Form allarme",
@@ -106,10 +107,11 @@ export const translation = {
         subtitle: "Benvenuto nella pagina degli avvisi. Qui puoi gestire i tuoi avvisi.",
         create_alarm: "Crea avviso",
         no_alarms: "Nessum avviso",
-        header_1: "Limite",
-        header_2: "Tipo",
-        header_3: "Attivo",
-        header_4: "Elimina",
+        threshold: "Limite",
+        threshold_type: "Tipo",
+        kpi: 'indice',
+        active: "Attivo",
+        delete: "Elimina",
         UPPER_BOUND: "Limite superiore",
         LOWER_BOUND: "Limite inferiore"
     },

@@ -1,53 +1,37 @@
 import React, { useContext, useEffect, useState } from "react";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { RiDeleteBin6Line, RiPencilFill } from "react-icons/ri";
 import { useTable } from "react-table"; 
-import { Link } from "react-router-dom";
 import "./css/Report.css";
 import { TranslationContext } from '../hooks/translation'
+import { DataContext } from '../hooks/data'
 import CreateAlarmModal from "../components/CreateAlarmModal";
 import BallIcon from "../components/BallIcon";
-
+import { fetchAlarmsSDK, deleteAlarmSDK, fetchKPIsSDK, updateAlarmSDK, createAlarmSDK } from '../sdk'
+import UpdateAlarmModal from "../components/UpdateAlarmModal";
 const Alarm = () => {
   const [alarms, setAlarms] = useState([]);
   const [loadingReports, setLoadingReports] = useState(false);
   const [error, setError] = useState(null);
   const { translate } = useContext(TranslationContext)
-  const [isAlarmModalOpen, setIsAlarmModalOpen] = useState(false);
-  
+  const { KPIs, setCachedKPIs } = useContext(DataContext)
+  const [createModal, setCreateModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false)
+  const [updateAlarm, setUpdateAlarm]= useState(null)
   const handleAlarmModal = () => {
-    setIsAlarmModalOpen((prev) => !prev)
+    setCreateModal((prev) => !prev)
   }
 
   useEffect(() => {
-    const fetchReports = async () => {
+    const fetchAlarms = async () => {
       setLoadingReports(true);
       setError(null);
-
-      const storedToken = localStorage.getItem("token");
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-
       try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/api/v1.0/alarm/",
-          requestOptions
-        );
+        let result = await fetchAlarmsSDK()
+        setAlarms(result.data)
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch reports");
-        }
-
-        const result = await response.json();
-        if (result.success) {
-          setAlarms(result.data);
-        } else {
-          throw new Error(result.message || "Failed to fetch reports");
+        if (!KPIs) {
+          result = await fetchKPIsSDK()
+          setCachedKPIs(result.data)
         }
       } catch (err) {
         setError(err.message);
@@ -56,30 +40,12 @@ const Alarm = () => {
       }
     };
 
-    fetchReports();
-  }, []);
+    fetchAlarms();
+  }, [KPIs, setCachedKPIs]);
 
   const handleDelete = async (alarmId) => {
-    const storedToken = localStorage.getItem("token");
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
-    const requestOptions = {
-      method: "DELETE",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
     try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/v1.0/alarm/${alarmId}`,
-        requestOptions
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to delete report");
-      }
-
+      await deleteAlarmSDK(alarmId)
       setAlarms(prevAlarms => prevAlarms.filter(alarm => alarm._id !== alarmId));
     } catch (err) {
       setError(err.message);
@@ -89,11 +55,11 @@ const Alarm = () => {
   const columns = React.useMemo(
     () => [
       {
-        Header: translate.Alarm.header_1,
+        Header: translate.Alarm.threshold,
         accessor: "threshold",
       },
       {
-        Header: translate.Alarm.header_2,
+        Header: translate.Alarm.threshold_type,
         accessor: "threshold_type",
         Cell: ({ value }) => {
           if (!value) return
@@ -102,11 +68,22 @@ const Alarm = () => {
           )
         },
       },
-        {
-        Header: translate.Alarm.header_3,
+      {
+        Header: translate.Alarm.kpi,
+        accessor: "kpi_id",
+        Cell: ({ value }) => {
+          if (!KPIs) return
+          const kpi = KPIs.find((KPI) => KPI._id === value)
+          if (!value) return
+          return (
+            <p>{kpi.name}</p>
+          )
+        },
+      },
+      {
+        Header: translate.Alarm.active,
         accessor: "enabled",
         Cell: ({ value }) => {
-          if (!value) return
           return (
             <p>
               {value ? <BallIcon fill="green" /> : <BallIcon fill="red" />}
@@ -115,7 +92,23 @@ const Alarm = () => {
         },
       },
       {
-        Header: translate.Alarm.header_4,
+        Header: translate.labels.update,
+        Cell: ({ row }) => {
+          return (
+            <button
+              className="delete-button"
+              onClick={() => {
+                setUpdateModal(true)
+                setUpdateAlarm(alarms[row.index])
+              }}
+            >
+              <RiPencilFill />
+            </button>
+          )
+        },
+      },
+      {
+        Header: translate.Alarm.delete,
         Cell: ({ row }) => (
           <button
             className="delete-button"
@@ -126,9 +119,18 @@ const Alarm = () => {
         ),
       },
     ],
-    [translate.Alarm]
+    [KPIs, alarms, translate.Alarm, translate.labels.update]
   );
-
+  const handleUpdateAlarm = async (update) => {
+    await updateAlarmSDK(update._id, update)
+    const result = await fetchAlarmsSDK()
+    setAlarms(result.data)
+  };
+  const handleCreateAlarm = async (inputValue) => {
+    await createAlarmSDK(inputValue)
+    const result = await fetchAlarmsSDK()
+    setAlarms(result.data)
+  }
   const data = React.useMemo(() => alarms, [alarms]);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -149,7 +151,8 @@ const Alarm = () => {
             >
             <span>{translate.Alarm.create_alarm}</span>
           </button>
-            {isAlarmModalOpen && (<CreateAlarmModal isOpen={isAlarmModalOpen} setIsOpen={setIsAlarmModalOpen} />)}
+            {createModal && (<CreateAlarmModal isOpen={createModal} setIsOpen={setCreateModal} onCreateAlarm={handleCreateAlarm} />)}
+            {updateModal && updateAlarm && (<UpdateAlarmModal data={updateAlarm} isOpen={updateModal} setIsOpen={setUpdateModal} onUpdateAlarm={handleUpdateAlarm} />)}
           </div>
         </div>
 

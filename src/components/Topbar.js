@@ -5,6 +5,7 @@ import { AuthContext } from "../hooks/user";
 import UserThumbnail from "./UserThumbnail";
 import ChangeTranslation from "./changeTranslation";
 import { Badge } from "@mui/material";
+import { format } from 'date-fns';
 
 function Topbar() {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -31,7 +32,7 @@ function Topbar() {
           };
   
           const response = await fetch(
-            `http://127.0.0.1:8000/api/v1.0/notifications`,
+            `http://127.0.0.1:8000/api/v1.0/notification`,
             requestOptions
           );
           if (!response.ok) {
@@ -72,6 +73,7 @@ function Topbar() {
                   <div key={index} className="notification-item">
                     <b>{notification.title}</b>
                     <p>{notification.message}</p>
+                    <p style={{ fontSize: '10px', color: 'grey', }}>{format(notification.created_at, 'dd-MM-yyyy HH:mm')}</p>
                   </div>
                 )
               })

@@ -9,6 +9,7 @@ import MyRoutes from "./components/Routes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { TranslationProvider } from "./hooks/translation";
 import { DataProvider } from "./hooks/data";
+import { fetchUserSDK } from "./sdk";
 
 const baseUrl = "http://127.0.0.1:8000/api/v1.0";
 
@@ -16,10 +17,8 @@ function App() {
   const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // In contextValue the info of the user
   const contextValue = useMemo(() => currentUser, [currentUser]);
 
-  // Retrieve token from localStorage on component mount
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
@@ -29,19 +28,9 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      // Call to get the user from api using the token
-      const storedToken = localStorage.getItem("token");
-      if (!storedToken) return;
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${storedToken}`);
-      myHeaders.append("Content-Type", "application/json");
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-      };
       try {
-        const response = await fetch(`${baseUrl}/user/`, requestOptions);
-        setCurrentUser((await response.json()).data);
+        const result = await fetchUserSDK()
+        setCurrentUser(result.data);
       } catch (e) {}
     }
     getUser();
