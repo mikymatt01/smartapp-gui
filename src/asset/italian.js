@@ -4,9 +4,12 @@ export const translation = {
         min: "Min",
         max: "Max",
         sum: "Somma",
-        std: 'Deviazione Standard'
+        std: 'Deviazione Standard',
+        cancel: 'Annulla',
+        add: 'Aggiungi'
     },
     Dashboard: {
+        alarm_title: "Form allarme",
         title: "Benvenuto nella Dashboard",
         subtitle: "Ecco la tua panoramica",
         graph_title_ffm: "Media del sito per la KPI:",

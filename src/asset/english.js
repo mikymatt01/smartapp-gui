@@ -4,9 +4,12 @@ export const translation = {
         min: 'Min',
         max: 'Max',
         sum: 'Sum',
-        std: 'Standard Deviation'
+        std: 'Standard Deviation',
+        cancel: 'Cancel',
+        add: 'Add'
     },
-    Dashboard : {
+    Dashboard: {
+        alarm_title: "Form alarm",
         title : "Welcome to the Dashboard",
         subtitle : "Here is your overview",
         graph_title_ffm : "Average of the site",
@@ -25,7 +28,7 @@ export const translation = {
         by_category : "By category",
         select_site : "Select Site",
         create_graph : "Create new graph",
-        create_button_loading : "Creating",
+        create_button_loading: "Creating",
     },
     CreateReport : {
         name: "Name",

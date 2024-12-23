@@ -61,7 +61,7 @@ export const LineGraph = ({ site, title }) => {
           redirect: "follow",
         };
         const response = await fetch(
-          `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/?site=${site}`,
+          `http://127.0.0.1:8000/api/v1.0/kpi/?site=${site}`,
           requestOptions
         );
 
@@ -106,7 +106,7 @@ export const LineGraph = ({ site, title }) => {
         };
 
         const response = await fetch(
-          `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/${site}/compute?kpi_id=${selectedKPI}&start_date=2024-10-08%2000%3A00%3A00&end_date=2024-10-14%2000%3A00%3A00&granularity_op=avg&granularity_days=1&category=${category}`,
+          `http://127.0.0.1:8000/api/v1.0/kpi/site/${site}/compute?kpi_id=${selectedKPI}&start_date=2024-10-08%2000%3A00%3A00&end_date=2024-10-14%2000%3A00%3A00&granularity_op=avg&granularity_days=1&category=${category}`,
           requestOptions
         );
 

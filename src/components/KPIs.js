@@ -50,7 +50,7 @@ export const KPI = () => {
                 };
 
                 const response = await fetch(
-                    `https://api-656930476914.europe-west1.run.app/api/v1.0/anomalies/?anomaly_type=${type}`,
+                    `http://127.0.0.1:8000/api/v1.0/anomalies/?anomaly_type=${type}`,
                     requestOptions
                 );
 
@@ -113,7 +113,7 @@ export const KPI = () => {
                 };
 
                 const response = await fetch(
-                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=avg&granularity_days=1`,
+                    `http://127.0.0.1:8000/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=avg&granularity_days=1`,
                     requestOptions
                 );
 
@@ -171,7 +171,7 @@ export const KPI = () => {
                 };
 
                 const response = await fetch(
-                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=avg&granularity_days=1`,
+                    `http://127.0.0.1:8000/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=avg&granularity_days=1`,
                     requestOptions
                 );
 
@@ -208,7 +208,7 @@ export const KPI = () => {
                 };
 
                 const response = await fetch(
-                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
+                    `http://127.0.0.1:8000/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
                     requestOptions
                 );
 
@@ -217,7 +217,7 @@ export const KPI = () => {
                 }
 
                 const response1 = await fetch(
-                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi1}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
+                    `http://127.0.0.1:8000/api/v1.0/kpi/site/1/compute?kpi_id=${kpi1}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
                     requestOptions
                 );
 
@@ -274,7 +274,7 @@ export const KPI = () => {
                 };
 
                 const response = await fetch(
-                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=avg&granularity_days=1`,
+                    `http://127.0.0.1:8000/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=avg&granularity_days=1`,
                     requestOptions
                 );
 
@@ -311,7 +311,7 @@ export const KPI = () => {
                 };
 
                 const response = await fetch(
-                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
+                    `http://127.0.0.1:8000/api/v1.0/kpi/site/1/compute?kpi_id=${kpi}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
                     requestOptions
                 );
 
@@ -320,7 +320,7 @@ export const KPI = () => {
                 }
 
                 const response1 = await fetch(
-                    `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/1/compute?kpi_id=${kpi1}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
+                    `http://127.0.0.1:8000/api/v1.0/kpi/site/1/compute?kpi_id=${kpi1}&start_date=2024-09-30%2000%3A00%3A00&end_date=2024-10-04%2000%3A00%3A00&granularity_op=sum`,
                     requestOptions
                 );
 

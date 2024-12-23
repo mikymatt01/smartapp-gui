@@ -31,7 +31,7 @@ const Report = () => {
 
       try {
         const response = await fetch(
-          "https://api-656930476914.europe-west1.run.app/api/v1.0/report/",
+          "http://127.0.0.1:8000/api/v1.0/report/",
           requestOptions
         );
 
@@ -70,7 +70,7 @@ const Report = () => {
     try {
       // Make the API DELETE request to delete the report
       const response = await fetch(
-        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/${reportId}`,
+        `http://127.0.0.1:8000/api/v1.0/report/${reportId}`,
         requestOptions
       );
 

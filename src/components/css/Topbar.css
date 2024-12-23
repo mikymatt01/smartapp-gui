@@ -46,7 +46,7 @@
   position: absolute;
   top: 40px; /* Dropdown position relative to the icon */
   right: 0;
-  width: 250px;
+  width: 300px;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -58,8 +58,10 @@
 }
 
 .notification-item {
+  flex: auto;
   padding: 10px;
   font-size: 14px;
+  align-content: space-between;
   color: #333;
   border-bottom: 1px solid #eee;
   cursor: pointer;

@@ -7,7 +7,9 @@ import { AuthContext } from "../hooks/user";
 import DatePicker from "react-datepicker";
 import LineGraphFiltered from "../components/LineGraphFiltered";
 import Chatbot from "../components/Chatbot";
+import CreateAlarmModal from "../components/CreateAlarmModal";
 import { TranslationContext } from "../hooks/translation";
+import { DataContext } from "../hooks/data";
 
 // There are three sites for the SMO
 const sites = [0, 1, 2];
@@ -15,9 +17,12 @@ const sites = [0, 1, 2];
 function Dashboard() {
   const auth = useContext(AuthContext); // Gets the context of the user
   const { translate } = useContext(TranslationContext); // Gets the context of the translation
+    const { setCachedKPIs, setCachedMachines } = useContext(DataContext)
+
   const [error, setError] = useState(null); // State for error messages
   const [errorWidget, setErrorWidget] = useState(null); // State for error messages for newwidget
   const [dropdownVisible2, setDropdownVisible2] = useState(false); // State for newwidget dropdown
+  const [isAlarmModalOpen, setIsAlarmModalOpen] = useState(false); // State for create alarm model
   const [granularity, setGranularity] = useState(""); // State for report name
   const [operation, setOperation] = useState(""); // State for opration of aggregation for newwidget
   const [startDate, setStartDate] = useState(null); // State for end date for newwidget
@@ -36,7 +41,6 @@ function Dashboard() {
       setLoadingKPIs(true);
       setError(null);
       const storedToken = localStorage.getItem("token");
-
       try {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${storedToken}`);
@@ -48,7 +52,7 @@ function Dashboard() {
         };
         if (site) {
           const response = await fetch(
-            `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/?site=${site}`,
+            `http://127.0.0.1:8000/api/v1.0/kpi/?site=${site}`,
             requestOptions
           );
 
@@ -58,6 +62,8 @@ function Dashboard() {
 
           const data = await response.json();
           setKpis(data.data); // the .data is an array of object
+          console.log("KPI: ", data.data)
+          setCachedKPIs(data.data)
         }
       } catch (err) {
         setError(err.message);
@@ -65,10 +71,8 @@ function Dashboard() {
         setLoadingKPIs(false);
       }
     };
-
-    if (dropdownVisible2) {
-      fetchKPIs();
-    }
+    fetchKPIs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dropdownVisible2, site]);
 
   useEffect(() => {
@@ -81,6 +85,10 @@ function Dashboard() {
   const handleGranularityChange = (newName) => {
     setGranularity(newName);
   };
+
+  const handleAlarmModal = () => {
+    setIsAlarmModalOpen((prev) => !prev)
+  }
 
   const handleChoiceWidget = (choice) => {
     toggleDropdown2();
@@ -129,7 +137,7 @@ function Dashboard() {
 
       if (site && selectedKPI) {
         const response = await fetch(
-          `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/site/${site}/compute?kpi_id=${selectedKPI}&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&granularity_op=${operation}&granularity_days=${granularity}`,
+          `http://127.0.0.1:8000/api/v1.0/kpi/site/${site}/compute?kpi_id=${selectedKPI}&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&granularity_op=${operation}&granularity_days=${granularity}`,
           requestOptions
         );
 
@@ -182,9 +190,8 @@ function Dashboard() {
         <p className="m-0">{translate.Dashboard.subtitle}</p>
         <div className="d-flex gap-2 flex-1 align-items-center justify-content-end ms-auto">
           <button
-            onClick={() => handleChoiceWidget()}
+            onClick={handleAlarmModal}
             className={`kpi-tab`}
-            disabled
           >
             {translate.Dashboard.create_alarm}
           </button>
@@ -201,6 +208,7 @@ function Dashboard() {
         {/* Dropdown menu */}
         <div className="d-flex flex-column gap-3">
           {/* Show additional options based on the selection */}
+          {isAlarmModalOpen && (<CreateAlarmModal isOpen={isAlarmModalOpen} setIsOpen={setIsAlarmModalOpen} />)}
           {dropdownVisible2 && (
             <div className="d-flex gap-3 flex-wrap kpi-card p-3">
               <select

@@ -18,7 +18,7 @@ const MachineDashboard = () => {
   const [selectedKpis, setSelectedKpis] = useState({});
   const [visibleKpis, setVisibleKpis] = useState({});
   const machineRefs = useRef({});
-  const baseUrl = "https://api-656930476914.europe-west1.run.app/api/v1.0";
+  const baseUrl = "http://127.0.0.1:8000/api/v1.0";
 
   useEffect(() => {
     const fetchMachines = async () => {

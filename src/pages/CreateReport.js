@@ -45,7 +45,7 @@ const CreateReport = () => {
         };
 
         const response = await fetch(
-          `https://api-656930476914.europe-west1.run.app/api/v1.0/kpi/?site=${site}`,
+          `http://127.0.0.1:8000/api/v1.0/kpi/?site=${site}`,
           requestOptions
         );
 
@@ -126,7 +126,7 @@ const CreateReport = () => {
       };
 
       const response = await fetch(
-        `https://api-656930476914.europe-west1.run.app/api/v1.0/report/`,
+        `http://127.0.0.1:8000/api/v1.0/report/`,
         requestOptions
       );
 

@@ -1,20 +1,53 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import "./css/Topbar.css";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { AuthContext } from "../hooks/user";
 import UserThumbnail from "./UserThumbnail";
 import ChangeTranslation from "./changeTranslation";
+import { Badge } from "@mui/material";
 
 function Topbar() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showTranslation, setShowTranslation] = useState(false);
-  const notifications = ["Allert #1", "Allert #2", "Allert #3"];
+  const [notifications, setNotifications] = useState({title: "Alert 1", message: "hey"});
   const ref = useRef(null)
 
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
   };
 
+  useEffect(() => {
+      const fetchNotifications = async () => {
+        const storedToken = localStorage.getItem("token");
+  
+        try {
+          const myHeaders = new Headers();
+          myHeaders.append("Authorization", `Bearer ${storedToken}`);
+  
+          const requestOptions = {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow",
+          };
+  
+          const response = await fetch(
+            `http://127.0.0.1:8000/api/v1.0/notifications`,
+            requestOptions
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch Notifications");
+          }
+  
+          const data = await response.json();
+          setNotifications(data.data); // the .data is an array of objects
+        } catch (err) {
+        } finally {
+        }
+      };
+  
+      fetchNotifications();
+  }, []);
+  
   const auth = useContext(AuthContext);
   return (
     <div className="topbar w-100  px-3">
@@ -25,18 +58,23 @@ function Topbar() {
           setShow={setShowTranslation}
         />
         <div className="notification-wrapper">
-          <NotificationsIcon
-            className="notification-icon"
-            onClick={toggleNotifications}
-            ref={ref}
-          />
+          <Badge badgeContent={' '} color="primary">
+            <NotificationsIcon
+              className="notification-icon"
+              onClick={toggleNotifications}
+              ref={ref}
+              />
+          </Badge>
           <div className="notification-dropdown" hidden={!showNotifications}>
             {notifications.length > 0 ? (
-              notifications.map((message, index) => (
-                <div key={index} className="notification-item">
-                  {message}
-                </div>
-              ))
+              notifications.map((notification, index) => {
+                return (
+                  <div key={index} className="notification-item">
+                    <b>{notification.title}</b>
+                    <p>{notification.message}</p>
+                  </div>
+                )
+              })
             ) : (
               <div className="notification-item">No new notifications</div>
             )}
