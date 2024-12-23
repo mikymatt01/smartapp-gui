@@ -41,7 +41,7 @@ const CreateAlarmModal = ({
     });
     const { translate } = useContext(TranslationContext); // Gets the context of the translation
     const handleThresholdChange = (e) => {
-        setInputValue((obj) => ({ ...obj, threshold: e.target.value }));
+        setInputValue((obj) => ({ ...obj, threshold: parseFloat(e.target.value) }));
     };
     const handleThresholdTypeChange = (e) => {
         setInputValue((obj) => ({ ...obj, threshold_type: e.target.value }));
@@ -59,15 +59,15 @@ const CreateAlarmModal = ({
         try {
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${storedToken}`);
-
+            myHeaders.append("Content-Type", "application/json");
+            console.log(inputValue)
             const requestOptions = {
                 method: "POST",
                 headers: myHeaders,
-                redirect: "follow",
                 body: JSON.stringify(inputValue),
             };
             const response = await fetch(
-                `http://127.0.0.1:8000/api/v1.0/alarm`,
+                'http://127.0.0.1:8000/api/v1.0/alarm/',
                 requestOptions
             );
 

@@ -138,6 +138,7 @@ export const translation = {
     },
     SideBar: {
         Dashboard: "Dashboard",
+        Alarm: "Alarms",
         Sites: "Sites",
         Machines: "Machines",
         Report: "Report",

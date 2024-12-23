@@ -98,7 +98,20 @@ export const translation = {
         create_report: "Crea Report",
         header_1: "Nome",
         header_2: "Scarica",
-        header_3: "Elimina",
+        header_3: "Elimina"
+    },
+
+    Alarm: {
+        title: "Avvisi",
+        subtitle: "Benvenuto nella pagina degli avvisi. Qui puoi gestire i tuoi avvisi.",
+        create_alarm: "Crea avviso",
+        no_alarms: "Nessum avviso",
+        header_1: "Limite",
+        header_2: "Tipo",
+        header_3: "Attivo",
+        header_4: "Elimina",
+        UPPER_BOUND: "Limite superiore",
+        LOWER_BOUND: "Limite inferiore"
     },
 
     Settings: {
@@ -140,6 +153,7 @@ export const translation = {
 
     SideBar: {
         Dashboard: "Schermata iniziale",
+        Alarm: "Avvisi",
         Sites: "Siti",
         Machines: "Macchine",
         Report: "Report",
