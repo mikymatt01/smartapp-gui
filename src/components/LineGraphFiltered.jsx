@@ -48,7 +48,7 @@ export default function LineGraphFiltered({ chartData, startDate, endDate, incre
         setData(newData);
       }
     }
-  }, [startDate, endDate, chartData, increment]);
+  }, [startDate, endDate, chartData, increment, translate.Graph.label]);
 
   return (
     <div
@@ -73,17 +73,17 @@ function generateDateRange(startDate, endDate, increment) {
   }
 
   // Generates the list of dates based on granularity
-  if(increment == 1){
+  if(increment === 1){
     while (currentDate <= finalDate) {
       dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
       currentDate.setDate(currentDate.getDate() + 1); // One day increment
     }
-  } else if(increment == 7){
+  } else if(increment === 7){
     while (currentDate <= finalDate) {
       dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
       currentDate.setDate(currentDate.getDate() + 7); // Seven days increment
     }
-  } else if(increment == 30){
+  } else if(increment === 30){
     while (currentDate <= finalDate) {
       dateList.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
       currentDate.setDate(currentDate.getDate() + 30); // 30 days increment
