@@ -24,17 +24,24 @@ function ChangeTranslation({ show, setShow }) {
         <div className="notification-wrapper" style={{ cursor: "pointer" }} >
             <img src={language.icon} width={40} height={20} alt='Spain flag' onClick={toggleLanguages} />
             <div className="translation-dropdown" hidden={!show}>
-                {languagesSupported.map((ls, index) => (
-                    <div role="button" onClick={() => {
-                        setLanguage(ls)
-                        setTranslation(ls.lang)
-                    }}>
-                        <img src={ls.icon} width={40} height={20} alt='Spain flag' />
-                        {index + 1 < languagesSupported.length ? (
-                            <div className="separator" />
-                        ) : null}
-                    </div>
-                ))}
+                {languagesSupported.map((ls, index) => {
+                    console.log(ls)
+                    return (
+                        <div
+                            role="button"
+                            onClick={() => {
+                                setLanguage(ls)
+                                setTranslation(ls.lang)
+                            }}
+                            key={`language_${index}`}
+                        >
+                            <img src={ls.icon} width={40} height={20} alt='Spain flag' />
+                            {index + 1 < languagesSupported.length ? (
+                                <div className="separator" />
+                            ) : null}
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )

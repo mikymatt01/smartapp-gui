@@ -94,7 +94,7 @@ export const fetchKPIsSDK = async (site) => {
         headers: myHeaders,
         redirect: "follow",
     };
-    if (!site) throw new Error("Failed to fetch KPIs");
+    if (site === null) throw new Error("Failed to fetch KPIs");
     const response = await fetch(
         `${baseUrl}/kpi/?site=${site}`,
         requestOptions
@@ -117,4 +117,24 @@ export const fetchUserSDK = async () => {
       };
     const response = await fetch(`${baseUrl}/user/`, requestOptions);
     return await response.json()
+}
+
+export const setNotificationsAsSeen = async () => {
+    const storedToken = localStorage.getItem("token");
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+    };
+    const response = await fetch(
+        `${baseUrl}/notification/seen`,
+        requestOptions
+    );
+
+    if (!response.ok)
+        throw new Error("Failed to fetch KPIs");
+    return await response.json();
 }

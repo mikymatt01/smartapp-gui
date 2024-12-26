@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { fetchKPIsSDK, fetchUserSDK } from "../sdk";
+
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
@@ -19,7 +20,8 @@ export const DataProvider = ({ children }) => {
       try {
         let result = await fetchUserSDK()
         const user = result.data
-        result = await fetchKPIsSDK(user.site)
+        if (user.site === null) result = { data: [] }
+        else result = await fetchKPIsSDK(user.site)
         setCurrentKPIs(result.data)
       } catch (e) {
 

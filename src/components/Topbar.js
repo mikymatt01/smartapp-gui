@@ -6,16 +6,26 @@ import UserThumbnail from "./UserThumbnail";
 import ChangeTranslation from "./changeTranslation";
 import { Badge } from "@mui/material";
 import { format } from 'date-fns';
+import { setNotificationsAsSeen } from "../sdk";
 
 function Topbar() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showTranslation, setShowTranslation] = useState(false);
-  const [notifications, setNotifications] = useState({title: "Alert 1", message: "hey"});
+  const [notifications, setNotifications] = useState([]);
   const ref = useRef(null)
 
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
   };
+
+  useEffect(() => {
+    console.log("notifications: ", showNotifications)
+    if (showNotifications) {
+      setNotificationsAsSeen()
+        .then((result) => setNotifications(result.data))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showNotifications])
 
   useEffect(() => {
       const fetchNotifications = async () => {
@@ -40,7 +50,7 @@ function Topbar() {
           }
   
           const data = await response.json();
-          setNotifications(data.data); // the .data is an array of objects
+          setNotifications(data.data);
         } catch (err) {
         } finally {
         }
@@ -59,13 +69,21 @@ function Topbar() {
           setShow={setShowTranslation}
         />
         <div className="notification-wrapper">
-          <Badge badgeContent={' '} color="primary">
-            <NotificationsIcon
+          {notifications.filter((notification) => !notification.seen).length > 0 ? (
+            <Badge badgeContent={' '} color="primary">
+              <NotificationsIcon
+                className="notification-icon"
+                onClick={toggleNotifications}
+                ref={ref}
+                />
+            </Badge>
+          ) : (
+              <NotificationsIcon
               className="notification-icon"
               onClick={toggleNotifications}
               ref={ref}
               />
-          </Badge>
+          )}
           <div className="notification-dropdown" hidden={!showNotifications}>
             {notifications.length > 0 ? (
               notifications.map((notification, index) => {

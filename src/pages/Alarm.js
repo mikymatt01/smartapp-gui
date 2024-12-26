@@ -9,6 +9,7 @@ import BallIcon from "../components/BallIcon";
 import { fetchAlarmsSDK, deleteAlarmSDK, fetchKPIsSDK, updateAlarmSDK, createAlarmSDK } from '../sdk'
 import UpdateAlarmModal from "../components/UpdateAlarmModal";
 import { format } from 'date-fns'
+import { AuthContext } from "../hooks/user";
 
 const Alarm = () => {
   const [alarms, setAlarms] = useState([]);
@@ -16,6 +17,7 @@ const Alarm = () => {
   const [error, setError] = useState(null);
   const { translate } = useContext(TranslationContext)
   const { KPIs, setCachedKPIs } = useContext(DataContext)
+  const user = useContext(AuthContext)
   const [createModal, setCreateModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false)
   const [updateAlarm, setUpdateAlarm]= useState(null)
@@ -30,10 +32,11 @@ const Alarm = () => {
       try {
         let result = await fetchAlarmsSDK()
         setAlarms(result.data)
-
         if (!KPIs) {
-          result = await fetchKPIsSDK()
+          if (user.site === null) result = { data: [] }
+          else result = await fetchKPIsSDK(user.site) 
           setCachedKPIs(result.data)
+          console.log("result: ", result)
         }
       } catch (err) {
         setError(err.message);
@@ -43,7 +46,7 @@ const Alarm = () => {
     };
 
     fetchAlarms();
-  }, [KPIs, setCachedKPIs]);
+  }, [KPIs, setCachedKPIs, user]);
 
   const handleDelete = async (alarmId) => {
     try {

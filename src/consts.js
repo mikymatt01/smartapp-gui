@@ -78,7 +78,13 @@ const ffmRoutes = [
         icon: <LogoutIcon className="sidebar-icon" /> 
     }
 ]
+const SITES = [
+    0,
+    1,
+    2
+]
 export {
     smoRoutes,
-    ffmRoutes
+    ffmRoutes,
+    SITES
 }
