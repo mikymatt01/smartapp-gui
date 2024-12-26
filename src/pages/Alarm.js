@@ -8,6 +8,8 @@ import CreateAlarmModal from "../components/CreateAlarmModal";
 import BallIcon from "../components/BallIcon";
 import { fetchAlarmsSDK, deleteAlarmSDK, fetchKPIsSDK, updateAlarmSDK, createAlarmSDK } from '../sdk'
 import UpdateAlarmModal from "../components/UpdateAlarmModal";
+import { format } from 'date-fns'
+
 const Alarm = () => {
   const [alarms, setAlarms] = useState([]);
   const [loadingReports, setLoadingReports] = useState(false);
@@ -87,6 +89,17 @@ const Alarm = () => {
           return (
             <p>
               {value ? <BallIcon fill="green" /> : <BallIcon fill="red" />}
+            </p>
+          )
+        },
+      },
+      {
+        Header: translate.Alarm.created_at,
+        accessor: "created_at",
+        Cell: ({ value }) => {
+          return (
+            <p>
+              {format(value, "dd-MM-yyyy hh:mm")}
             </p>
           )
         },

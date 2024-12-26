@@ -11,6 +11,12 @@ import { TranslationContext } from "../hooks/translation";
 import { AuthContext } from "../hooks/user";
 import { DataContext } from "../hooks/data";
 
+const SITES = [
+    0,
+    1,
+    2
+]
+
 const CreateAlarmModal = ({
     isOpen,
     setIsOpen,
@@ -26,6 +32,7 @@ const CreateAlarmModal = ({
         threshold: 0,
         threshold_type: "UPPER_BOUND"
     });
+
     const { translate } = useContext(TranslationContext); // Gets the context of the translation
     const handleThresholdChange = (e) => {
         setInputValue((obj) => ({ ...obj, threshold: e.target.value }));
@@ -39,11 +46,15 @@ const CreateAlarmModal = ({
     const handleKPIChange = (e) => {
         setInputValue((obj) => ({ ...obj, kpi_id: e.target.value }));
     };
+    const handleSitesChange = (e) => {
+        console.log("site: ", e.target.value)
+        setInputValue((obj) => ({ ...obj, site_id: e.target.value }));
+    };
     
     const handleSubmit = async () => {
         setLoadingAlarm(true);
         try {
-            await onCreateAlarm({ ...inputValue, threshold: parseFloat(inputValue.threshold) })
+            await onCreateAlarm({ ...inputValue, threshold: parseFloat(inputValue.threshold), site_id: parseInt(inputValue.site_id) })
         } catch (err) {
         } finally {
             setLoadingAlarm(false);
@@ -54,7 +65,6 @@ const CreateAlarmModal = ({
     const handleOpen = () => setIsOpen(true);
     const handleClose = () => setIsOpen(false);
     const closeModal = () => setIsOpen(false);
-    console.log(inputValue)
     return (
         <Modal
             open={isOpen}
@@ -97,6 +107,23 @@ const CreateAlarmModal = ({
                         {KPIs && KPIs.map((KPI) => (
                             <MenuItem value={KPI._id}>{KPI.name}</MenuItem>
                         ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel id="site-label">Sites</InputLabel>
+                            <Select
+                                labelId="site-label"
+                                name="site"
+                                value={inputValue.site_id}
+                                onChange={handleSitesChange}
+                        >
+                            {
+                                "site" in user ?
+                                    (<MenuItem value={user.site}>{user.site}</MenuItem>) :
+                                SITES && SITES.map((site) => (
+                                    <MenuItem value={site}>{site}</MenuItem>
+                                ))
+                            }
                         </Select>
                     </FormControl>
                     <div style={styles.buttonContainer}>

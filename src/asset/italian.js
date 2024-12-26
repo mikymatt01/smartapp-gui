@@ -110,6 +110,7 @@ export const translation = {
         threshold: "Limite",
         threshold_type: "Tipo",
         kpi: 'indice',
+        created_at: "Creato il",
         active: "Attivo",
         delete: "Elimina",
         UPPER_BOUND: "Limite superiore",
