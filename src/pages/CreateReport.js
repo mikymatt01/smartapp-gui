@@ -45,7 +45,7 @@ const CreateReport = () => {
         };
 
         const response = await fetch(
-          `http://127.0.0.1:8000/api/v1.0/kpi/?site=${site}`,
+          `${process.env.REACT_APP_API_URL}/kpi/?site=${site}`,
           requestOptions
         );
 
@@ -126,7 +126,7 @@ const CreateReport = () => {
       };
 
       const response = await fetch(
-        `http://127.0.0.1:8000/api/v1.0/report/`,
+        `${process.env.REACT_APP_API_URL}/report/`,
         requestOptions
       );
 

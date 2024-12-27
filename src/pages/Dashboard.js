@@ -17,7 +17,7 @@ const sites = [0, 1, 2];
 function Dashboard() {
   const auth = useContext(AuthContext); // Gets the context of the user
   const { translate } = useContext(TranslationContext); // Gets the context of the translation
-  const { setCachedKPIs, setCachedMachines } = useContext(DataContext)
+  const { setCachedKPIs } = useContext(DataContext)
 
   const [error, setError] = useState(null); // State for error messages
   const [errorWidget, setErrorWidget] = useState(null); // State for error messages for newwidget
@@ -117,7 +117,7 @@ function Dashboard() {
 
       if (site && selectedKPI) {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/v1.0/kpi/site/${site}/compute?kpi_id=${selectedKPI}&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&granularity_op=${operation}&granularity_days=${granularity}`,
+          `${process.env.REACT_APP_API_URL}/kpi/site/${site}/compute?kpi_id=${selectedKPI}&start_date=${formattedStartDate}%2000%3A00%3A00&end_date=${formattedEndDate}%2000%3A00%3A00&granularity_op=${operation}&granularity_days=${granularity}`,
           requestOptions
         );
 

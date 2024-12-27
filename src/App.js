@@ -11,8 +11,6 @@ import { TranslationProvider } from "./hooks/translation";
 import { DataProvider } from "./hooks/data";
 import { fetchUserSDK } from "./sdk";
 
-const baseUrl = "http://127.0.0.1:8000/api/v1.0";
-
 function App() {
   const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);

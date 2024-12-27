@@ -7,9 +7,13 @@ import ChangeTranslation from "./changeTranslation";
 import { Badge } from "@mui/material";
 import { format } from 'date-fns';
 import { setNotificationsAsSeen } from "../sdk";
+import { Spinner } from "react-bootstrap";
+import { Box } from '@mui/material';
+import { Link } from "react-router-dom";
 
 function Topbar() {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [loadingNotifications, setLoadingNotifications] = useState(false)
   const [showTranslation, setShowTranslation] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const ref = useRef(null)
@@ -19,10 +23,11 @@ function Topbar() {
   };
 
   useEffect(() => {
-    console.log("notifications: ", showNotifications)
     if (showNotifications) {
+      setLoadingNotifications(true)
       setNotificationsAsSeen()
         .then((result) => setNotifications(result.data))
+        .finally(() => setLoadingNotifications(false))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showNotifications])
@@ -42,7 +47,7 @@ function Topbar() {
           };
   
           const response = await fetch(
-            `http://127.0.0.1:8000/api/v1.0/notification`,
+            `${process.env.REACT_APP_API_URL}/notification`,
             requestOptions
           );
           if (!response.ok) {
@@ -55,8 +60,8 @@ function Topbar() {
         } finally {
         }
       };
-  
-      fetchNotifications();
+      setLoadingNotifications(true)
+    fetchNotifications().finally(() => setLoadingNotifications(false));
   }, []);
   
   const auth = useContext(AuthContext);
@@ -85,19 +90,44 @@ function Topbar() {
               />
           )}
           <div className="notification-dropdown" hidden={!showNotifications}>
-            {notifications.length > 0 ? (
-              notifications.map((notification, index) => {
-                return (
-                  <div key={index} className="notification-item">
-                    <b>{notification.title}</b>
-                    <p>{notification.message}</p>
-                    <p style={{ fontSize: '10px', color: 'grey', }}>{format(notification.created_at, 'dd-MM-yyyy HH:mm')}</p>
-                  </div>
-                )
-              })
+            {loadingNotifications ?
+              (
+                <div style={{ alignSelf: 'center' }}>
+                  <Spinner />
+                </div>
+            ):
+              notifications.length > 0 ? (
+                <Box
+                  sx={{
+                    width: '300px',
+                    height: '300px',
+                    overflow: 'auto',
+                  }}
+                >
+                {
+                  notifications.map((notification, index) => {
+                    return (
+                      <Link
+                        to="/alarms"
+                        style={{
+                          textDecoration: 'none',
+                          color: 'inherit',
+                          userSelect: 'none',
+                        }}
+                      >
+                        <div key={index} className="notification-item">
+                          <b>{notification.title}</b>
+                          <p>{notification.message}</p>
+                          <p style={{ fontSize: '10px', color: 'grey', }}>{format(notification.created_at, 'dd-MM-yyyy HH:mm')}</p>
+                        </div>
+                      </Link>
+                    )
+                  })
+                }
+              </Box>
             ) : (
               <div className="notification-item">No new notifications</div>
-            )}
+                )}
           </div>
         </div>
         {auth ? (

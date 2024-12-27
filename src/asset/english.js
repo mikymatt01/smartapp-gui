@@ -6,7 +6,9 @@ export const translation = {
         sum: 'Sum',
         std: 'Standard Deviation',
         cancel: 'Cancel',
-        add: 'Add'
+        add: 'Add',
+        update: 'Update',
+        delete: 'Delete'
     },
     Dashboard: {
         alarm_title: "Form alarm",
@@ -108,6 +110,7 @@ export const translation = {
         threshold: "Threshold",
         threshold_type: "Type",
         kpi: 'KPI',
+        created_at: "Created at",
         active: "Active",
         delete: "Delete",
         UPPER_BOUND: "Upper bound",

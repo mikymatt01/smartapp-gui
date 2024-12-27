@@ -61,7 +61,7 @@ export const LineGraph = ({ site, title }) => {
           redirect: "follow",
         };
         const response = await fetch(
-          `http://127.0.0.1:8000/api/v1.0/kpi/?site=${site}`,
+          `${process.env.REACT_APP_API_URL}/kpi/?site=${site}`,
           requestOptions
         );
 
@@ -79,6 +79,7 @@ export const LineGraph = ({ site, title }) => {
     };
 
     fetchKPIs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -106,7 +107,7 @@ export const LineGraph = ({ site, title }) => {
         };
 
         const response = await fetch(
-          `http://127.0.0.1:8000/api/v1.0/kpi/site/${site}/compute?kpi_id=${selectedKPI}&start_date=2024-10-08%2000%3A00%3A00&end_date=2024-10-14%2000%3A00%3A00&granularity_op=avg&granularity_days=1&category=${category}`,
+          `${process.env.REACT_APP_API_URL}/kpi/site/${site}/compute?kpi_id=${selectedKPI}&start_date=2024-10-08%2000%3A00%3A00&end_date=2024-10-14%2000%3A00%3A00&granularity_op=avg&granularity_days=1&category=${category}`,
           requestOptions
         );
 
@@ -159,6 +160,7 @@ export const LineGraph = ({ site, title }) => {
     };
 
     fetchAllValues();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedKPI]); // Empty dependency array ensures this runs only once when the component mounts
 
   // Default options for the chart

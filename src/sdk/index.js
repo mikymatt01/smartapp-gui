@@ -1,4 +1,4 @@
-const baseUrl = "http://127.0.0.1:8000/api/v1.0"
+const baseUrl = `${process.env.REACT_APP_API_URL}`
 
 export const fetchAlarmsSDK = async () => {
     const storedToken = localStorage.getItem("token");

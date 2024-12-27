@@ -10,6 +10,7 @@ import { fetchAlarmsSDK, deleteAlarmSDK, fetchKPIsSDK, updateAlarmSDK, createAla
 import UpdateAlarmModal from "../components/UpdateAlarmModal";
 import { format } from 'date-fns'
 import { AuthContext } from "../hooks/user";
+import DeleteAlarmModal from "../components/deleteAlarmModal";
 
 const Alarm = () => {
   const [alarms, setAlarms] = useState([]);
@@ -20,6 +21,8 @@ const Alarm = () => {
   const user = useContext(AuthContext)
   const [createModal, setCreateModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [alarmToDelete, setAlarmToDelete] = useState('')
   const [updateAlarm, setUpdateAlarm]= useState(null)
   const handleAlarmModal = () => {
     setCreateModal((prev) => !prev)
@@ -36,7 +39,6 @@ const Alarm = () => {
           if (user.site === null) result = { data: [] }
           else result = await fetchKPIsSDK(user.site) 
           setCachedKPIs(result.data)
-          console.log("result: ", result)
         }
       } catch (err) {
         setError(err.message);
@@ -48,10 +50,11 @@ const Alarm = () => {
     fetchAlarms();
   }, [KPIs, setCachedKPIs, user]);
 
-  const handleDelete = async (alarmId) => {
+  const handleDelete = async () => {
     try {
-      await deleteAlarmSDK(alarmId)
-      setAlarms(prevAlarms => prevAlarms.filter(alarm => alarm._id !== alarmId));
+      if (!alarmToDelete) return
+      await deleteAlarmSDK(alarmToDelete)
+      setAlarms(prevAlarms => prevAlarms.filter(alarm => alarm._id !== alarmToDelete));
     } catch (err) {
       setError(err.message);
     }
@@ -125,14 +128,21 @@ const Alarm = () => {
       },
       {
         Header: translate.Alarm.delete,
-        Cell: ({ row }) => (
+        Cell: ({ row }) => {
+          console.log(row.original._id)
+          return (
           <button
             className="delete-button"
-            onClick={() => handleDelete(row.original._id)}
+              onClick={() => {
+                setAlarmToDelete(row.original._id)
+                setDeleteModal(true)
+              }}
           >
           <RiDeleteBin6Line />
           </button>
-        ),
+          )
+        }
+        ,
       },
     ],
     [KPIs, alarms, translate.Alarm, translate.labels.update]
@@ -168,6 +178,7 @@ const Alarm = () => {
             <span>{translate.Alarm.create_alarm}</span>
           </button>
             {createModal && (<CreateAlarmModal isOpen={createModal} setIsOpen={setCreateModal} onCreateAlarm={handleCreateAlarm} />)}
+            {deleteModal && (<DeleteAlarmModal isOpen={deleteModal} setIsOpen={setDeleteModal} onDeleteAlarm={() => handleDelete()} />)}
             {updateModal && updateAlarm && (<UpdateAlarmModal data={updateAlarm} isOpen={updateModal} setIsOpen={setUpdateModal} onUpdateAlarm={handleUpdateAlarm} />)}
           </div>
         </div>

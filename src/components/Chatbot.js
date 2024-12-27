@@ -7,6 +7,8 @@ import "./css/Chatbot.css";
 
 // This implements the chatbot
 
+const baseUrl = process.env.REACT_APP_API_URL
+
 export function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
@@ -33,7 +35,7 @@ export function Chatbot() {
 
       //Add site from user
       const response = await fetch(
-        `http://127.0.0.1:8000/api/v1.0/chat/?site_id=1&query=${userInput}`,
+        `${baseUrl}/chat/?site_id=1&query=${userInput}`,
         requestOptions
       );
 

@@ -7,10 +7,13 @@ export const translation = {
         std: 'Deviazione Standard',
         cancel: 'Annulla',
         add: 'Aggiungi',
-        update: 'Modifica'
+        update: 'Modifica',
+        delete: 'Elimina'
     },
     Dashboard: {
         alarm_title: "Form allarme",
+        delete_alarm: "Elimina allarme",
+        delete_alarm_description: "Questo processo non è reversibile.",
         title: "Benvenuto nella Dashboard",
         subtitle: "Ecco la tua panoramica",
         graph_title_ffm: "Media del sito per la KPI:",
@@ -109,7 +112,7 @@ export const translation = {
         no_alarms: "Nessum avviso",
         threshold: "Limite",
         threshold_type: "Tipo",
-        kpi: 'indice',
+        kpi: 'Indice',
         created_at: "Creato il",
         active: "Attivo",
         delete: "Elimina",

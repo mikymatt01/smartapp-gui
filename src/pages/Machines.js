@@ -18,7 +18,7 @@ const MachineDashboard = () => {
   const [selectedKpis, setSelectedKpis] = useState({});
   const [visibleKpis, setVisibleKpis] = useState({});
   const machineRefs = useRef({});
-  const baseUrl = "http://127.0.0.1:8000/api/v1.0";
+  const baseUrl = `${process.env.REACT_APP_API_URL}`;
 
   useEffect(() => {
     const fetchMachines = async () => {
@@ -51,6 +51,7 @@ const MachineDashboard = () => {
     };
 
     fetchMachines();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchKpis = async (machineId) => {
