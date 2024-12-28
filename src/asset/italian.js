@@ -119,7 +119,8 @@ export const translation = {
         active: "Attivo",
         delete: "Elimina",
         UPPER_BOUND: "Limite superiore",
-        LOWER_BOUND: "Limite inferiore"
+        LOWER_BOUND: "Limite inferiore",
+        all_machines: "Tutte le macchine"
     },
 
     Settings: {

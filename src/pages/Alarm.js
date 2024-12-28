@@ -87,15 +87,10 @@ const Alarm = () => {
       },
       {
         Header: translate.Alarm.kpi,
-        accessor: "kpi_id",
-        Cell: ({ value }) => {
-          if (!KPIs) return
-          const kpi = KPIs.find((KPI) => KPI._id === value)
-          if (!value) return
-          return (
-            <p>{kpi.name}</p>
-          )
-        },
+        accessor: "kpi_name",
+        Cell: ({ value }) => (
+            <p>{value}</p>
+          ),
       },
       {
         Header: translate.Alarm.site,
@@ -106,9 +101,9 @@ const Alarm = () => {
       },
       {
         Header: translate.Alarm.machine,
-        accessor: "machine_id",
+        accessor: "machine_name",
         Cell: ({ value }) => (
-            <p>{value ?? 'NO'}</p>
+            <p>{value ?? translate.Alarm.all_machines}</p>
           ),
       },
       {
@@ -168,7 +163,7 @@ const Alarm = () => {
         ,
       },
     ],
-    [KPIs, alarms, translate.Alarm, translate.labels.update]
+    [alarms, translate.Alarm, translate.labels.update]
   );
   const handleUpdateAlarm = async (update) => {
     await updateAlarmSDK(update._id, update)

@@ -39,6 +39,7 @@ const CreateAlarmModal = ({
             fetchKPIsSDK(inputValue.site_id).then((result) => setCachedKPIs(result.data))
             fetchMachinesBySiteSDK(inputValue.site_id).then((result) => setCachedMachinesBySite(result.data))
             setInputValue((obj) => ({ ...obj, kpi_id: "" }));
+            setInputValue((obj) => ({ ...obj, machine_id: "" }));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inputValue.site_id])

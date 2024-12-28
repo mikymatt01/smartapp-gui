@@ -110,11 +110,14 @@ export const translation = {
         threshold: "Threshold",
         threshold_type: "Type",
         kpi: 'KPI',
+        site: 'Site',
+        machine: 'Machine',
         created_at: "Created at",
         active: "Active",
         delete: "Delete",
         UPPER_BOUND: "Upper bound",
-        LOWER_BOUND: "Lower bound"
+        LOWER_BOUND: "Lower bound",
+        all_machines: "All machines"
     },
 
     Settings : {

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Modal from '@mui/material/Modal';
 import {
   TextField,
@@ -11,6 +11,9 @@ import {
 } from '@mui/material';
 import { TranslationContext } from "../hooks/translation";
 import { DataContext } from "../hooks/data";
+import { fetchKPIsSDK, fetchMachinesBySiteSDK } from '../sdk';
+import { SITES } from '../consts';
+import { AuthContext } from '../hooks/user';
 
 const UpdateAlarmModal = ({
     data,
@@ -18,10 +21,11 @@ const UpdateAlarmModal = ({
     setIsOpen,
     onUpdateAlarm,
 }) => {
-    const { KPIs } = useContext(DataContext)
+    const { KPIs, setCachedKPIs, MachinesBySite, setCachedMachinesBySite } = useContext(DataContext)
     const [loadingAlarm, setLoadingAlarm] = useState(false)
     const [inputValue, setInputValue] = useState(data);
     const { translate } = useContext(TranslationContext)
+    const user = useContext(AuthContext)
     const handleThresholdChange = (e) => {
         setInputValue((obj) => ({ ...obj, threshold: e.target.value }));
     };
@@ -37,7 +41,13 @@ const UpdateAlarmModal = ({
     const handleActiveChange = (e) => {
         setInputValue((obj) => ({ ...obj, enabled: !obj.enabled }));
     };
-    
+    useEffect(() => {
+        if (inputValue.site_id !== null) {
+            fetchKPIsSDK(inputValue.site_id).then((result) => setCachedKPIs(result.data))
+            fetchMachinesBySiteSDK(inputValue.site_id).then((result) => setCachedMachinesBySite(result.data))
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [inputValue.site_id])
     const handleSubmit = async () => {
         setLoadingAlarm(true);
         try {
@@ -83,6 +93,26 @@ const UpdateAlarmModal = ({
                         </Select>
                     </FormControl>
                     <FormControl fullWidth margin="normal">
+                        <InputLabel id="site-label">Sites</InputLabel>
+                            <Select
+                                labelId="site-label"
+                                name="site"
+                                disabled
+                                value={inputValue.site_id}
+                            >
+                            {
+                                user.site !== null ?
+                                    (<MenuItem value={user.site}>{user.site}</MenuItem>) :
+                                    SITES.map((site) => {
+                                        console.log(site)
+                                        return (
+                                            <MenuItem value={site}>{site}</MenuItem>
+                                        )
+                                    })
+                            }
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
                         <InputLabel id="kpi-label">KPIs</InputLabel>
                             <Select
                                 labelId="kpi-label"
@@ -92,6 +122,19 @@ const UpdateAlarmModal = ({
                         >
                         {KPIs && KPIs.map((KPI) => (
                             <MenuItem value={KPI._id}>{KPI.name}</MenuItem>
+                        ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel id="machine-label">Machines</InputLabel>
+                            <Select
+                                labelId="machine-label"
+                                name="machine"
+                                value={inputValue.machine_id}
+                                onChange={handleMachineChange}
+                        >
+                        {MachinesBySite && MachinesBySite.map((machine) => (
+                            <MenuItem value={machine._id}>{machine.name}</MenuItem>
                         ))}
                         </Select>
                     </FormControl>
