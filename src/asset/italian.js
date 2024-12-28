@@ -1,8 +1,8 @@
 export const translation = {
     labels: {
         avg: "Media",
-        min: "Min",
-        max: "Max",
+        min: "Minimo",
+        max: "Massimo",
         sum: "Somma",
         std: 'Deviazione Standard',
         cancel: 'Annulla',
@@ -113,6 +113,7 @@ export const translation = {
         threshold: "Limite",
         threshold_type: "Tipo",
         kpi: 'Indice',
+        op: 'Operazione',
         site: 'Sito',
         machine: 'Macchina',
         created_at: "Creato il",
@@ -120,7 +121,8 @@ export const translation = {
         delete: "Elimina",
         UPPER_BOUND: "Limite superiore",
         LOWER_BOUND: "Limite inferiore",
-        all_machines: "Tutte le macchine"
+        all_machines: "Tutte le macchine",
+        enabled: "Attivo"
     },
 
     Settings: {

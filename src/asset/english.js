@@ -1,8 +1,8 @@
 export const translation = {
     labels: {
         avg: 'Avarage',
-        min: 'Min',
-        max: 'Max',
+        min: 'Minimum',
+        max: 'Maximum',
         sum: 'Sum',
         std: 'Standard Deviation',
         cancel: 'Cancel',
@@ -12,6 +12,8 @@ export const translation = {
     },
     Dashboard: {
         alarm_title: "Form alarm",
+        delete_alarm: "Delete alarm",
+        delete_alarm_description: "This process is not reversible",
         title : "Welcome to the Dashboard",
         subtitle : "Here is your overview",
         graph_title_ffm : "Average of the site",
@@ -110,6 +112,7 @@ export const translation = {
         threshold: "Threshold",
         threshold_type: "Type",
         kpi: 'KPI',
+        op: 'Operation',
         site: 'Site',
         machine: 'Machine',
         created_at: "Created at",
@@ -117,7 +120,8 @@ export const translation = {
         delete: "Delete",
         UPPER_BOUND: "Upper bound",
         LOWER_BOUND: "Lower bound",
-        all_machines: "All machines"
+        all_machines: "All machines",
+        enabled: "Enabled"
     },
 
     Settings : {

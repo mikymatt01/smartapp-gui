@@ -11,6 +11,7 @@ import { TranslationContext } from "../hooks/translation";
 import { AuthContext } from "../hooks/user";
 import { DataContext } from "../hooks/data";
 import { fetchKPIsSDK, fetchMachinesBySiteSDK } from '../sdk';
+import { KPI_OPS } from '../consts';
 
 const SITES = [
     0,
@@ -28,6 +29,7 @@ const CreateAlarmModal = ({
     const [loadingAlarm, setLoadingAlarm] = useState(false)
     const [inputValue, setInputValue] = useState({
         kpi_id: "",
+        op: "",
         site_id: user.site,
         machine_id: null,
         threshold: 0,
@@ -56,6 +58,9 @@ const CreateAlarmModal = ({
     };
     const handleKPIChange = (e) => {
         setInputValue((obj) => ({ ...obj, kpi_id: e.target.value }));
+    };
+    const handleOperationChange = (e) => {
+        setInputValue((obj) => ({ ...obj, op: e.target.value }));
     };
     const handleSitesChange = (e) => {
         setInputValue((obj) => ({ ...obj, site_id: e.target.value }));
@@ -94,19 +99,19 @@ const CreateAlarmModal = ({
                         margin="normal"
                     />
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="threshold-type-label">Threshold Type</InputLabel>
+                        <InputLabel id="threshold-type-label">{translate.Alarm.threshold_type}</InputLabel>
                             <Select
                                 labelId="threshold-type-label"
                                 name="threshold"
                                 value={inputValue.threshold_type}
                                 onChange={handleThresholdTypeChange}
                             >
-                        <MenuItem value="UPPER_BOUND">Upper bound</MenuItem>
-                        <MenuItem value="LOWER_BOUND">Lower bound</MenuItem>
+                        <MenuItem value="UPPER_BOUND">{translate.Alarm.UPPER_BOUND}</MenuItem>
+                        <MenuItem value="LOWER_BOUND">{translate.Alarm.LOWER_BOUND}</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="site-label">Sites</InputLabel>
+                        <InputLabel id="site-label">{translate.Alarm.site}</InputLabel>
                             <Select
                                 labelId="site-label"
                                 name="site"
@@ -126,7 +131,7 @@ const CreateAlarmModal = ({
                         </Select>
                     </FormControl>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="machine-label">Machines</InputLabel>
+                        <InputLabel id="machine-label">{translate.Alarm.machine}</InputLabel>
                             <Select
                                 labelId="machine-label"
                                 name="machine"
@@ -144,7 +149,7 @@ const CreateAlarmModal = ({
                         </Select>
                     </FormControl>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="kpi-label">KPIs</InputLabel>
+                        <InputLabel id="kpi-label">{translate.Alarm.kpi}</InputLabel>
                             <Select
                                 labelId="kpi-label"
                                 name="kpi"
@@ -153,6 +158,19 @@ const CreateAlarmModal = ({
                         >
                         {KPIs && KPIs.map((KPI) => (
                             <MenuItem value={KPI._id}>{KPI.name}</MenuItem>
+                        ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel id="operation-label">{translate.Alarm.op}</InputLabel>
+                            <Select
+                                labelId="operation-label"
+                                name="operation"
+                                value={inputValue.op}
+                                onChange={handleOperationChange}
+                        >
+                        {KPI_OPS && KPI_OPS.map((op) => (
+                            <MenuItem value={op}>{translate.labels[op]}</MenuItem>
                         ))}
                         </Select>
                     </FormControl>

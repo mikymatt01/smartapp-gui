@@ -12,7 +12,7 @@ import {
 import { TranslationContext } from "../hooks/translation";
 import { DataContext } from "../hooks/data";
 import { fetchKPIsSDK, fetchMachinesBySiteSDK } from '../sdk';
-import { SITES } from '../consts';
+import { KPI_OPS, SITES } from '../consts';
 import { AuthContext } from '../hooks/user';
 
 const UpdateAlarmModal = ({
@@ -34,6 +34,9 @@ const UpdateAlarmModal = ({
     };
     const handleMachineChange = (e) => {
         setInputValue((obj) => ({ ...obj, machine_id: e.target.value }));
+    };
+    const handleOperationChange = (e) => {
+        setInputValue((obj) => ({ ...obj, op: e.target.value }));
     };
     const handleKPIChange = (e) => {
         setInputValue((obj) => ({ ...obj, kpi_id: e.target.value }));
@@ -81,19 +84,19 @@ const UpdateAlarmModal = ({
                         margin="normal"
                     />
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="threshold-type-label">Threshold Type</InputLabel>
+                        <InputLabel id="threshold-type-label">{translate.Alarm.threshold_type}</InputLabel>
                             <Select
                                 labelId="threshold-type-label"
                                 name="threshold"
                                 value={inputValue.threshold_type}
                                 onChange={handleThresholdTypeChange}
                             >
-                        <MenuItem value="UPPER_BOUND">Upper bound</MenuItem>
-                        <MenuItem value="LOWER_BOUND">Lower bound</MenuItem>
+                        <MenuItem value="UPPER_BOUND">{translate.Alarm.UPPER_BOUND}</MenuItem>
+                        <MenuItem value="LOWER_BOUND">{translate.Alarm.LOWER_BOUND}</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="site-label">Sites</InputLabel>
+                        <InputLabel id="site-label">{translate.Alarm.site}</InputLabel>
                             <Select
                                 labelId="site-label"
                                 name="site"
@@ -113,7 +116,7 @@ const UpdateAlarmModal = ({
                         </Select>
                     </FormControl>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="kpi-label">KPIs</InputLabel>
+                        <InputLabel id="kpi-label">{translate.Alarm.kpi}</InputLabel>
                             <Select
                                 labelId="kpi-label"
                                 name="kpi"
@@ -126,7 +129,7 @@ const UpdateAlarmModal = ({
                         </Select>
                     </FormControl>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="machine-label">Machines</InputLabel>
+                        <InputLabel id="machine-label">{translate.Alarm.machine}</InputLabel>
                             <Select
                                 labelId="machine-label"
                                 name="machine"
@@ -138,7 +141,20 @@ const UpdateAlarmModal = ({
                         ))}
                         </Select>
                     </FormControl>
-                    <FormLabel component="legend">Enabled</FormLabel>
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel id="operation-label">{translate.Alarm.op}</InputLabel>
+                            <Select
+                                labelId="operation-label"
+                                name="operation"
+                                value={inputValue.op}
+                                onChange={handleOperationChange}
+                        >
+                        {KPI_OPS && KPI_OPS.map((op) => (
+                            <MenuItem value={op}>{translate.labels[op]}</MenuItem>
+                        ))}
+                        </Select>
+                    </FormControl>
+                    <FormLabel component="legend">{translate.Alarm.enabled}</FormLabel>
                     <Switch checked={inputValue.enabled} onChange={handleActiveChange} /> 
                     <div style={styles.buttonContainer}>
                         <button onClick={handleSubmit} style={styles.button}>{loadingAlarm ? 'loading' :translate.labels.update}</button>

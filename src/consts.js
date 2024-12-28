@@ -78,13 +78,24 @@ const ffmRoutes = [
         icon: <LogoutIcon className="sidebar-icon" /> 
     }
 ]
+
 const SITES = [
     0,
     1,
     2
 ]
+
+const KPI_OPS = [
+    'sum',
+    'avg',
+    'min',
+    'max',
+    'std'
+]
+
 export {
     smoRoutes,
     ffmRoutes,
-    SITES
+    SITES,
+    KPI_OPS
 }

@@ -5,12 +5,12 @@ export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
 
-  const [KPIs, setCurrentKPIs] = useState();
+  const [KPIs, setCurrentKPIs] = useState([]);
     const setCachedKPIs = (kpiList) => {
         setCurrentKPIs(kpiList);
     };
     
-  const [MachinesBySite, setCurrentMachinesBySite] = useState();
+  const [MachinesBySite, setCurrentMachinesBySite] = useState([]);
   const setCachedMachinesBySite = (machineList) => {
     setCurrentMachinesBySite(machineList);
   };

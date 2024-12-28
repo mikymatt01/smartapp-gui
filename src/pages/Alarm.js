@@ -68,7 +68,6 @@ const Alarm = () => {
       setError(err.message);
     }
   };
-  console.log("alarms: ", alarms)
   const columns = React.useMemo(
     () => [
       {
@@ -90,6 +89,13 @@ const Alarm = () => {
         accessor: "kpi_name",
         Cell: ({ value }) => (
             <p>{value}</p>
+          ),
+      },
+      {
+        Header: translate.Alarm.op,
+        accessor: "op",
+        Cell: ({ value }) => (
+            <p>{translate.labels[value]}</p>
           ),
       },
       {
@@ -163,7 +169,7 @@ const Alarm = () => {
         ,
       },
     ],
-    [alarms, translate.Alarm, translate.labels.update]
+    [alarms, translate.Alarm, translate.labels]
   );
   const handleUpdateAlarm = async (update) => {
     await updateAlarmSDK(update._id, update)
