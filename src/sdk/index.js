@@ -105,6 +105,27 @@ export const fetchKPIsSDK = async (site) => {
     return await response.json();
 }
 
+export const fetchMachinesBySiteSDK = async (site) => {
+    const storedToken = localStorage.getItem("token");
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${storedToken}`);
+
+    const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+    };
+    if (site === null) throw new Error("Failed to fetch Machines");
+    const response = await fetch(
+        `${baseUrl}/machine/site?site=${site}`,
+        requestOptions
+    );
+
+    if (!response.ok)
+        throw new Error("Failed to fetch Machines");
+    return await response.json();
+}
+
 export const fetchUserSDK = async () => {
     const storedToken = localStorage.getItem("token");
       if (!storedToken) return;

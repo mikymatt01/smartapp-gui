@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { fetchKPIsSDK, fetchUserSDK } from "../sdk";
+import { fetchKPIsSDK, fetchMachinesBySiteSDK, fetchUserSDK } from "../sdk";
 
 export const DataContext = createContext();
 
@@ -10,9 +10,9 @@ export const DataProvider = ({ children }) => {
         setCurrentKPIs(kpiList);
     };
     
-  const [Machines, setCurrentMachines] = useState();
-  const setCachedMachines = (machineList) => {
-    setCurrentMachines(machineList);
+  const [MachinesBySite, setCurrentMachinesBySite] = useState();
+  const setCachedMachinesBySite = (machineList) => {
+    setCurrentMachinesBySite(machineList);
   };
 
   useEffect(() => {
@@ -20,9 +20,18 @@ export const DataProvider = ({ children }) => {
       try {
         let result = await fetchUserSDK()
         const user = result.data
-        if (user.site === null) result = { data: [] }
-        else result = await fetchKPIsSDK(user.site)
-        setCurrentKPIs(result.data)
+        let KPIsResult = {}
+        let MachinesResult = {}
+        if (user.site === null) {
+          KPIsResult = { data: [] }
+          MachinesResult = { data: [] }
+        }
+        else {
+          KPIsResult = await fetchKPIsSDK(user.site)
+          MachinesResult = await fetchMachinesBySiteSDK(user.site)
+        }
+        setCurrentKPIs(KPIsResult.data)
+        setCurrentMachinesBySite(MachinesResult.data)
       } catch (e) {
 
       }
@@ -31,7 +40,7 @@ export const DataProvider = ({ children }) => {
   }, [])
 
   return (
-    <DataContext.Provider value={{ KPIs, setCachedKPIs, Machines, setCachedMachines }}>
+    <DataContext.Provider value={{ KPIs, setCachedKPIs, MachinesBySite, setCachedMachinesBySite }}>
       {children}
     </DataContext.Provider>
   );

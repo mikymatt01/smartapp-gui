@@ -10,7 +10,7 @@ import {
 import { TranslationContext } from "../hooks/translation";
 import { AuthContext } from "../hooks/user";
 import { DataContext } from "../hooks/data";
-import { fetchKPIsSDK } from '../sdk';
+import { fetchKPIsSDK, fetchMachinesBySiteSDK } from '../sdk';
 
 const SITES = [
     0,
@@ -24,7 +24,7 @@ const CreateAlarmModal = ({
     onCreateAlarm
 }) => {
     const user = useContext(AuthContext); // Gets the context of the translation
-    const { KPIs, setCachedKPIs } = useContext(DataContext); // Gets the context of the translation
+    const { KPIs, setCachedKPIs, MachinesBySite, setCachedMachinesBySite } = useContext(DataContext); // Gets the context of the translation
     const [loadingAlarm, setLoadingAlarm] = useState(false)
     const [inputValue, setInputValue] = useState({
         kpi_id: "",
@@ -37,6 +37,7 @@ const CreateAlarmModal = ({
     useEffect(() => {
         if (inputValue.site_id !== null) {
             fetchKPIsSDK(inputValue.site_id).then((result) => setCachedKPIs(result.data))
+            fetchMachinesBySiteSDK(inputValue.site_id).then((result) => setCachedMachinesBySite(result.data))
             setInputValue((obj) => ({ ...obj, kpi_id: "" }));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,6 +121,24 @@ const CreateAlarmModal = ({
                                             <MenuItem value={site}>{site}</MenuItem>
                                         )
                                     })
+                            }
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel id="machine-label">Machines</InputLabel>
+                            <Select
+                                labelId="machine-label"
+                                name="machine"
+                                value={inputValue.machine_id}
+                                onChange={handleMachineChange}
+                        >
+                            {
+                            MachinesBySite.map((machine) => {
+                                console.log(machine)
+                                return (
+                                    <MenuItem value={machine._id}>{machine.name}</MenuItem>
+                                )
+                            })
                             }
                         </Select>
                     </FormControl>

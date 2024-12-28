@@ -6,7 +6,7 @@ import { TranslationContext } from '../hooks/translation'
 import { DataContext } from '../hooks/data'
 import CreateAlarmModal from "../components/CreateAlarmModal";
 import BallIcon from "../components/BallIcon";
-import { fetchAlarmsSDK, deleteAlarmSDK, fetchKPIsSDK, updateAlarmSDK, createAlarmSDK } from '../sdk'
+import { fetchAlarmsSDK, deleteAlarmSDK, fetchKPIsSDK, updateAlarmSDK, createAlarmSDK, fetchMachinesBySiteSDK } from '../sdk'
 import UpdateAlarmModal from "../components/UpdateAlarmModal";
 import { format } from 'date-fns'
 import { AuthContext } from "../hooks/user";
@@ -17,7 +17,7 @@ const Alarm = () => {
   const [loadingReports, setLoadingReports] = useState(false);
   const [error, setError] = useState(null);
   const { translate } = useContext(TranslationContext)
-  const { KPIs, setCachedKPIs } = useContext(DataContext)
+  const { KPIs, setCachedKPIs, setCachedMachinesBySite } = useContext(DataContext)
   const user = useContext(AuthContext)
   const [createModal, setCreateModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false)
@@ -35,10 +35,19 @@ const Alarm = () => {
       try {
         let result = await fetchAlarmsSDK()
         setAlarms(result.data)
+        let KPIsResult = {}
+        let MachinesResult = {}
         if (!KPIs) {
-          if (user.site === null) result = { data: [] }
-          else result = await fetchKPIsSDK(user.site) 
-          setCachedKPIs(result.data)
+          if (user.site === null) {
+            KPIsResult = { data: [] }
+            MachinesResult = { data: [] }
+          }
+          else {
+            KPIsResult = await fetchKPIsSDK(user.site)
+            MachinesResult = await fetchMachinesBySiteSDK(user.site)
+          }
+          setCachedKPIs(KPIsResult.data)
+          setCachedMachinesBySite(MachinesResult.data)
         }
       } catch (err) {
         setError(err.message);
@@ -48,7 +57,7 @@ const Alarm = () => {
     };
 
     fetchAlarms();
-  }, [KPIs, setCachedKPIs, user]);
+  }, [KPIs, setCachedKPIs, setCachedMachinesBySite, user]);
 
   const handleDelete = async () => {
     try {
@@ -59,7 +68,7 @@ const Alarm = () => {
       setError(err.message);
     }
   };
-
+  console.log("alarms: ", alarms)
   const columns = React.useMemo(
     () => [
       {
@@ -87,6 +96,20 @@ const Alarm = () => {
             <p>{kpi.name}</p>
           )
         },
+      },
+      {
+        Header: translate.Alarm.site,
+        accessor: "site_id",
+        Cell: ({ value }) => (
+            <p>{value}</p>
+          ),
+      },
+      {
+        Header: translate.Alarm.machine,
+        accessor: "machine_id",
+        Cell: ({ value }) => (
+            <p>{value ?? 'NO'}</p>
+          ),
       },
       {
         Header: translate.Alarm.active,
