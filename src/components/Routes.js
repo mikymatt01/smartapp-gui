@@ -8,6 +8,7 @@ import Settings from "../pages/Settings";
 import Logout from "../pages/Logout";
 import Alarm from "../pages/Alarm";
 import CreateReport from "../pages/CreateReport";
+import Maintenance from "../pages/Maintenance";
 
 // Page to know where the user has to be routed to 
 
@@ -16,6 +17,7 @@ function MyRoutes({ setToken }) {
        <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/alarms" element={<Alarm />} />
+            <Route path="/maintenance" element={<Maintenance />} />
             <Route path="/sites" element={<Sites />} />
             <Route path="/machines" element={<Machines />} />
             <Route path="/report" element={<Report />} />

@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { TranslationContext } from "../hooks/translation";
+import { DataContext } from "../hooks/data";
 
 // Register the components with Chart.js
 ChartJS.register(
@@ -33,6 +34,7 @@ export const LineGraph = ({ site, title }) => {
   const [kpis, setKpis] = useState([]); // State for KPIs options to show to user for newwidget
   const [selectedKPI, setSelectedKPI] = useState("673a6ad2d9e0b151b88cbed0"); // State for selected KPI
   const { translate } = React.useContext(TranslationContext); // Gets the context of the translation
+  const { alarms } = React.useContext(DataContext); // Gets the context of the translation
 
   // Color mapping for each machine category
   const colorMapping = {
@@ -137,7 +139,16 @@ export const LineGraph = ({ site, title }) => {
         const allValues = await Promise.all(
           machine_category.map((category) => fetchValues(category))
         );
-
+        let alarmsForKpi = []
+        if (allValues.length && selectedKPI)
+          alarmsForKpi = alarms
+            .filter(alarm => alarm.kpi_id === selectedKPI && alarm.site_id === site && alarm.op === 'avg')
+            .map((alarm, index) => ({
+            label: `Alarm ${index + 1}`,
+            data:   Array(allValues[0].data.length).fill(alarm.threshold),
+            borderColor: "black", // Custom border color
+            fill: false, // Disable filling under the line
+          }))
         // Format the data for the chart
         const data = {
           labels: [
@@ -149,7 +160,7 @@ export const LineGraph = ({ site, title }) => {
             "24-10-13",
             "24-10-14",
           ], // x-axis labels
-          datasets: allValues, // Set the fetched data as datasets
+          datasets: [...allValues, ...alarmsForKpi], // Set the fetched data as datasets
         };
 
         // Set the chart data after fetching all the values
@@ -161,7 +172,7 @@ export const LineGraph = ({ site, title }) => {
 
     fetchAllValues();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedKPI]); // Empty dependency array ensures this runs only once when the component mounts
+  }, [selectedKPI, alarms]); // Empty dependency array ensures this runs only once when the component mounts
 
   // Default options for the chart
   const options = {
@@ -176,7 +187,7 @@ export const LineGraph = ({ site, title }) => {
   if (!chartData) {
     return <p>{translate.KPIs.loading}</p>; // Show a loading message while data is being fetched
   }
-
+  console.log("chartData: ", chartData)
   return (
     <div className="line-graph" style={{ position: "relative", width: "100%" }}>
       <h2>

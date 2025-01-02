@@ -163,6 +163,7 @@ export const translation = {
     SideBar: {
         Dashboard: "Dashboard",
         Alarm: "Alarms",
+        Maintenance: "Maintenance",
         Sites: "Sites",
         Machines: "Machines",
         Report: "Report",

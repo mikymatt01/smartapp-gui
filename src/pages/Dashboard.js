@@ -10,14 +10,14 @@ import Chatbot from "../components/Chatbot";
 import CreateAlarmModal from "../components/CreateAlarmModal";
 import { TranslationContext } from "../hooks/translation";
 import { DataContext } from "../hooks/data";
-import { fetchKPIsSDK } from '../sdk'
+import { fetchKPIsSDK, fetchAlarmsSDK, createAlarmSDK } from '../sdk'
 // There are three sites for the SMO
 const sites = [0, 1, 2];
 
 function Dashboard() {
   const auth = useContext(AuthContext); // Gets the context of the user
   const { translate } = useContext(TranslationContext); // Gets the context of the translation
-  const { setCachedKPIs } = useContext(DataContext)
+  const { setCachedKPIs, setCachedAlarms } = useContext(DataContext)
 
   const [error, setError] = useState(null); // State for error messages
   const [errorWidget, setErrorWidget] = useState(null); // State for error messages for newwidget
@@ -42,8 +42,7 @@ function Dashboard() {
       setError(null);
       try {
           const data = await fetchKPIsSDK(site)
-          setKpis(data.data); // the .data is an array of object
-          console.log("KPI: ", data.data)
+          setKpis(data.data);
           setCachedKPIs(data.data)
       } catch (err) {
         setError(err.message);
@@ -163,6 +162,11 @@ function Dashboard() {
       );
   };
 
+  const handleCreateAlarm = async (inputValue) => {
+    await createAlarmSDK(inputValue)
+    const result = await fetchAlarmsSDK()
+    setCachedAlarms(result.data)
+  }
   return (
     <div className="d-flex flex-column w-100 h-100 overflow-scroll p-3">
       <h2>{translate.Dashboard.title}</h2>
@@ -188,7 +192,7 @@ function Dashboard() {
         {/* Dropdown menu */}
         <div className="d-flex flex-column gap-3">
           {/* Show additional options based on the selection */}
-          {isAlarmModalOpen && (<CreateAlarmModal isOpen={isAlarmModalOpen} setIsOpen={setIsAlarmModalOpen} />)}
+          {isAlarmModalOpen && (<CreateAlarmModal isOpen={isAlarmModalOpen} setIsOpen={setIsAlarmModalOpen} onCreateAlarm={handleCreateAlarm} />)}
           {dropdownVisible2 && (
             <div className="d-flex gap-3 flex-wrap kpi-card p-3">
               <select

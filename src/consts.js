@@ -18,7 +18,11 @@ const smoRoutes = [
         url: "/alarms",
         title: "Alarm",
         icon: <HistoryIcon className="sidebar-icon" />
-      
+    },
+    {
+        url: "/maintenance",
+        title: "Maintenance",
+        icon: <HistoryIcon className="sidebar-icon" />
     },
     {
         url: "/sites",
@@ -54,8 +58,12 @@ const ffmRoutes = [
     {
         url: "/alarms",
         title: "Alarm",
+        icon: <HistoryIcon className="sidebar-icon" /> 
+    },
+    {
+        url: "/maintenance",
+        title: "Maintenance",
         icon: <HistoryIcon className="sidebar-icon" />
-      
     },
     {
         url: "/machines",

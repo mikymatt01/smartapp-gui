@@ -17,7 +17,7 @@ const Alarm = () => {
   const [loadingReports, setLoadingReports] = useState(false);
   const [error, setError] = useState(null);
   const { translate } = useContext(TranslationContext)
-  const { KPIs, setCachedKPIs, setCachedMachinesBySite } = useContext(DataContext)
+  const { KPIs, setCachedKPIs, setCachedMachinesBySite, setCachedAlarms, alarms: cachedAlarms } = useContext(DataContext)
   const user = useContext(AuthContext)
   const [createModal, setCreateModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false)
@@ -35,6 +35,7 @@ const Alarm = () => {
       try {
         let result = await fetchAlarmsSDK()
         setAlarms(result.data)
+        if (!cachedAlarms) setCachedAlarms(result.data)
         let KPIsResult = {}
         let MachinesResult = {}
         if (!KPIs) {
@@ -57,13 +58,14 @@ const Alarm = () => {
     };
 
     fetchAlarms();
-  }, [KPIs, setCachedKPIs, setCachedMachinesBySite, user]);
+  }, [KPIs, cachedAlarms, setCachedAlarms, setCachedKPIs, setCachedMachinesBySite, user]);
 
   const handleDelete = async () => {
     try {
       if (!alarmToDelete) return
       await deleteAlarmSDK(alarmToDelete)
       setAlarms(prevAlarms => prevAlarms.filter(alarm => alarm._id !== alarmToDelete));
+      setCachedAlarms(prevAlarms => prevAlarms.filter(alarm => alarm._id !== alarmToDelete));
     } catch (err) {
       setError(err.message);
     }
@@ -175,11 +177,13 @@ const Alarm = () => {
     await updateAlarmSDK(update._id, update)
     const result = await fetchAlarmsSDK()
     setAlarms(result.data)
+    setCachedAlarms(result.data)
   };
   const handleCreateAlarm = async (inputValue) => {
     await createAlarmSDK(inputValue)
     const result = await fetchAlarmsSDK()
     setAlarms(result.data)
+    setCachedAlarms(result.data)
   }
   const data = React.useMemo(() => alarms, [alarms]);
 

@@ -165,6 +165,7 @@ export const translation = {
     SideBar: {
         Dashboard: "Schermata iniziale",
         Alarm: "Avvisi",
+        Maintenance: "Manutenzione",
         Sites: "Siti",
         Machines: "Macchine",
         Report: "Report",
